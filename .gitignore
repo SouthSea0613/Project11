@@ -1,0 +1,45 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+frontend-nextjs/node_modules
+frontend-nextjs/.pnp
+frontend-nextjs/.pnp.*
+frontend-nextjs/.yarn/*
+!frontend-nextjs/.yarn/patches
+!frontend-nextjs/.yarn/plugins
+!frontend-nextjs/.yarn/releases
+!frontend-nextjs/.yarn/versions
+
+# testing
+frontend-nextjs/coverage
+
+# next.js
+frontend-nextjs/.next/
+frontend-nextjs/out/
+
+# production
+frontend-nextjs/build
+
+# misc
+.DS_Store
+*.pem
+
+# JetBrains / IntelliJ IDEA
+.idea/
+*.iml
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files (can opt-in for committing if needed)
+frontend-nextjs/.env*
+
+# vercel
+frontend-nextjs/.vercel
+
+# typescript
+frontend-nextjs/*.tsbuildinfo
+frontend-nextjs/next-env.d.ts
