@@ -63,6 +63,27 @@ export default function Navbar() {
                 HAEYOUNGLAB
               </a>
             )}
+            {mounted ? (
+              <span className="shrink-0 inline-flex items-center gap-1 text-[11px] font-medium tracking-tight text-muted-foreground md:text-xs">
+                <Link
+                  href="/Namhae_Kim"
+                  className="hover:text-foreground transition-colors"
+                >
+                  김남해
+                </Link>
+                <span aria-hidden="true">·</span>
+                <Link
+                  href="/Minyoung_Kim"
+                  className="hover:text-foreground transition-colors"
+                >
+                  김민영
+                </Link>
+              </span>
+            ) : (
+              <span className="shrink-0 text-[11px] font-medium tracking-tight text-muted-foreground md:text-xs">
+                김남해 · 김민영
+              </span>
+            )}
           </div>
 
           {/* 우측 버튼 */}
