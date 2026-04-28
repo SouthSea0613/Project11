@@ -29,6 +29,8 @@ export default function Navbar() {
   if (pathname.startsWith("/detail")) return null;
 
   const isDark = resolvedTheme === "dark";
+  const isNamhaePage = pathname.startsWith("/Namhae_Kim");
+  const isMinyoungPage = pathname.startsWith("/Minyoung_Kim");
 
   return (
     <div className="fixed top-0 left-0 w-full z-50 pointer-events-none">
@@ -48,39 +50,47 @@ export default function Navbar() {
         onMouseLeave={() => setHovered(false)}
       >
         <div className="mx-auto flex h-14 md:h-20 max-w-screen-2xl items-center justify-between px-4 sm:px-6 md:px-8 lg:px-6">
-          <div className="flex min-w-0 items-center gap-1.5 md:gap-2">
+          <div className="flex min-w-0 items-end gap-2 md:gap-3">
             {pathname.startsWith("/haeyoungsoftware") ? (
-              <span className="truncate font-semibold text-xs tracking-tight text-foreground md:text-sm">
-                HAEYOUNGSOFTWARE
+              <span className="truncate font-semibold leading-none text-xl tracking-tight text-foreground md:text-3xl">
+                HaeYoungLab Team
               </span>
             ) : (
               <a
-                href="https://www.haeyounglab.com"
+                href="https://team.haeyounglab.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="truncate font-semibold text-xs tracking-tight text-foreground underline-offset-4 hover:text-emerald-600 hover:underline md:text-sm"
+                className="truncate font-semibold leading-none text-xl tracking-tight text-foreground underline-offset-4 hover:text-emerald-600 hover:underline md:text-3xl"
               >
-                HAEYOUNGLAB
+                HaeYoungLab Team
               </a>
             )}
             {mounted ? (
-              <span className="shrink-0 inline-flex items-center gap-1 text-[11px] font-medium tracking-tight text-muted-foreground md:text-xs">
+              <span className="shrink-0 inline-flex items-center gap-1.5 pb-0.5 text-sm font-semibold tracking-tight text-foreground/90 md:text-base">
                 <Link
                   href="/Namhae_Kim"
-                  className="hover:text-foreground transition-colors"
+                  className={`transition-colors underline-offset-4 ${
+                    isNamhaePage
+                      ? "text-emerald-400 underline"
+                      : "hover:text-emerald-400"
+                  }`}
                 >
                   김남해
                 </Link>
-                <span aria-hidden="true">·</span>
+                <span aria-hidden="true" className="text-foreground/70">·</span>
                 <Link
                   href="/Minyoung_Kim"
-                  className="hover:text-foreground transition-colors"
+                  className={`transition-colors underline-offset-4 ${
+                    isMinyoungPage
+                      ? "text-emerald-400 underline"
+                      : "hover:text-emerald-400"
+                  }`}
                 >
                   김민영
                 </Link>
               </span>
             ) : (
-              <span className="shrink-0 text-[11px] font-medium tracking-tight text-muted-foreground md:text-xs">
+              <span className="shrink-0 pb-0.5 text-sm font-semibold tracking-tight text-foreground/90 md:text-base">
                 김남해 · 김민영
               </span>
             )}
@@ -90,12 +100,12 @@ export default function Navbar() {
           <div className="flex items-center gap-1 md:gap-2">
             {pathname.startsWith("/haeyoungsoftware") ? (
               <a
-                href="https://www.haeyounglab.com"
+                href="https://team.haeyounglab.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-xs md:text-sm font-semibold tracking-tight text-foreground underline-offset-4 hover:text-emerald-600 hover:underline px-3"
               >
-                HAEYOUNGLAB
+                HaeYoungLab Team
               </a>
             ) : (
               <Button asChild variant="ghost" size="sm" className="text-xs md:text-sm font-medium px-3 h-8 text-muted-foreground hover:text-foreground">
