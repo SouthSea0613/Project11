@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { portfolioProjects, teamMembers } from "@/lib/portfolioData";
+import {
+  haeyoungLabPitch,
+  portfolioProjects,
+  teamMembers,
+} from "@/lib/portfolioData";
 
 export const metadata: Metadata = {
   title: "Team Portfolio | HAEYOUNGLAB",
@@ -42,15 +46,16 @@ export default function Home() {
         style={{ backgroundImage: "url('/background.jpg')" }}
       />
       <section className="mx-auto max-w-screen-2xl px-4 pt-32 pb-20 sm:px-6 md:px-8 lg:px-6">
-        <p className="text-sm text-emerald-400">Team Portfolio</p>
+        <p className="text-sm text-emerald-400">{haeyoungLabPitch.tagline}</p>
         <h1 className="mt-3 text-3xl font-bold tracking-tight text-white md:text-5xl">
-          아이디어를 제품으로 바꾸는
+          {haeyoungLabPitch.heroTitle}
           <br />
-          김남해 · 김민영 팀
+          <span className="text-2xl font-semibold text-slate-200 md:text-3xl">
+            {haeyoungLabPitch.heroSubtitle}
+          </span>
         </h1>
-        <p className="mt-6 max-w-2xl text-sm leading-7 text-slate-200 md:text-base">
-          이 페이지는 팀의 대표 프로젝트, 각자의 역할, 결과물을 빠르게 파악할 수
-          있는 포트폴리오 허브입니다.
+        <p className="mt-6 max-w-3xl text-sm leading-7 text-slate-200 md:text-base">
+          {haeyoungLabPitch.description}
         </p>
         <div className="mt-8 flex flex-wrap items-center gap-3">
           {teamMembers.map((member) => (
