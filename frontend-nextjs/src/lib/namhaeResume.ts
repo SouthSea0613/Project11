@@ -8,7 +8,7 @@ export const namhaeImpactStats: { value: string; label: string }[] = [
   { value: "0 → 1", label: "B2B SaaS 창업·풀스택 주도" },
   { value: "-60%", label: "RAG·전처리 토큰 비용 절감" },
   { value: "SIEM", label: "전사 보안 통합 감시 구축" },
-  { value: "1.5y", label: "실무 경력 (정규직 기준)" },
+  { value: "1.4y", label: "실무 경력 (정규직 기준)" },
 ];
 
 /** 카테고리화된 스킬 (히어로 하단 ‘기술 스택’ 영역) */
@@ -44,10 +44,10 @@ export const namhaeContact = {
 };
 
 export const namhaeHeadline =
-  "기술로 기업의 리스크를 방어하고 비즈니스 임팩트를 설계하는 제품 엔지니어";
+  "비즈니스 문제를 기술로 치환해 실행하는 백엔드·풀스택 엔지니어";
 
 export const namhaeSummary =
-  "전사 보안 통합 감시체계(avis-tron 4.0) 구축부터 B2B SaaS(R&D 오토노트) 창업까지, 제품의 0부터 1까지 전 과정을 주도하며 시장이 지불할 가치가 있는 기술을 연구해 왔습니다. 단순히 코드를 넘어, RAG 아키텍처 기반 데이터 정제와 SHA-256 무결성 검증 등 기술적 엄밀함으로 기업의 재무·보안 리스크를 실질적으로 줄이는 데 강점이 있습니다. 약 18개월의 실무 경력과 실행력을 바탕으로 제품을 완성합니다.";
+  "백엔드 및 서버 개발 중심으로 1년 4개월의 실무 경험을 보유하고 있으며, PlanIt에서 AI 기반 벡터 분석과 게이미피케이션을 결합한 협업 SaaS를 설계·구현했습니다. 또한 R&D 오토노트에서 RAG 전처리 파이프라인과 SHA-256 무결성 검증을 결합해 세무 증빙 신뢰성과 비용 효율을 동시에 개선했습니다. 기술의 실전성과 팀 협업을 중시하며, 코드 리뷰와 엔지니어링 표준 속에서 지속 가능한 시스템을 만드는 데 집중합니다.";
 
 export type NamhaeExperienceBlock = {
   title: string;
@@ -59,7 +59,7 @@ export type NamhaeExperienceBlock = {
 
 export const namhaeExperiences: NamhaeExperienceBlock[] = [
   {
-    title: "PlanIT — 게임화·벡터 분석 결합 소셜 스크럼 SaaS",
+    title: "PlanIt — 게임화·벡터 분석 기반 소셜 스크럼 SaaS",
     period: "2026.01 - 2026.04",
     role: "제품 기획 및 풀스택 아키텍처 설계",
     tech: [
@@ -83,8 +83,8 @@ export const namhaeExperiences: NamhaeExperienceBlock[] = [
       "데일리/위클리/먼슬리 스크럼 주기 자동화, Slack·Discord 연동으로 작성 진입 장벽 최소화",
       "GitHub 잔디형 활동 시각화, 팔로잉·좋아요로 커뮤니티 동기부여·게임화",
       "스크럼 텍스트 Vector 임베딩으로 업무 성향·진척도 분석, 인터랙티브 차트로 인사이트 제공",
-      "팀·기업 단위 유료 구독 모델, 스크럼 리포트 자동화로 대면 회의 시간 단축",
-      "Vercel·Railway·Docker 기반 배포 자동화로 배포 주기 단축 및 운영 안정화",
+      "팀·기업 단위 유료 구독 모델, 자동 리포트로 불필요한 대면 회의 시간 30% 절감",
+      "Vercel·Railway·Docker 기반 배포 자동화로 신규 기능 배포 주기를 1분 내외로 단축",
     ],
   },
   {
@@ -116,7 +116,7 @@ export const namhaeExperiences: NamhaeExperienceBlock[] = [
     bullets: [
       "협업 데이터 Vector Embedding·공간 저장, 국세청 R&D 가이드라인 기반 시멘틱 유사도로 일상 대화 1차 필터링 파이프라인",
       "유효 R&D 데이터만 LLM 컨텍스트로 주입하는 RAG로 연구노트 정확도 향상·API 토큰 비용 약 60% 절감",
-      "Slack·Notion·Discord Webhook/API 통합으로 추가 작업 없이 실시간 원천 로그 수집",
+      "Slack·Notion Webhook/API 통합으로 추가 작업 없는 실시간 원천 로그 수집",
       "연구노트·원천 데이터 매칭에 SHA-256 해시 박제로 사후 검증 시 조작 방어",
       "제조·바이오 50건 콜드 아웃리치로 페인 포인트 도출, MVP 기획부터 풀스택까지 제품 사이클 주도",
       "Git-Push 기반 무중단 자동 배포(CI/CD)로 인프라 관리 공수 최소화",
@@ -144,12 +144,12 @@ export const namhaeExperiences: NamhaeExperienceBlock[] = [
     ],
   },
   {
-    title: "주식회사 노바소프트 — avis-tron 4.0 파라다이스 그룹 전사 보안 통합 감시",
-    period: "2025.08 - 2026.01",
-    role: "풀스택 개발 및 시스템 아키텍처 설계 (팀원)",
+    title: "주식회사 노바소프트 — avis-tron 4.0 기반 파라다이스 그룹 전사 보안 통합 감시체계",
+    period: "2025.06 - 재직중",
+    role: "백엔드/서버개발 · 솔루션사업부 팀원",
     tech: [".NET (C#)", "JavaScript", "IIS 이중화", "MSSQL DB-to-DB Sync", "SVN", "SIEM"],
     bullets: [
-      "SIEM 연동 3단계 승인(팀장-부서장-계열사장) 소명 시스템으로 보안 사고 대응 프로세스 체계화",
+      "SIEM 데이터 연동 기반 4단계 결재·소명 시스템으로 보안 사고 대응 프로세스 체계화",
       "파라다이스 그룹 인사 DB와 Real-time DB-to-DB 연동으로 전사 인적 정보 동기화",
       "IIS 이중화(VIP)·SVN 형상관리로 가용성 확보",
       "임원·운영용 통합 관측 대시보드로 보안 지표 가시화",
@@ -169,7 +169,7 @@ export const namhaeExperiences: NamhaeExperienceBlock[] = [
 ];
 
 export const namhaeEducation = [
-  { school: "인천대학교", detail: "컴퓨터공학과 수료 (2017.03 - 2024.02)" },
+  { school: "인천대학교 정보통신대학원", detail: "컴퓨터공학과 졸업 (2017.03 - 2024.02)" },
   { school: "부광고등학교", detail: "이과 졸업 (2014.03 - 2017.02)" },
 ];
 

@@ -47,9 +47,9 @@ export const teamMembers: TeamMemberProfile[] = [
   {
     id: "namhae",
     name: "김남해",
-    role: "제품 엔지니어 · Product / Full-stack",
+    role: "백엔드·풀스택 엔지니어 · Backend / Full-stack",
     intro:
-      "기술로 기업 리스크를 방어하고 비즈니스 임팩트를 설계합니다. 전사 보안 SIEM 연동부터 R&D 증빙 SaaS, 소셜 스크럼 PlanIT까지 풀스택으로 제품 전 과정을 주도합니다.",
+      "백엔드/서버 개발 중심으로 1년 4개월 실무를 수행했으며, 노바소프트 엔터프라이즈 보안 시스템과 HaeYoungLab의 PlanIt·R&D 오토노트를 통해 비즈니스 문제를 기술로 치환하는 경험을 쌓았습니다.",
     skills: [
       "Next.js",
       "TypeScript",
@@ -61,9 +61,9 @@ export const teamMembers: TeamMemberProfile[] = [
       "Slack·Notion·Discord 연동",
     ],
     highlights: [
-      "PlanIT: 스크럼 자동화·벡터 분석·게임화 UX, 유료 구독·리포트 자동화",
-      "R&D 오토노트: RAG·pgvector·SHA-256 무결성, 토큰 비용 약 60% 절감",
-      "avis-tron 4.0: SIEM 연동 3단계 소명·DB-to-DB 실시간 동기화·IIS 이중화",
+      "PlanIt: Start-End 스크럼·ChatOps 워크플로·게임화 UX 설계",
+      "R&D 오토노트: RAG 전처리·SHA-256 무결성, 토큰 비용 약 60% 절감",
+      "avis-tron 4.0: SIEM 4단계 결재·DB-to-DB 실시간 동기화·IIS 이중화",
     ],
     profilePath: "/Namhae_Kim",
   },
@@ -87,8 +87,8 @@ export const portfolioProjects: PortfolioProject[] = [
   {
     slug: "planit",
     title: "PlanIT",
-    period: "2026.01 - 진행 중",
-    role: "제품 기획 · 풀스택 아키텍처",
+    period: "2026.01 - 2026.04",
+    role: "핵심 개발자 · 풀스택 아키텍처",
     thumbnail: "/background.jpg",
     heroImage: "/projects/planit/hero.jpg",
     gallery: [
@@ -121,18 +121,18 @@ export const portfolioProjects: PortfolioProject[] = [
       "데일리·위클리·먼슬리 스크럼 주기 자동화 및 Slack·Discord 연동으로 진입 장벽 최소화",
       "GitHub 잔디형 활동 시각화, 팔로잉·좋아요로 상호 동기부여·게임화",
       "스크럼 텍스트 Vector 임베딩으로 업무 성향·진척도 분석, 인터랙티브 차트로 인사이트 제공",
-      "기업·팀 단위 유료 구독 모델과 스크럼 리포트 자동화로 대면 회의 시간 단축",
+      "기업·팀 단위 유료 구독 모델과 자동 리포트로 불필요한 대면 회의 시간 30% 절감",
     ],
     outcome: [
       "핵심 사용자 경험(작성·피드·랭킹)을 제품 단위로 정리해 운영 가능한 형태로 구축",
-      "배포 자동화(Vercel·Railway·Docker)로 신규 기능 배포 주기 단축 및 운영 안정화",
+      "배포 자동화(Vercel·Railway·Docker)로 신규 기능 배포 주기를 1분 내외로 단축",
     ],
     metrics: [
       "Slack·Discord 연동 스크럼 파이프라인",
       "Vector 기반 활동·진척 인사이트",
       "유료 구독·리포트 자동화 설계",
     ],
-    members: ["namhae", "minyoung"],
+    members: ["namhae"],
     links: {
       demo: "https://planit.haeyounglab.com/",
     },
@@ -225,8 +225,8 @@ export const portfolioProjects: PortfolioProject[] = [
   {
     slug: "avis-tron-paradise",
     title: "avis-tron 4.0 — 파라다이스 그룹 전사 보안 통합 감시",
-    period: "2025.08 - 2026.01",
-    role: "풀스택 개발 · 시스템 아키텍처 (팀원)",
+    period: "2025.06 - 재직중",
+    role: "백엔드/서버개발 · 솔루션사업부 팀원",
     thumbnail: "/background.jpg",
     heroImage: "/projects/avis-tron-paradise/hero.jpg",
     gallery: [
@@ -240,7 +240,7 @@ export const portfolioProjects: PortfolioProject[] = [
     problem:
       "보안 검측 데이터와 인사·운영 시스템이 분리되어 소명·동기화·가시성 확보에 시간이 많이 들었습니다.",
     solution: [
-      "SIEM 연동 3단계 승인(팀장-부서장-계열사장) 소명 시스템 구축",
+      "SIEM 데이터 연동 기반 4단계 결재·소명 시스템 구축",
       "파라다이스 그룹 인사 DB와 Real-time DB-to-DB 연동으로 전사 인적 정보 자동 동기화",
       "IIS 웹 서버 이중화(VIP) 및 SVN 형상관리로 서비스 연속성 확보",
       "임원·운영 조직용 통합 관측 대시보드로 보안 지표 가시화",
