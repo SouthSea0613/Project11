@@ -70,14 +70,14 @@ export const teamMembers: TeamMemberProfile[] = [
   {
     id: "minyoung",
     name: "김민영",
-    role: "Backend / Infra",
+    role: "백엔드·풀스택 엔지니어 · Backend / Full-stack",
     intro:
-      "안정적인 서비스 운영을 위한 서버 구조와 데이터 흐름을 설계하고, 운영 자동화를 구축합니다.",
-    skills: ["Node.js", "API Design", "Infra", "Monitoring"],
+      "의료 데이터 연동 환경에서 데이터 무결성과 운영 효율을 중심으로 시스템을 설계·구현해 왔습니다. C# .NET, MS-SQL 기반 실무와 PlanIt 아키텍처 경험을 통해 신뢰성 높은 서비스를 지향합니다.",
+    skills: [".NET (C#)", "MS-SQL", "API Integration", "Query Tuning", "Next.js", "TypeScript"],
     highlights: [
-      "API/데이터 흐름 설계 및 성능 개선",
-      "배포/운영 자동화 파이프라인 구축",
-      "운영 이슈 분석 및 재발 방지 체계화",
+      "카카오 케어챗 연동: 쿼리 구조 최적화로 응답 성능 30% 개선",
+      "옵션 관리 구조화: 운영 대응 속도 50%+ 개선",
+      "혈당 데이터 인터페이스: 다단계 검증으로 데이터 무결성 강화",
     ],
     profilePath: "/Minyoung_Kim",
   },
@@ -132,7 +132,7 @@ export const portfolioProjects: PortfolioProject[] = [
       "Vector 기반 활동·진척 인사이트",
       "유료 구독·리포트 자동화 설계",
     ],
-    members: ["namhae"],
+    members: ["namhae", "minyoung"],
     links: {
       demo: "https://planit.haeyounglab.com/",
     },
@@ -191,6 +191,97 @@ export const portfolioProjects: PortfolioProject[] = [
     links: {
       demo: "https://www.haeyounglab.com",
     },
+  },
+  {
+    slug: "kakao-carechat-integration",
+    title: "카카오 케어챗 병원 예약/진료 정보 연동",
+    period: "2025.09 - 2026.02",
+    role: "API 인터페이스 설계 · DB 프로시저 · 연동 테스트",
+    thumbnail: "/background.jpg",
+    heroImage: "/projects/kakao-carechat-integration/hero.jpg",
+    gallery: [
+      "/projects/kakao-carechat-integration/g1.jpg",
+      "/projects/kakao-carechat-integration/g2.jpg",
+      "/projects/kakao-carechat-integration/g3.jpg",
+    ],
+    stack: ["C# WinForms", ".NET", "MS-SQL", "REST API", "JSON"],
+    summary:
+      "카카오 케어챗 플랫폼과 병원 시스템을 연결해 실시간 예약·대기·진료 정보 조회를 가능하게 한 연동 프로젝트.",
+    problem:
+      "파편화된 데이터 조회 구조와 증가하는 데이터량으로 응답 지연 및 시스템 부하 문제가 발생.",
+    solution: [
+      "다중 JOIN 기반 고성능 Stored Procedure 설계 및 쿼리 튜닝",
+      "RESTful 기반 엔드포인트와 복합 데이터 매핑 로직 구현",
+      "API 호출→DB 반영 End-to-End 데이터 흐름 검증 체계 구축",
+    ],
+    outcome: [
+      "응답 성능 30% 이상 개선",
+      "실시간 예약/진료 조회 기능 안정화",
+      "연동 시스템 운영 안정성 강화",
+    ],
+    metrics: ["응답 성능 +30%", "E2E 연동 테스트 체계", "실시간 조회 안정화"],
+    members: ["minyoung"],
+    links: {},
+  },
+  {
+    slug: "hospital-option-admin",
+    title: "병원 옵션 설정/그룹화 관리 시스템",
+    period: "2025.07 - 2025.08",
+    role: "UI 개발 · 메타데이터 DB 설계",
+    thumbnail: "/background.jpg",
+    heroImage: "/projects/hospital-option-admin/hero.jpg",
+    gallery: [
+      "/projects/hospital-option-admin/g1.jpg",
+      "/projects/hospital-option-admin/g2.jpg",
+      "/projects/hospital-option-admin/g3.jpg",
+    ],
+    stack: ["C# WinForms", ".NET", "MS-SQL"],
+    summary:
+      "분산된 병원 옵션 설정을 그룹-리스트-상세 구조로 통합해 운영 효율을 높인 관리자 시스템.",
+    problem:
+      "프로젝트별로 흩어진 옵션 구조로 인해 설정 변경 시 위치 탐색 비용이 크고 운영 대응이 지연됨.",
+    solution: [
+      "3단계 계층형 옵션 관리 구조 설계",
+      "관리자 직접 CRUD 가능한 통합 관리 화면 구현",
+      "선 검증 후 저장 프로세스로 설정 충돌/중복 방지",
+    ],
+    outcome: [
+      "운영 담당자 기준 유지보수 대응 속도 50%+ 개선",
+      "숙련도와 무관한 직관적 설정 제어 환경 구축",
+    ],
+    metrics: ["대응 속도 +50% 이상", "계층형 옵션 구조", "충돌 방지 검증 프로세스"],
+    members: ["minyoung"],
+    links: {},
+  },
+  {
+    slug: "glucose-device-interface",
+    title: "혈당 기기 연동 및 데이터 관리 화면",
+    period: "2026.01 - 2026.02",
+    role: "풀스택 개발 · 데이터 연동 설계",
+    thumbnail: "/background.jpg",
+    heroImage: "/projects/glucose-device-interface/hero.jpg",
+    gallery: [
+      "/projects/glucose-device-interface/g1.jpg",
+      "/projects/glucose-device-interface/g2.jpg",
+      "/projects/glucose-device-interface/g3.jpg",
+    ],
+    stack: ["C# WinForms", ".NET", "MS-SQL"],
+    summary:
+      "외부 혈당 측정 기기와 병원 내부 DB를 실시간 인터페이스로 연결하고 데이터 검증/이관 운영 화면을 구축한 프로젝트.",
+    problem:
+      "중복 시퀀스 충돌과 수기 입력 오류로 데이터 누락·오염 가능성이 존재하는 의료 데이터 연동 환경.",
+    solution: [
+      "1차 유효성 검증 + 2차 시퀀스 충돌 방지의 다단계 검증 도입",
+      "중간(Staging) 테이블 선저장 후 관리자 검토/이관 플로우 구현",
+      "환자/기간 필터와 원클릭 이관 기능으로 운영 편의성 강화",
+    ],
+    outcome: [
+      "데이터 정합성 향상 및 누락 최소화",
+      "수동 입력 오류 감소와 운영 처리 시간 단축",
+    ],
+    metrics: ["다단계 검증 체계", "Staging 기반 이관", "실시간 데이터 정합성 강화"],
+    members: ["minyoung"],
+    links: {},
   },
   {
     slug: "pet-health-llm",

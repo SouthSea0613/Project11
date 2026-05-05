@@ -5,15 +5,20 @@ import ProjectTabs from "@/components/ProjectTabs";
 import { getMemberById, getProjectsByMember } from "@/lib/portfolioData";
 import {
   namhaeAcademicProjects,
+  namhaeCaseStudies,
   namhaeContact,
   namhaeEducation,
   namhaeExternalLinks,
+  namhaeExperiences,
+  namhaeFuturePlan,
   namhaeGithubUrl,
   namhaeHeadline,
   namhaeImpactStats,
   namhaeLanguages,
+  namhaeMotivation,
   namhaePhoto,
   namhaeSkillCategories,
+  namhaeStrengths,
   namhaeSummary,
 } from "@/lib/namhaeResume";
 
@@ -154,6 +159,98 @@ export default function NamhaeKimPage() {
         </p>
         <div className="mt-4">
           <ProjectTabs projects={projects} />
+        </div>
+      </section>
+
+      {/* ── Resume Timeline ── */}
+      <section className="mt-12">
+        <h2 className="text-xl font-semibold md:text-2xl">경력 타임라인</h2>
+        <p className="mt-1 text-sm text-muted-foreground">
+          이력서 기준 프로젝트/실무 경력을 시간순으로 정리했습니다.
+        </p>
+        <div className="mt-4 space-y-3">
+          {namhaeExperiences.map((exp) => (
+            <article key={`${exp.title}-${exp.period}`} className="rounded-xl border bg-card p-4">
+              <div className="flex flex-wrap items-baseline justify-between gap-2">
+                <h3 className="text-base font-semibold">{exp.title}</h3>
+                <span className="text-xs text-muted-foreground">{exp.period}</span>
+              </div>
+              <p className="mt-1 text-sm font-medium text-emerald-500">{exp.role}</p>
+              <div className="mt-2 flex flex-wrap gap-1.5">
+                {exp.tech.slice(0, 8).map((tech) => (
+                  <span
+                    key={tech}
+                    className="rounded-full border border-border bg-muted/40 px-2 py-0.5 text-[11px] text-foreground"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+              <ul className="mt-3 space-y-1 text-sm text-muted-foreground">
+                {exp.bullets.slice(0, 3).map((bullet) => (
+                  <li key={bullet}>· {bullet}</li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      {/* ── Self-introduction Content ── */}
+      <section className="mt-12">
+        <h2 className="text-xl font-semibold md:text-2xl">자기소개서</h2>
+        <div className="mt-4 rounded-xl border bg-card p-5">
+          <h3 className="text-base font-semibold">{namhaeMotivation.title}</h3>
+          <div className="mt-3 space-y-3 text-sm leading-7 text-muted-foreground">
+            {namhaeMotivation.paragraphs.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="mt-6">
+        <h3 className="text-lg font-semibold">핵심 역량 및 업무 성과 사례</h3>
+        <div className="mt-4 grid gap-3 lg:grid-cols-3">
+          {namhaeCaseStudies.map((item) => (
+            <article key={item.title} className="rounded-xl border bg-card p-4">
+              <p className="text-xs font-semibold tracking-wide text-emerald-500">{item.title}</p>
+              <h4 className="mt-1 text-base font-semibold">{item.topic}</h4>
+              <p className="mt-2 text-sm text-muted-foreground">{item.problem}</p>
+              <ul className="mt-3 space-y-1 text-sm text-muted-foreground">
+                {item.approach.map((approach) => (
+                  <li key={approach}>· {approach}</li>
+                ))}
+              </ul>
+              <p className="mt-3 text-sm font-medium text-foreground">성과: {item.outcome}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="mt-6 grid gap-4 md:grid-cols-2">
+        <div className="rounded-xl border bg-card p-5">
+          <h3 className="text-lg font-semibold">직무 전문성 및 강점</h3>
+          <div className="mt-3 space-y-4">
+            {namhaeStrengths.map((strength) => (
+              <div key={strength.title}>
+                <p className="text-sm font-semibold text-emerald-500">{strength.title}</p>
+                <ul className="mt-1 space-y-1 text-sm text-muted-foreground">
+                  {strength.bullets.map((bullet) => (
+                    <li key={bullet}>· {bullet}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="rounded-xl border bg-card p-5">
+          <h3 className="text-lg font-semibold">입사 후 포부</h3>
+          <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+            {namhaeFuturePlan.map((plan) => (
+              <li key={plan}>· {plan}</li>
+            ))}
+          </ul>
         </div>
       </section>
 
