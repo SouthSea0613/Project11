@@ -5,7 +5,10 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
+import { ImageSlot } from "@/components/ImageSlot";
 import { useLang } from "@/contexts/LanguageContext";
+import { namhaePhoto } from "@/lib/namhaeResume";
+import { minyoungPhoto } from "@/lib/minyoungResume";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -66,26 +69,60 @@ export default function Navbar() {
               </a>
             )}
             {mounted ? (
-              <span className="shrink-0 inline-flex items-center gap-1.5 pb-0.5 text-sm font-semibold tracking-tight text-foreground/90 md:text-base">
+              <span className="shrink-0 inline-flex items-center gap-2 pb-0.5 text-sm font-semibold tracking-tight text-foreground/90 md:text-base">
                 <Link
                   href="/Namhae_Kim"
-                  className={`transition-colors underline-offset-4 ${
+                  aria-current={isNamhaePage ? "page" : undefined}
+                  className={`group inline-flex items-center gap-1.5 rounded-full pl-0.5 pr-2 py-0.5 transition-colors underline-offset-4 ${
                     isNamhaePage
                       ? "text-emerald-400 underline"
                       : "hover:text-emerald-400"
                   }`}
                 >
+                  <span
+                    className={`block h-7 w-7 overflow-hidden rounded-full ring-2 transition ${
+                      isNamhaePage
+                        ? "ring-emerald-400"
+                        : "ring-border group-hover:ring-emerald-400/60"
+                    }`}
+                  >
+                    <ImageSlot
+                      src={namhaePhoto}
+                      alt="김남해 프로필"
+                      aspect="aspect-square"
+                      rounded="rounded-full"
+                      label=""
+                      className="!border-0"
+                    />
+                  </span>
                   김남해
                 </Link>
-                <span aria-hidden="true" className="text-foreground/70">·</span>
+                <span aria-hidden="true" className="text-foreground/40">·</span>
                 <Link
                   href="/Minyoung_Kim"
-                  className={`transition-colors underline-offset-4 ${
+                  aria-current={isMinyoungPage ? "page" : undefined}
+                  className={`group inline-flex items-center gap-1.5 rounded-full pl-0.5 pr-2 py-0.5 transition-colors underline-offset-4 ${
                     isMinyoungPage
                       ? "text-emerald-400 underline"
                       : "hover:text-emerald-400"
                   }`}
                 >
+                  <span
+                    className={`block h-7 w-7 overflow-hidden rounded-full ring-2 transition ${
+                      isMinyoungPage
+                        ? "ring-emerald-400"
+                        : "ring-border group-hover:ring-emerald-400/60"
+                    }`}
+                  >
+                    <ImageSlot
+                      src={minyoungPhoto}
+                      alt="김민영 프로필"
+                      aspect="aspect-square"
+                      rounded="rounded-full"
+                      label=""
+                      className="!border-0"
+                    />
+                  </span>
                   김민영
                 </Link>
               </span>

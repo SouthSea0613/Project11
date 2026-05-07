@@ -5,9 +5,20 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 import { ImageSlot } from "@/components/ImageSlot";
 import ProjectTabs from "@/components/ProjectTabs";
+import type { PortfolioProject } from "@/lib/portfolioData";
+import { categoryLabelToDot } from "@/lib/stackCategory";
+import {
+  minyoungEducation,
+  minyoungFuturePlan,
+  minyoungMotivation,
+  minyoungSkillCategories,
+  minyoungStrengths,
+  minyoungTraining,
+  minyoungExperiences,
+} from "@/lib/minyoungResume";
 
-const NamhaeAbilityRadar = dynamic(
-  () => import("@/components/NamhaeAbilityRadar"),
+const MinyoungAbilityRadar = dynamic(
+  () => import("@/components/MinyoungAbilityRadar"),
   {
     ssr: false,
     loading: () => (
@@ -17,18 +28,8 @@ const NamhaeAbilityRadar = dynamic(
     ),
   }
 );
-import type { PortfolioProject } from "@/lib/portfolioData";
-import { categoryLabelToDot } from "@/lib/stackCategory";
-import {
-  namhaeEducation,
-  namhaeExperiences,
-  namhaeFuturePlan,
-  namhaeMotivation,
-  namhaeSkillCategories,
-  namhaeStrengths,
-} from "@/lib/namhaeResume";
 
-type NamhaeContentTabsProps = {
+type MinyoungContentTabsProps = {
   projects: PortfolioProject[];
 };
 
@@ -36,17 +37,21 @@ type PrimaryTab = "overview" | "detail";
 type DetailTab = "intro" | "career" | "projects" | "education";
 
 const motivationHighlights = [
-  { icon: "🎯", title: "비즈니스 → 기술", desc: "현장 문제를 코드로 치환" },
-  { icon: "⚙️", title: "0 → 1 실행력", desc: "기획·개발·배포 풀사이클 주도" },
-  { icon: "🤝", title: "성장 협업", desc: "코드리뷰·표준 환경 지향" },
+  { icon: "🛡️", title: "데이터 무결성", desc: "오염·누락 없는 방어적 설계" },
+  { icon: "⚡", title: "성능 최적화", desc: "실행 계획·튜닝 실무 경험" },
+  { icon: "🏥", title: "의료 도메인", desc: "신뢰성 우선 시스템 운영" },
 ];
 
-export default function NamhaeContentTabs({ projects }: NamhaeContentTabsProps) {
+export default function MinyoungContentTabs({ projects }: MinyoungContentTabsProps) {
   const [primaryTab, setPrimaryTab] = useState<PrimaryTab>("overview");
   const [detailTab, setDetailTab] = useState<DetailTab>("intro");
 
   const topProjects = useMemo(() => {
-    const featuredOrder = ["planit", "rd-autonote", "avis-tron-paradise"];
+    const featuredOrder = [
+      "planit",
+      "kakao-carechat-integration",
+      "glucose-device-interface",
+    ];
     const map = new Map(projects.map((p) => [p.slug, p]));
     return featuredOrder
       .map((slug) => map.get(slug))
@@ -61,7 +66,7 @@ export default function NamhaeContentTabs({ projects }: NamhaeContentTabsProps) 
           onClick={() => setPrimaryTab("overview")}
           className={`rounded-md px-3 py-1.5 text-sm font-semibold ${
             primaryTab === "overview"
-              ? "bg-emerald-500 text-slate-950"
+              ? "bg-sky-500 text-slate-950"
               : "text-muted-foreground hover:bg-muted"
           }`}
         >
@@ -72,7 +77,7 @@ export default function NamhaeContentTabs({ projects }: NamhaeContentTabsProps) 
           onClick={() => setPrimaryTab("detail")}
           className={`rounded-md px-3 py-1.5 text-sm font-semibold ${
             primaryTab === "detail"
-              ? "bg-emerald-500 text-slate-950"
+              ? "bg-sky-500 text-slate-950"
               : "text-muted-foreground hover:bg-muted"
           }`}
         >
@@ -82,20 +87,18 @@ export default function NamhaeContentTabs({ projects }: NamhaeContentTabsProps) 
 
       {primaryTab === "overview" ? (
         <div className="mt-5 grid gap-4 md:grid-cols-2">
-          {/* 핵심 역량 레이더 */}
           <section className="rounded-xl border bg-card p-5">
             <div className="flex items-baseline justify-between">
               <h2 className="text-base font-semibold">핵심 역량</h2>
               <span className="text-[11px] text-muted-foreground">5축 · 100점 환산</span>
             </div>
-            <NamhaeAbilityRadar />
+            <MinyoungAbilityRadar />
           </section>
 
-          {/* 기술 맵 */}
           <section className="rounded-xl border bg-card p-5">
             <h2 className="text-base font-semibold">기술 맵</h2>
             <div className="mt-3 space-y-2">
-              {namhaeSkillCategories.map((cat) => (
+              {minyoungSkillCategories.map((cat) => (
                 <div key={cat.label} className="flex items-start gap-2">
                   <span
                     className={`mt-1 inline-block h-2 w-2 shrink-0 rounded-full ${categoryLabelToDot(cat.label)}`}
@@ -120,7 +123,6 @@ export default function NamhaeContentTabs({ projects }: NamhaeContentTabsProps) 
             </div>
           </section>
 
-          {/* 대표 프로젝트 3선 */}
           <section className="rounded-xl border bg-card p-5 md:col-span-2">
             <h2 className="text-base font-semibold">대표 프로젝트</h2>
             <div className="mt-3 grid gap-3 md:grid-cols-3">
@@ -128,7 +130,7 @@ export default function NamhaeContentTabs({ projects }: NamhaeContentTabsProps) 
                 <Link
                   key={project.slug}
                   href={`/projects/${project.slug}`}
-                  className="group overflow-hidden rounded-lg border bg-background/40 transition hover:border-emerald-400/60"
+                  className="group overflow-hidden rounded-lg border bg-background/40 transition hover:border-sky-400/60"
                 >
                   <ImageSlot
                     src={project.heroImage}
@@ -139,14 +141,14 @@ export default function NamhaeContentTabs({ projects }: NamhaeContentTabsProps) 
                   />
                   <div className="p-3">
                     <p className="text-[11px] text-muted-foreground">{project.period}</p>
-                    <h3 className="mt-1 text-sm font-semibold group-hover:text-emerald-400">
+                    <h3 className="mt-1 text-sm font-semibold group-hover:text-sky-400">
                       {project.title}
                     </h3>
                     <div className="mt-2 flex flex-wrap gap-1">
                       {project.metrics.slice(0, 3).map((metric) => (
                         <span
                           key={metric}
-                          className="rounded-md border border-emerald-400/30 bg-emerald-400/10 px-1.5 py-0.5 text-[10px] font-medium text-emerald-500"
+                          className="rounded-md border border-sky-400/30 bg-sky-400/10 px-1.5 py-0.5 text-[10px] font-medium text-sky-500"
                         >
                           {metric}
                         </span>
@@ -198,18 +200,16 @@ export default function NamhaeContentTabs({ projects }: NamhaeContentTabsProps) 
               </section>
 
               <section className="rounded-xl border bg-card p-5">
-                <h3 className="text-sm font-semibold">{namhaeMotivation.title}</h3>
+                <h3 className="text-sm font-semibold">{minyoungMotivation.title}</h3>
                 <p className="mt-2 text-sm leading-7 text-muted-foreground">
-                  {namhaeMotivation.paragraphs[0]}
+                  {minyoungMotivation.paragraphs[0]}
                 </p>
               </section>
 
               <section className="grid gap-3 md:grid-cols-3">
-                {namhaeStrengths.map((strength) => (
+                {minyoungStrengths.map((strength) => (
                   <article key={strength.title} className="rounded-xl border bg-card p-4">
-                    <p className="text-sm font-semibold text-emerald-500">
-                      {strength.title}
-                    </p>
+                    <p className="text-sm font-semibold text-sky-500">{strength.title}</p>
                     <ul className="mt-2 space-y-1 text-xs text-muted-foreground">
                       {strength.bullets.slice(0, 2).map((bullet) => (
                         <li key={bullet}>· {bullet}</li>
@@ -222,9 +222,9 @@ export default function NamhaeContentTabs({ projects }: NamhaeContentTabsProps) 
               <section className="rounded-xl border bg-card p-5">
                 <h3 className="text-sm font-semibold">입사 후 포부</h3>
                 <ul className="mt-2 grid gap-2 text-sm text-muted-foreground md:grid-cols-3">
-                  {namhaeFuturePlan.map((plan, idx) => (
+                  {minyoungFuturePlan.map((plan, idx) => (
                     <li key={plan} className="rounded-md border bg-background/40 p-3">
-                      <span className="text-[11px] font-semibold text-emerald-500">
+                      <span className="text-[11px] font-semibold text-sky-500">
                         #{idx + 1}
                       </span>
                       <p className="mt-1 text-xs leading-6">{plan}</p>
@@ -237,17 +237,17 @@ export default function NamhaeContentTabs({ projects }: NamhaeContentTabsProps) 
 
           {detailTab === "career" && (
             <ol className="relative ml-3 space-y-3 border-l border-border pl-5">
-              {namhaeExperiences.map((exp) => (
+              {minyoungExperiences.map((exp) => (
                 <li
                   key={`${exp.title}-${exp.period}`}
                   className="relative rounded-xl border bg-card p-4"
                 >
-                  <span className="absolute -left-[27px] top-5 inline-block h-3 w-3 rounded-full border-2 border-background bg-emerald-500" />
+                  <span className="absolute -left-[27px] top-5 inline-block h-3 w-3 rounded-full border-2 border-background bg-sky-500" />
                   <div className="flex flex-wrap items-baseline justify-between gap-2">
                     <h3 className="text-sm font-semibold">{exp.title}</h3>
                     <span className="text-[11px] text-muted-foreground">{exp.period}</span>
                   </div>
-                  <p className="mt-1 text-xs text-emerald-500">{exp.role}</p>
+                  <p className="mt-1 text-xs text-sky-500">{exp.role}</p>
                   <div className="mt-2 flex flex-wrap gap-1">
                     {exp.tech.slice(0, 6).map((tech) => (
                       <span
@@ -275,7 +275,7 @@ export default function NamhaeContentTabs({ projects }: NamhaeContentTabsProps) 
               <section className="rounded-xl border bg-card p-5">
                 <h3 className="text-sm font-semibold">학력</h3>
                 <ul className="mt-2 space-y-1 text-sm text-muted-foreground">
-                  {namhaeEducation.map((row) => (
+                  {minyoungEducation.map((row) => (
                     <li key={row.school}>
                       · <span className="font-medium text-foreground">{row.school}</span>
                       <span className="text-xs"> — {row.detail}</span>
@@ -284,15 +284,12 @@ export default function NamhaeContentTabs({ projects }: NamhaeContentTabsProps) 
                 </ul>
               </section>
               <section className="rounded-xl border bg-card p-5">
-                <h3 className="text-sm font-semibold">자격 / 어학</h3>
-                <div className="mt-2 flex flex-wrap gap-1.5">
-                  <span className="rounded-full border bg-muted/40 px-2.5 py-1 text-xs">
-                    TOEIC 680
-                  </span>
-                  <span className="rounded-full border bg-muted/40 px-2.5 py-1 text-xs">
-                    영어 비즈니스
-                  </span>
-                </div>
+                <h3 className="text-sm font-semibold">교육 / 훈련</h3>
+                <ul className="mt-2 space-y-1 text-sm text-muted-foreground">
+                  {minyoungTraining.map((training) => (
+                    <li key={training}>· {training}</li>
+                  ))}
+                </ul>
               </section>
             </div>
           )}

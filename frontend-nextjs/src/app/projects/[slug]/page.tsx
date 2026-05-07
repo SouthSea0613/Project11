@@ -1,12 +1,18 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
 import { notFound } from "next/navigation";
+import { ImageSlot } from "@/components/ImageSlot";
 import {
   getProjectBySlug,
   portfolioProjects,
   teamMembers,
 } from "@/lib/portfolioData";
+import {
+  STACK_BADGE_CLASS,
+  STACK_CATEGORIES,
+  STACK_LABEL,
+  classifyTech,
+} from "@/lib/stackCategory";
 
 type ProjectDetailPageProps = {
   params: Promise<{ slug: string }>;
@@ -22,9 +28,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const project = getProjectBySlug(slug);
   if (!project) {
-    return {
-      title: "Project Not Found",
-    };
+    return { title: "Project Not Found" };
   }
 
   return {
@@ -41,79 +45,216 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
     notFound();
   }
 
-  const memberNames = teamMembers
-    .filter((member) => project.members.includes(member.id))
-    .map((member) => member.name);
+  const projectMembers = teamMembers.filter((m) => project.members.includes(m.id));
+  const stackByCategory = STACK_CATEGORIES.map((key) => ({
+    key,
+    label: STACK_LABEL[key],
+    items: project.stack.filter((s) => classifyTech(s) === key),
+  }));
 
   return (
-    <main className="mx-auto max-w-4xl px-4 pt-28 pb-24 sm:px-6">
-      <div className="relative mb-8 h-56 w-full overflow-hidden rounded-2xl border">
-        <Image
-          src={project.thumbnail}
-          alt={project.title}
-          fill
-          className="object-cover opacity-70"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
-      </div>
-      <p className="text-sm text-emerald-400">Project Detail</p>
-      <h1 className="mt-2 text-3xl font-bold tracking-tight text-foreground md:text-4xl">
-        {project.title}
-      </h1>
-      <p className="mt-2 text-sm text-muted-foreground">{project.period}</p>
-      <p className="mt-4 text-sm leading-7 text-muted-foreground md:text-base">
-        {project.summary}
-      </p>
-
-      <section className="mt-8 rounded-xl border bg-card p-5">
-        <h2 className="text-lg font-semibold">문제 정의</h2>
-        <p className="mt-3 text-sm leading-7 text-muted-foreground">{project.problem}</p>
+    <main className="mx-auto max-w-5xl px-4 pt-24 pb-24 sm:px-6">
+      {/* ── Hero ── */}
+      <section className="relative overflow-hidden rounded-2xl border border-white/10">
+        <div className="aspect-[21/9] w-full bg-slate-900">
+          <ImageSlot
+            src={project.heroImage}
+            alt={project.title}
+            aspect="aspect-[21/9]"
+            rounded="rounded-none"
+            label="히어로 이미지 추가 예정"
+            className="!border-0"
+          />
+        </div>
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 p-5 sm:p-7">
+          <p className="text-[11px] font-semibold tracking-[0.25em] uppercase text-emerald-300">
+            Project Detail
+          </p>
+          <h1 className="mt-2 text-2xl font-bold tracking-tight text-white md:text-4xl">
+            {project.title}
+          </h1>
+          <div className="mt-3 flex flex-wrap items-center gap-2">
+            <span className="rounded-full border border-white/20 bg-white/10 px-2.5 py-0.5 text-[11px] text-slate-200">
+              {project.period}
+            </span>
+            {project.role && (
+              <span className="rounded-full border border-emerald-400/30 bg-emerald-400/15 px-2.5 py-0.5 text-[11px] text-emerald-200">
+                {project.role}
+              </span>
+            )}
+          </div>
+        </div>
       </section>
 
-      <section className="mt-6 rounded-xl border bg-card p-5">
-        <h2 className="text-lg font-semibold">해결 방법</h2>
-        <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-          {project.solution.map((item) => (
-            <li key={item}>- {item}</li>
+      {/* ── Summary + Metrics ── */}
+      <section className="mt-6 grid gap-4 md:grid-cols-5">
+        <div className="rounded-xl border bg-card p-5 md:col-span-3">
+          <h2 className="text-sm font-semibold text-emerald-500">한 줄 요약</h2>
+          <p className="mt-2 text-sm leading-7 text-muted-foreground md:text-base">
+            {project.summary}
+          </p>
+          {projectMembers.length > 0 && (
+            <div className="mt-4 flex flex-wrap items-center gap-2">
+              <span className="text-[11px] font-semibold tracking-wider uppercase text-muted-foreground">
+                참여 멤버
+              </span>
+              {projectMembers.map((member) => (
+                <Link
+                  key={member.id}
+                  href={member.profilePath}
+                  className="inline-flex items-center gap-1 rounded-full border bg-muted/40 px-2.5 py-0.5 text-xs hover:border-emerald-400/50 hover:text-emerald-500"
+                >
+                  {member.name}
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
+        <div className="grid gap-2 md:col-span-2 md:grid-cols-1">
+          {project.metrics.slice(0, 3).map((metric, idx) => (
+            <div
+              key={metric}
+              className="rounded-xl border bg-card px-4 py-3"
+            >
+              <span className="text-[10px] font-semibold tracking-wider text-emerald-500">
+                METRIC #{idx + 1}
+              </span>
+              <p className="mt-1 text-sm font-medium leading-snug">{metric}</p>
+            </div>
           ))}
-        </ul>
+        </div>
       </section>
 
-      <section className="mt-6 rounded-xl border bg-card p-5">
-        <h2 className="text-lg font-semibold">결과</h2>
-        <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-          {project.outcome.map((item) => (
-            <li key={item}>- {item}</li>
-          ))}
-        </ul>
+      {/* ── Problem → Solution → Outcome 흐름 카드 ── */}
+      <section className="mt-8">
+        <h2 className="text-sm font-semibold tracking-wider uppercase text-muted-foreground">
+          Problem → Solution → Outcome
+        </h2>
+        <div className="relative mt-3 grid gap-3 md:grid-cols-3">
+          {/* Problem */}
+          <article className="relative rounded-2xl border border-rose-400/30 bg-rose-500/[0.06] p-5">
+            <div className="flex items-center gap-2">
+              <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-rose-500/20 text-rose-300">
+                ⚠
+              </span>
+              <h3 className="text-sm font-semibold text-rose-200">Problem</h3>
+            </div>
+            <p className="mt-3 text-sm leading-7 text-slate-200">
+              {project.problem}
+            </p>
+            <span
+              aria-hidden
+              className="absolute -right-2 top-1/2 hidden -translate-y-1/2 text-rose-300/70 md:block"
+            >
+              →
+            </span>
+          </article>
+
+          {/* Solution */}
+          <article className="relative rounded-2xl border border-emerald-400/30 bg-emerald-500/[0.06] p-5">
+            <div className="flex items-center gap-2">
+              <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-300">
+                ⚙
+              </span>
+              <h3 className="text-sm font-semibold text-emerald-200">Solution</h3>
+            </div>
+            <ul className="mt-3 space-y-2 text-sm leading-6 text-slate-200">
+              {project.solution.map((item) => (
+                <li key={item} className="flex gap-2">
+                  <span className="mt-1 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+            <span
+              aria-hidden
+              className="absolute -right-2 top-1/2 hidden -translate-y-1/2 text-emerald-300/70 md:block"
+            >
+              →
+            </span>
+          </article>
+
+          {/* Outcome */}
+          <article className="rounded-2xl border border-sky-400/30 bg-sky-500/[0.06] p-5">
+            <div className="flex items-center gap-2">
+              <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-sky-500/20 text-sky-300">
+                ✦
+              </span>
+              <h3 className="text-sm font-semibold text-sky-200">Outcome</h3>
+            </div>
+            <ul className="mt-3 space-y-2 text-sm leading-6 text-slate-200">
+              {project.outcome.map((item) => (
+                <li key={item} className="flex gap-2">
+                  <span className="mt-1 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-sky-400" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </article>
+        </div>
       </section>
 
-      <section className="mt-6 rounded-xl border bg-card p-5">
-        <h2 className="text-lg font-semibold">핵심 지표/성과</h2>
-        <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-          {project.metrics.map((item) => (
-            <li key={item}>- {item}</li>
-          ))}
-        </ul>
+      {/* ── Tech Stack (categorized) ── */}
+      <section className="mt-8 rounded-2xl border bg-card p-5">
+        <h2 className="text-sm font-semibold tracking-wider uppercase text-muted-foreground">
+          기술 스택
+        </h2>
+        <div className="mt-3 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+          {stackByCategory
+            .filter((cat) => cat.items.length > 0)
+            .map((cat) => (
+              <div key={cat.key} className="rounded-xl border bg-background/40 p-3">
+                <p className="text-[11px] font-semibold tracking-wider uppercase text-muted-foreground">
+                  {cat.label}
+                </p>
+                <div className="mt-2 flex flex-wrap gap-1.5">
+                  {cat.items.map((item) => (
+                    <span
+                      key={item}
+                      className={`rounded-md border px-2 py-0.5 text-[11px] font-medium ${STACK_BADGE_CLASS[cat.key]}`}
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+        </div>
       </section>
 
-      <section className="mt-6 rounded-xl border bg-card p-5">
-        <h2 className="text-lg font-semibold">참여 멤버 / 기술 스택</h2>
-        <p className="mt-3 text-sm text-muted-foreground">
-          참여 멤버: {memberNames.join(", ")}
-        </p>
-        <p className="mt-2 text-sm text-muted-foreground">
-          기술 스택: {project.stack.join(", ")}
-        </p>
-        <div className="mt-4 flex flex-wrap items-center gap-3">
+      {/* ── Gallery ── */}
+      {project.gallery && project.gallery.length > 0 && (
+        <section className="mt-8">
+          <h2 className="text-sm font-semibold tracking-wider uppercase text-muted-foreground">
+            Gallery
+          </h2>
+          <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {project.gallery.map((src, idx) => (
+              <ImageSlot
+                key={src}
+                src={src}
+                alt={`${project.title} 이미지 ${idx + 1}`}
+                aspect="aspect-[4/3]"
+                rounded="rounded-xl"
+                label={`이미지 ${idx + 1} 추가 예정`}
+              />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* ── Links ── */}
+      {(project.links.demo || project.links.github) && (
+        <section className="mt-8 flex flex-wrap items-center gap-3">
           {project.links.demo && (
             <a
               href={project.links.demo}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm text-emerald-500 underline-offset-4 hover:underline"
+              className="rounded-md bg-emerald-500 px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-emerald-400"
             >
-              데모 보기
+              데모 열기 →
             </a>
           )}
           {project.links.github && (
@@ -121,20 +262,27 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
               href={project.links.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm text-emerald-500 underline-offset-4 hover:underline"
+              className="rounded-md border px-4 py-2 text-sm font-semibold hover:bg-muted"
             >
-              GitHub
+              GitHub →
             </a>
           )}
-        </div>
-      </section>
+        </section>
+      )}
 
-      <div className="mt-8 flex items-center gap-4">
+      {/* ── Back ── */}
+      <div className="mt-10 flex items-center justify-between text-sm">
         <Link
           href="/"
-          className="text-sm text-emerald-500 underline-offset-4 hover:underline"
+          className="text-emerald-500 underline-offset-4 hover:underline"
         >
-          홈으로 돌아가기
+          ← 홈으로 돌아가기
+        </Link>
+        <Link
+          href="/#all-projects"
+          className="text-emerald-500 underline-offset-4 hover:underline"
+        >
+          모든 프로젝트 보기 →
         </Link>
       </div>
     </main>
