@@ -1,7 +1,7 @@
 /** 자기소개서(김남해) 기반 — 포트폴리오·프로필 전용 데이터 */
 
 /** 프로필 사진 경로. 이 경로에 파일을 두면 자동으로 표시됩니다. */
-export const namhaePhoto = "/profile/namhae.jpg";
+export const namhaePhoto = "/스튜디오세션-095.jpg";
 
 /** 히어로 옆에 들어갈 임팩트 카드 4개 */
 export const namhaeImpactStats: { value: string; label: string }[] = [
