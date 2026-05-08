@@ -184,3 +184,71 @@ html.detail-page {
 .animate-marquee:hover {
   animation-play-state: paused;
 }
+
+/* ──────────────────────────────────────────────
+   Print / PDF 출력 스타일
+   - 멤버 페이지 등에서 Ctrl+P 또는 "PDF로 저장" 버튼 클릭 시 적용.
+   - .print-hide: 출력 시 숨김
+   - .print-show-all: 비활성 탭도 인쇄 시 보이도록
+   - .print-break-before: 새 페이지에서 시작
+   - .print-break-avoid: 카드/이미지가 페이지 분할되는 것 방지
+   ────────────────────────────────────────────── */
+@media print {
+  /* 색상·그라데이션 보존 (브라우저 옵션 없이도 컬러 출력) */
+  *,
+  *::before,
+  *::after {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  html,
+  body {
+    background: #ffffff !important;
+    scroll-snap-type: none !important;
+    overflow: visible !important;
+  }
+
+  .print-hide {
+    display: none !important;
+  }
+
+  .print-show-all > * {
+    display: block !important;
+  }
+
+  .print-break-before {
+    break-before: page;
+    page-break-before: always;
+  }
+
+  .print-break-avoid,
+  img,
+  figure,
+  article {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* 너무 어두운 배경의 카드는 라이트로 바꿔 읽기 쉽게 */
+  .print-light-card {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    border-color: #cbd5e1 !important;
+  }
+
+  /* 페이지 마진 */
+  @page {
+    margin: 14mm 12mm;
+  }
+
+  /* 메인 콘텐츠 폭 제한 해제 */
+  main {
+    max-width: 100% !important;
+    padding-top: 0 !important;
+  }
+
+  /* 링크 URL 인쇄 (장문 URL 가독성 위해 비활성, 필요하면 활성)
+     a[href]::after { content: " (" attr(href) ")"; font-size: 10px; color: #666; }
+   */
+}

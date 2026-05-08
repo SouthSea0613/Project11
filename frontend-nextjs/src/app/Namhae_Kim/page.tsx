@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import NamhaeContentTabs from "@/components/NamhaeContentTabs";
+import PrintButton from "@/components/PrintButton";
 import ProfilePhotoViewer from "@/components/ProfilePhotoViewer";
 import { getMemberById, getProjectsByMember } from "@/lib/portfolioData";
 import {
@@ -41,11 +42,12 @@ export default function NamhaeKimPage() {
             >
               이메일
             </a>
+            <PrintButton documentTitle="김남해_HaeYoungLab_Portfolio" />
             <a
               href={namhaeGithubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 rounded-md border px-3 py-1.5 font-medium text-foreground hover:bg-muted"
+              className="print-hide inline-flex items-center gap-1.5 rounded-md border px-3 py-1.5 font-medium text-foreground hover:bg-muted"
               aria-label="GitHub 프로필"
             >
               <svg
@@ -106,7 +108,7 @@ export default function NamhaeKimPage() {
 
       <NamhaeContentTabs projects={projects} />
 
-      <section className="mt-10 rounded-xl border bg-card p-5">
+      <section className="print-hide mt-10 rounded-xl border bg-card p-5">
         <h2 className="text-lg font-semibold">외부 링크</h2>
         <ul className="mt-3 space-y-2 text-sm">
           {namhaeExternalLinks.map((link) => (
@@ -125,7 +127,7 @@ export default function NamhaeKimPage() {
       </section>
 
       {/* ── Footer Nav ── */}
-      <div className="mt-10 flex items-center justify-between text-sm">
+      <div className="print-hide mt-10 flex items-center justify-between text-sm">
         <Link href="/" className="text-emerald-500 underline-offset-4 hover:underline">
           ← 홈으로 돌아가기
         </Link>

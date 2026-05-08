@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { ImageSlot } from "@/components/ImageSlot";
 import type { PortfolioProject } from "@/lib/portfolioData";
+import { normalizeGallery } from "@/lib/portfolioData";
 
 type ProjectTabsProps = {
   projects: PortfolioProject[];
@@ -122,15 +123,27 @@ export default function ProjectTabs({ projects }: ProjectTabsProps) {
         <div className="mt-6">
           <p className="text-sm font-semibold">스크린샷 / 작업 결과</p>
           <div className="mt-3 grid gap-3 md:grid-cols-3">
-            {(active.gallery ?? ["", "", ""]).slice(0, 3).map((src, idx) => (
-              <ImageSlot
-                key={idx}
-                src={src || undefined}
-                alt={`${active.title} 이미지 ${idx + 1}`}
-                aspect="aspect-[4/3]"
-                label={`이미지 ${idx + 1} 자리`}
-              />
-            ))}
+            {(() => {
+              const items = normalizeGallery(active.gallery);
+              const padded: { src: string; caption?: string }[] =
+                items.length >= 3
+                  ? items.slice(0, 3)
+                  : [
+                      ...items,
+                      ...Array.from({ length: 3 - items.length }).map(() => ({
+                        src: "",
+                      })),
+                    ];
+              return padded.map((item, idx) => (
+                <ImageSlot
+                  key={idx}
+                  src={item.src || undefined}
+                  alt={item.caption ?? `${active.title} 이미지 ${idx + 1}`}
+                  aspect="aspect-[4/3]"
+                  label={`이미지 ${idx + 1} 자리`}
+                />
+              ));
+            })()}
           </div>
         </div>
 

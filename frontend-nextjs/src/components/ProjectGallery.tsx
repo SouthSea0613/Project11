@@ -3,9 +3,10 @@
 import { useState } from "react";
 import { ImageSlot } from "@/components/ImageSlot";
 import { ImageLightbox, type LightboxItem } from "@/components/ImageLightbox";
+import type { GalleryItem } from "@/lib/portfolioData";
 
 type ProjectGalleryProps = {
-  images: string[];
+  images: GalleryItem[];
   title: string;
 };
 
@@ -13,30 +14,31 @@ export default function ProjectGallery({ images, title }: ProjectGalleryProps) {
   const [open, setOpen] = useState(false);
   const [index, setIndex] = useState(0);
 
-  const items: LightboxItem[] = images.map((src, idx) => ({
-    src,
-    alt: `${title} 이미지 ${idx + 1}`,
-    caption: `${title} · ${idx + 1} / ${images.length}`,
+  const items: LightboxItem[] = images.map((img, idx) => ({
+    src: img.src,
+    alt: img.caption ?? `${title} 이미지 ${idx + 1}`,
+    caption:
+      img.caption ?? `${title} · ${idx + 1} / ${images.length}`,
   }));
 
   return (
     <>
       <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        {images.map((src, idx) => (
+        {images.map((img, idx) => (
           <button
-            key={src}
+            key={img.src}
             type="button"
             onClick={() => {
               setIndex(idx);
               setOpen(true);
             }}
             className="group cursor-zoom-in text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
-            aria-label={`${title} 이미지 ${idx + 1} 크게 보기`}
+            aria-label={`${img.caption ?? `${title} 이미지 ${idx + 1}`} 크게 보기`}
           >
             <div className="relative">
               <ImageSlot
-                src={src}
-                alt={`${title} 이미지 ${idx + 1}`}
+                src={img.src}
+                alt={img.caption ?? `${title} 이미지 ${idx + 1}`}
                 aspect="aspect-[4/3]"
                 rounded="rounded-xl"
                 label={`이미지 ${idx + 1} 추가 예정`}
@@ -51,6 +53,11 @@ export default function ProjectGallery({ images, title }: ProjectGalleryProps) {
                 </span>
               </span>
             </div>
+            {img.caption && (
+              <p className="mt-1.5 text-[11px] text-muted-foreground line-clamp-1">
+                {img.caption}
+              </p>
+            )}
           </button>
         ))}
       </div>

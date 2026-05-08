@@ -1,12 +1,13 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { ImageSlot } from "@/components/ImageSlot";
 import HighlightImageGrid from "@/components/HighlightImageGrid";
 import ProjectTabs from "@/components/ProjectTabs";
 import type { PortfolioProject } from "@/lib/portfolioData";
+import { normalizeGallery } from "@/lib/portfolioData";
 import { categoryLabelToDot } from "@/lib/stackCategory";
 import {
   minyoungEducation,
@@ -17,6 +18,7 @@ import {
   minyoungTraining,
   minyoungExperiences,
 } from "@/lib/minyoungResume";
+import { minyoungImpactMetrics } from "@/lib/impactData";
 
 const MinyoungAbilityRadar = dynamic(
   () => import("@/components/MinyoungAbilityRadar"),
@@ -25,6 +27,17 @@ const MinyoungAbilityRadar = dynamic(
     loading: () => (
       <div className="flex h-[280px] w-full items-center justify-center text-xs text-muted-foreground">
         능력치 차트 불러오는 중…
+      </div>
+    ),
+  }
+);
+const MemberImpactChart = dynamic(
+  () => import("@/components/MemberImpactChart"),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="flex h-[200px] w-full items-center justify-center text-xs text-muted-foreground">
+        임팩트 차트 불러오는 중…
       </div>
     ),
   }
@@ -46,6 +59,22 @@ const motivationHighlights = [
 export default function MinyoungContentTabs({ projects }: MinyoungContentTabsProps) {
   const [primaryTab, setPrimaryTab] = useState<PrimaryTab>("overview");
   const [detailTab, setDetailTab] = useState<DetailTab>("intro");
+  const [isPrintMode, setIsPrintMode] = useState(false);
+
+  useEffect(() => {
+    const before = () => setIsPrintMode(true);
+    const after = () => setIsPrintMode(false);
+    window.addEventListener("beforeprint", before);
+    window.addEventListener("afterprint", after);
+    return () => {
+      window.removeEventListener("beforeprint", before);
+      window.removeEventListener("afterprint", after);
+    };
+  }, []);
+
+  const showOverview = isPrintMode || primaryTab === "overview";
+  const showDetail = isPrintMode || primaryTab === "detail";
+  const isShown = (id: DetailTab) => isPrintMode || detailTab === id;
 
   const topProjects = useMemo(() => {
     const featuredOrder = [
@@ -63,7 +92,7 @@ export default function MinyoungContentTabs({ projects }: MinyoungContentTabsPro
 
   return (
     <section className="mt-10">
-      <div className="flex gap-2 border-b pb-2">
+      <div className="print-hide flex gap-2 border-b pb-2">
         <button
           type="button"
           onClick={() => setPrimaryTab("overview")}
@@ -88,7 +117,7 @@ export default function MinyoungContentTabs({ projects }: MinyoungContentTabsPro
         </button>
       </div>
 
-      {primaryTab === "overview" ? (
+      {showOverview && (
         <div className="mt-5 grid gap-4 md:grid-cols-2">
           <section className="rounded-xl border bg-card p-5">
             <div className="flex items-baseline justify-between">
@@ -126,12 +155,28 @@ export default function MinyoungContentTabs({ projects }: MinyoungContentTabsPro
             </div>
           </section>
 
+          {/* 비즈니스 임팩트 — % 단위 BarChart */}
+          <section className="rounded-xl border bg-card p-5 md:col-span-2">
+            <div className="flex items-baseline justify-between">
+              <h2 className="text-base font-semibold">비즈니스 임팩트</h2>
+              <span className="text-[11px] text-muted-foreground">
+                실제 프로젝트 적용 후 측정·체감 수치
+              </span>
+            </div>
+            <div className="mt-3">
+              <MemberImpactChart metrics={minyoungImpactMetrics} accent="sky" />
+            </div>
+            <p className="mt-2 text-[11px] text-muted-foreground">
+              + 표기는 성능·운영 처리량 증가, − 표기는 비용·시간 절감
+            </p>
+          </section>
+
           <section className="rounded-xl border bg-card p-5 md:col-span-2">
             <h2 className="text-base font-semibold">대표 프로젝트</h2>
             <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
               {topProjects.map((project) => {
-                const galleryThumbs = (project.gallery ?? [])
-                  .filter((g) => g !== project.heroImage)
+                const galleryThumbs = normalizeGallery(project.gallery)
+                  .filter((g) => g.src !== project.heroImage)
                   .slice(0, 3);
                 return (
                   <Link
@@ -148,11 +193,11 @@ export default function MinyoungContentTabs({ projects }: MinyoungContentTabsPro
                     />
                     {galleryThumbs.length > 0 && (
                       <div className="grid grid-cols-3 gap-px bg-border/40">
-                        {galleryThumbs.map((src, idx) => (
+                        {galleryThumbs.map((thumb, idx) => (
                           <ImageSlot
-                            key={src}
-                            src={src}
-                            alt={`${project.title} 미리보기 ${idx + 1}`}
+                            key={thumb.src}
+                            src={thumb.src}
+                            alt={thumb.caption ?? `${project.title} 미리보기 ${idx + 1}`}
                             aspect="aspect-[4/3]"
                             rounded="rounded-none"
                             label=""
@@ -228,9 +273,11 @@ export default function MinyoungContentTabs({ projects }: MinyoungContentTabsPro
             />
           </section>
         </div>
-      ) : (
-        <div className="mt-5">
-          <div className="mb-4 flex flex-wrap gap-2">
+      )}
+
+      {showDetail && (
+        <div className={`mt-5 ${isPrintMode ? "print-break-before" : ""}`}>
+          <div className="print-hide mb-4 flex flex-wrap gap-2">
             {[
               { id: "intro", label: "자기소개서" },
               { id: "career", label: "실제 경력" },
@@ -252,7 +299,7 @@ export default function MinyoungContentTabs({ projects }: MinyoungContentTabsPro
             ))}
           </div>
 
-          {detailTab === "intro" && (
+          {isShown("intro") && (
             <div className="space-y-4">
               <section className="grid gap-3 md:grid-cols-3">
                 {motivationHighlights.map((item) => (
@@ -303,7 +350,7 @@ export default function MinyoungContentTabs({ projects }: MinyoungContentTabsPro
             </div>
           )}
 
-          {detailTab === "career" && (
+          {isShown("career") && (
             <ol className="relative ml-3 space-y-3 border-l border-border pl-5">
               {minyoungExperiences.map((exp) => (
                 <li
@@ -336,9 +383,13 @@ export default function MinyoungContentTabs({ projects }: MinyoungContentTabsPro
             </ol>
           )}
 
-          {detailTab === "projects" && <ProjectTabs projects={projects} />}
+          {isShown("projects") && (
+            <div className={isPrintMode ? "mt-6" : undefined}>
+              <ProjectTabs projects={projects} />
+            </div>
+          )}
 
-          {detailTab === "education" && (
+          {isShown("education") && (
             <div className="grid gap-3 md:grid-cols-2">
               <section className="rounded-xl border bg-card p-5">
                 <h3 className="text-sm font-semibold">학력</h3>

@@ -1,5 +1,20 @@
 export type MemberId = "namhae" | "minyoung";
 
+/** 갤러리 항목: 단순 경로(string)이거나 캡션이 있는 객체 */
+export type GalleryEntry = string | { src: string; caption?: string };
+
+export type GalleryItem = { src: string; caption?: string };
+
+/** GalleryEntry[] 또는 string[] 어떤 형태든 일관된 객체 배열로 정규화 */
+export function normalizeGallery(
+  entries: GalleryEntry[] | undefined
+): GalleryItem[] {
+  if (!entries) return [];
+  return entries.map((entry) =>
+    typeof entry === "string" ? { src: entry } : entry
+  );
+}
+
 export type PortfolioProject = {
   slug: string;
   title: string;
@@ -8,7 +23,7 @@ export type PortfolioProject = {
   /** 상세 페이지·탭 상단 히어로 이미지. 비우면 placeholder 표시. */
   heroImage?: string;
   /** 갤러리 슬롯. 비어있으면 placeholder 카드 노출. */
-  gallery?: string[];
+  gallery?: GalleryEntry[];
   /** 프로젝트 한 줄 역할 (탭 헤더용) */
   role?: string;
   stack: string[];
@@ -101,15 +116,39 @@ export const portfolioProjects: PortfolioProject[] = [
     thumbnail: "/projects/planit/planit-gallery-04.png",
     heroImage: "/projects/planit/planit-gallery-04.png",
     gallery: [
-      "/projects/planit/planit-hero.png",
-      "/projects/planit/planit-gallery-01.png",
-      "/projects/planit/planit-gallery-02.png",
-      "/projects/planit/planit-gallery-03.png",
-      "/projects/planit/planit-scrumbot-01.png",
-      "/projects/planit/planit-scrumbot-02.png",
-      "/projects/planit/planit-scrumbot-03.png",
-      "/projects/planit/planit-scrumbot-04.png",
-      "/projects/planit/planit-scrumbot-05.png",
+      { src: "/projects/planit/planit-hero.png", caption: "PlanIT — 메인 화면" },
+      {
+        src: "/projects/planit/planit-gallery-01.png",
+        caption: "PlanIT — 제품 화면 1",
+      },
+      {
+        src: "/projects/planit/planit-gallery-02.png",
+        caption: "PlanIT — 제품 화면 2",
+      },
+      {
+        src: "/projects/planit/planit-gallery-03.png",
+        caption: "PlanIT — 제품 화면 3",
+      },
+      {
+        src: "/projects/planit/planit-scrumbot-01.png",
+        caption: "ChatOps 스크럼봇 — 작성 인터랙션",
+      },
+      {
+        src: "/projects/planit/planit-scrumbot-02.png",
+        caption: "ChatOps 스크럼봇 — 자동 리포트",
+      },
+      {
+        src: "/projects/planit/planit-scrumbot-03.png",
+        caption: "ChatOps 스크럼봇 — Slack/Discord 연동",
+      },
+      {
+        src: "/projects/planit/planit-scrumbot-04.png",
+        caption: "ChatOps 스크럼봇 — 잔디형 활동 시각화",
+      },
+      {
+        src: "/projects/planit/planit-scrumbot-05.png",
+        caption: "ChatOps 스크럼봇 — 진척도 인사이트",
+      },
     ],
     stack: [
       "NestJS",
@@ -160,16 +199,46 @@ export const portfolioProjects: PortfolioProject[] = [
     thumbnail: "/projects/rd-autonote/rd-autonote-screen-01.png",
     heroImage: "/projects/rd-autonote/rd-autonote-screen-01.png",
     gallery: [
-      "/projects/rd-autonote/rd-autonote-screen-01.png",
-      "/projects/rd-autonote/rd-autonote-screen-02.png",
-      "/projects/rd-autonote/rd-autonote-screen-03.png",
-      "/projects/rd-autonote/rd-autonote-screen-04.png",
-      "/projects/rd-autonote/rd-autonote-business-01.png",
-      "/projects/rd-autonote/rd-autonote-business-02.png",
-      "/projects/rd-autonote/rd-autonote-business-03.png",
-      "/projects/rd-autonote/rd-autonote-slackbot-01.png",
-      "/projects/rd-autonote/rd-autonote-slackbot-02.png",
-      "/projects/rd-autonote/rd-autonote-slackbot-03.png",
+      {
+        src: "/projects/rd-autonote/rd-autonote-screen-01.png",
+        caption: "R&D 오토노트 — 제품 메인 UI",
+      },
+      {
+        src: "/projects/rd-autonote/rd-autonote-screen-02.png",
+        caption: "R&D 오토노트 — 연구노트 자동 생성 화면",
+      },
+      {
+        src: "/projects/rd-autonote/rd-autonote-screen-03.png",
+        caption: "R&D 오토노트 — 협업 로그 통합 뷰",
+      },
+      {
+        src: "/projects/rd-autonote/rd-autonote-screen-04.png",
+        caption: "R&D 오토노트 — RAG·무결성 설정",
+      },
+      {
+        src: "/projects/rd-autonote/rd-autonote-business-01.png",
+        caption: "사업 비전 1 — 시장 페인포인트 분석",
+      },
+      {
+        src: "/projects/rd-autonote/rd-autonote-business-02.png",
+        caption: "사업 비전 2 — 솔루션 가치 제안",
+      },
+      {
+        src: "/projects/rd-autonote/rd-autonote-business-03.png",
+        caption: "사업 비전 3 — 비즈니스 임팩트",
+      },
+      {
+        src: "/projects/rd-autonote/rd-autonote-slackbot-01.png",
+        caption: "Slack 연동 — 메시지 수집 봇",
+      },
+      {
+        src: "/projects/rd-autonote/rd-autonote-slackbot-02.png",
+        caption: "Slack 연동 — Webhook 자동화",
+      },
+      {
+        src: "/projects/rd-autonote/rd-autonote-slackbot-03.png",
+        caption: "Slack 연동 — 실시간 원천 로그 동기화",
+      },
     ],
     stack: [
       "NestJS",
@@ -222,7 +291,10 @@ export const portfolioProjects: PortfolioProject[] = [
     thumbnail: "/projects/kakao-carechat-integration/kakao-carechat-workflow.png",
     heroImage: "/projects/kakao-carechat-integration/kakao-carechat-workflow.png",
     gallery: [
-      "/projects/kakao-carechat-integration/kakao-carechat-workflow.png",
+      {
+        src: "/projects/kakao-carechat-integration/kakao-carechat-workflow.png",
+        caption: "카카오 헬스케어 데이터 연동 워크플로우",
+      },
     ],
     stack: ["C# WinForms", ".NET", "MS-SQL", "REST API", "JSON"],
     summary:
@@ -281,8 +353,14 @@ export const portfolioProjects: PortfolioProject[] = [
     thumbnail: "/projects/glucose-device-interface/glucose-device-photo.png",
     heroImage: "/projects/glucose-device-interface/glucose-device-photo.png",
     gallery: [
-      "/projects/glucose-device-interface/glucose-device-photo.png",
-      "/projects/glucose-device-interface/glucose-device-workflow.png",
+      {
+        src: "/projects/glucose-device-interface/glucose-device-photo.png",
+        caption: "병원 혈당 측정 기기 + 노트북 대시보드 실제 사용 환경",
+      },
+      {
+        src: "/projects/glucose-device-interface/glucose-device-workflow.png",
+        caption: "병원 혈당 기기 연동 흐름도 — 다단계 검증·시퀀스 충돌 방지",
+      },
     ],
     stack: ["C# WinForms", ".NET", "MS-SQL"],
     summary:
@@ -340,9 +418,18 @@ export const portfolioProjects: PortfolioProject[] = [
     thumbnail: "/projects/avis-tron-paradise/avis-tron-dashboard-01.png",
     heroImage: "/projects/avis-tron-paradise/avis-tron-dashboard-01.png",
     gallery: [
-      "/projects/avis-tron-paradise/avis-tron-dashboard-01.png",
-      "/projects/avis-tron-paradise/avis-tron-dashboard-02.png",
-      "/projects/avis-tron-paradise/avis-tron-dashboard-03.png",
+      {
+        src: "/projects/avis-tron-paradise/avis-tron-dashboard-01.png",
+        caption: "avis-tron 4.0 — 임원 통합 관측 대시보드",
+      },
+      {
+        src: "/projects/avis-tron-paradise/avis-tron-dashboard-02.png",
+        caption: "avis-tron 4.0 — 운영 통합 대시보드",
+      },
+      {
+        src: "/projects/avis-tron-paradise/avis-tron-dashboard-03.png",
+        caption: "avis-tron 4.0 — 보안 지표 시각화",
+      },
     ],
     stack: [".NET (C#)", "JavaScript", "IIS", "MSSQL", "SIEM", "SVN"],
     summary:
@@ -435,9 +522,18 @@ export const portfolioProjects: PortfolioProject[] = [
     thumbnail: "/projects/planit-jump-game/jump-game-gameplay.png",
     heroImage: "/projects/planit-jump-game/jump-game-gameplay.png",
     gallery: [
-      "/projects/planit-jump-game/jump-game-gameplay.png",
-      "/projects/planit-jump-game/jump-game-character-select.png",
-      "/projects/planit-jump-game/jump-game-unity-editor.png",
+      {
+        src: "/projects/planit-jump-game/jump-game-gameplay.png",
+        caption: "실제 플레이 — 무한 점프, 7m / Best 16m 점수 시스템",
+      },
+      {
+        src: "/projects/planit-jump-game/jump-game-character-select.png",
+        caption: "캐릭터 선택 + PhaseThroughAbility 어빌리티 코드",
+      },
+      {
+        src: "/projects/planit-jump-game/jump-game-unity-editor.png",
+        caption: "Unity 6 에디터 — Note20 Ultra 시뮬레이터 검증",
+      },
     ],
     stack: ["Unity 6", "C#", "Mobile (Android/iOS)", "ScriptableObject"],
     summary:

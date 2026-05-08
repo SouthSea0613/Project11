@@ -5,6 +5,7 @@ import { ImageSlot } from "@/components/ImageSlot";
 import ProjectGallery from "@/components/ProjectGallery";
 import {
   getProjectBySlug,
+  normalizeGallery,
   portfolioProjects,
   teamMembers,
 } from "@/lib/portfolioData";
@@ -241,7 +242,10 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
               이미지를 클릭하면 크게 볼 수 있습니다
             </span>
           </div>
-          <ProjectGallery images={project.gallery} title={project.title} />
+          <ProjectGallery
+            images={normalizeGallery(project.gallery)}
+            title={project.title}
+          />
         </section>
       )}
 

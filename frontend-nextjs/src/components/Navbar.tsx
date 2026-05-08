@@ -36,7 +36,7 @@ export default function Navbar() {
   const isMinyoungPage = pathname.startsWith("/Minyoung_Kim");
 
   return (
-    <div className="fixed top-0 left-0 w-full z-50 pointer-events-none">
+    <div className="print-hide fixed top-0 left-0 w-full z-50 pointer-events-none">
       {/* 호버 트리거 영역 */}
       <div
         className="absolute top-0 left-0 w-full h-4 pointer-events-auto"

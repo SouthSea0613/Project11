@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { ImageSlot } from "@/components/ImageSlot";
@@ -18,7 +18,19 @@ const NamhaeAbilityRadar = dynamic(
     ),
   }
 );
+const MemberImpactChart = dynamic(
+  () => import("@/components/MemberImpactChart"),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="flex h-[200px] w-full items-center justify-center text-xs text-muted-foreground">
+        임팩트 차트 불러오는 중…
+      </div>
+    ),
+  }
+);
 import type { PortfolioProject } from "@/lib/portfolioData";
+import { normalizeGallery } from "@/lib/portfolioData";
 import { categoryLabelToDot } from "@/lib/stackCategory";
 import {
   namhaeEducation,
@@ -28,6 +40,7 @@ import {
   namhaeSkillCategories,
   namhaeStrengths,
 } from "@/lib/namhaeResume";
+import { namhaeImpactMetrics } from "@/lib/impactData";
 
 type NamhaeContentTabsProps = {
   projects: PortfolioProject[];
@@ -45,6 +58,18 @@ const motivationHighlights = [
 export default function NamhaeContentTabs({ projects }: NamhaeContentTabsProps) {
   const [primaryTab, setPrimaryTab] = useState<PrimaryTab>("overview");
   const [detailTab, setDetailTab] = useState<DetailTab>("intro");
+  const [isPrintMode, setIsPrintMode] = useState(false);
+
+  useEffect(() => {
+    const before = () => setIsPrintMode(true);
+    const after = () => setIsPrintMode(false);
+    window.addEventListener("beforeprint", before);
+    window.addEventListener("afterprint", after);
+    return () => {
+      window.removeEventListener("beforeprint", before);
+      window.removeEventListener("afterprint", after);
+    };
+  }, []);
 
   const topProjects = useMemo(() => {
     const featuredOrder = ["planit", "rd-autonote", "avis-tron-paradise"];
@@ -54,9 +79,13 @@ export default function NamhaeContentTabs({ projects }: NamhaeContentTabsProps) 
       .filter((p): p is PortfolioProject => !!p);
   }, [projects]);
 
+  const showOverview = isPrintMode || primaryTab === "overview";
+  const showDetail = isPrintMode || primaryTab === "detail";
+  const isShown = (id: DetailTab) => isPrintMode || detailTab === id;
+
   return (
     <section className="mt-10">
-      <div className="flex gap-2 border-b pb-2">
+      <div className="print-hide flex gap-2 border-b pb-2">
         <button
           type="button"
           onClick={() => setPrimaryTab("overview")}
@@ -81,7 +110,7 @@ export default function NamhaeContentTabs({ projects }: NamhaeContentTabsProps) 
         </button>
       </div>
 
-      {primaryTab === "overview" ? (
+      {showOverview && (
         <div className="mt-5 grid gap-4 md:grid-cols-2">
           {/* 핵심 역량 레이더 */}
           <section className="rounded-xl border bg-card p-5">
@@ -121,13 +150,29 @@ export default function NamhaeContentTabs({ projects }: NamhaeContentTabsProps) 
             </div>
           </section>
 
+          {/* 비즈니스 임팩트 — % 단위 BarChart */}
+          <section className="rounded-xl border bg-card p-5 md:col-span-2">
+            <div className="flex items-baseline justify-between">
+              <h2 className="text-base font-semibold">비즈니스 임팩트</h2>
+              <span className="text-[11px] text-muted-foreground">
+                실제 프로젝트 적용 후 측정·체감 수치
+              </span>
+            </div>
+            <div className="mt-3">
+              <MemberImpactChart metrics={namhaeImpactMetrics} accent="emerald" />
+            </div>
+            <p className="mt-2 text-[11px] text-muted-foreground">
+              − 표기는 비용·시간 절감, + 표기는 성능·운영 처리량 증가
+            </p>
+          </section>
+
           {/* 대표 프로젝트 3선 */}
           <section className="rounded-xl border bg-card p-5 md:col-span-2">
             <h2 className="text-base font-semibold">대표 프로젝트</h2>
             <div className="mt-3 grid gap-3 md:grid-cols-3">
               {topProjects.map((project) => {
-                const galleryThumbs = (project.gallery ?? [])
-                  .filter((g) => g !== project.heroImage)
+                const galleryThumbs = normalizeGallery(project.gallery)
+                  .filter((g) => g.src !== project.heroImage)
                   .slice(0, 3);
                 return (
                   <Link
@@ -144,11 +189,11 @@ export default function NamhaeContentTabs({ projects }: NamhaeContentTabsProps) 
                     />
                     {galleryThumbs.length > 0 && (
                       <div className="grid grid-cols-3 gap-px bg-border/40">
-                        {galleryThumbs.map((src, idx) => (
+                        {galleryThumbs.map((thumb, idx) => (
                           <ImageSlot
-                            key={src}
-                            src={src}
-                            alt={`${project.title} 미리보기 ${idx + 1}`}
+                            key={thumb.src}
+                            src={thumb.src}
+                            alt={thumb.caption ?? `${project.title} 미리보기 ${idx + 1}`}
                             aspect="aspect-[4/3]"
                             rounded="rounded-none"
                             label=""
@@ -224,9 +269,11 @@ export default function NamhaeContentTabs({ projects }: NamhaeContentTabsProps) 
             />
           </section>
         </div>
-      ) : (
-        <div className="mt-5">
-          <div className="mb-4 flex flex-wrap gap-2">
+      )}
+
+      {showDetail && (
+        <div className={`mt-5 ${isPrintMode ? "print-break-before" : ""}`}>
+          <div className="print-hide mb-4 flex flex-wrap gap-2">
             {[
               { id: "intro", label: "자기소개서" },
               { id: "career", label: "실제 경력" },
@@ -248,7 +295,7 @@ export default function NamhaeContentTabs({ projects }: NamhaeContentTabsProps) 
             ))}
           </div>
 
-          {detailTab === "intro" && (
+          {isShown("intro") && (
             <div className="space-y-4">
               <section className="grid gap-3 md:grid-cols-3">
                 {motivationHighlights.map((item) => (
@@ -301,7 +348,7 @@ export default function NamhaeContentTabs({ projects }: NamhaeContentTabsProps) 
             </div>
           )}
 
-          {detailTab === "career" && (
+          {isShown("career") && (
             <ol className="relative ml-3 space-y-3 border-l border-border pl-5">
               {namhaeExperiences.map((exp) => (
                 <li
@@ -334,9 +381,13 @@ export default function NamhaeContentTabs({ projects }: NamhaeContentTabsProps) 
             </ol>
           )}
 
-          {detailTab === "projects" && <ProjectTabs projects={projects} />}
+          {isShown("projects") && (
+            <div className={isPrintMode ? "mt-6" : undefined}>
+              <ProjectTabs projects={projects} />
+            </div>
+          )}
 
-          {detailTab === "education" && (
+          {isShown("education") && (
             <div className="grid gap-3 md:grid-cols-2">
               <section className="rounded-xl border bg-card p-5">
                 <h3 className="text-sm font-semibold">학력</h3>

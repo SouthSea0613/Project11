@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import MinyoungContentTabs from "@/components/MinyoungContentTabs";
+import PrintButton from "@/components/PrintButton";
 import ProfilePhotoViewer from "@/components/ProfilePhotoViewer";
 import { getMemberById, getProjectsByMember } from "@/lib/portfolioData";
 import {
@@ -41,11 +42,12 @@ export default function MinyoungKimPage() {
             >
               이메일
             </a>
+            <PrintButton documentTitle="김민영_HaeYoungLab_Portfolio" />
             <a
               href={minyoungGithubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 rounded-md border px-3 py-1.5 font-medium text-foreground hover:bg-muted"
+              className="print-hide inline-flex items-center gap-1.5 rounded-md border px-3 py-1.5 font-medium text-foreground hover:bg-muted"
               aria-label="GitHub 프로필"
             >
               <svg
@@ -105,7 +107,7 @@ export default function MinyoungKimPage() {
 
       <MinyoungContentTabs projects={projects} />
 
-      <section className="mt-10 rounded-xl border bg-card p-5">
+      <section className="print-hide mt-10 rounded-xl border bg-card p-5">
         <h2 className="text-lg font-semibold">외부 링크</h2>
         <ul className="mt-3 space-y-2 text-sm">
           {minyoungExternalLinks.map((link) => (
@@ -124,7 +126,7 @@ export default function MinyoungKimPage() {
       </section>
 
       {/* ── Footer Nav ── */}
-      <div className="mt-10 flex items-center justify-between text-sm">
+      <div className="print-hide mt-10 flex items-center justify-between text-sm">
         <Link href="/" className="text-sky-500 underline-offset-4 hover:underline">
           ← 홈으로 돌아가기
         </Link>
