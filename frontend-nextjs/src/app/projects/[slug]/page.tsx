@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ImageSlot } from "@/components/ImageSlot";
+import ProjectGallery from "@/components/ProjectGallery";
 import {
   getProjectBySlug,
   portfolioProjects,
@@ -232,21 +233,15 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
       {/* ── Gallery ── */}
       {project.gallery && project.gallery.length > 0 && (
         <section className="mt-8">
-          <h2 className="text-sm font-semibold tracking-wider uppercase text-muted-foreground">
-            Gallery
-          </h2>
-          <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {project.gallery.map((src, idx) => (
-              <ImageSlot
-                key={src}
-                src={src}
-                alt={`${project.title} 이미지 ${idx + 1}`}
-                aspect="aspect-[4/3]"
-                rounded="rounded-xl"
-                label={`이미지 ${idx + 1} 추가 예정`}
-              />
-            ))}
+          <div className="flex items-baseline justify-between">
+            <h2 className="text-sm font-semibold tracking-wider uppercase text-muted-foreground">
+              Gallery
+            </h2>
+            <span className="text-[11px] text-muted-foreground">
+              이미지를 클릭하면 크게 볼 수 있습니다
+            </span>
           </div>
+          <ProjectGallery images={project.gallery} title={project.title} />
         </section>
       )}
 

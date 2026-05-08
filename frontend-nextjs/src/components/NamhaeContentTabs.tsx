@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { ImageSlot } from "@/components/ImageSlot";
+import HighlightImageGrid from "@/components/HighlightImageGrid";
 import ProjectTabs from "@/components/ProjectTabs";
 
 const NamhaeAbilityRadar = dynamic(
@@ -183,11 +184,12 @@ export default function NamhaeContentTabs({ projects }: NamhaeContentTabsProps) 
             <div className="flex items-baseline justify-between">
               <h2 className="text-base font-semibold">사업 · 설계 자료</h2>
               <span className="text-[11px] text-muted-foreground">
-                실제 사업 검증·아키텍처 설명 자료
+                이미지를 클릭하면 크게 볼 수 있습니다
               </span>
             </div>
-            <div className="mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
-              {[
+            <HighlightImageGrid
+              accent="emerald"
+              items={[
                 {
                   src: "/projects/rd-autonote/rd-autonote-business-01.png",
                   caption: "R&D 오토노트 — 사업 비전 1",
@@ -218,25 +220,8 @@ export default function NamhaeContentTabs({ projects }: NamhaeContentTabsProps) 
                   caption: "PlanIT — ChatOps 스크럼봇",
                   href: "/projects/planit",
                 },
-              ].map((item) => (
-                <Link
-                  key={item.src}
-                  href={item.href}
-                  className="group overflow-hidden rounded-lg border bg-background/40 transition hover:border-emerald-400/60"
-                >
-                  <ImageSlot
-                    src={item.src}
-                    alt={item.caption}
-                    aspect="aspect-[16/10]"
-                    rounded="rounded-none"
-                    label="이미지 추가 예정"
-                  />
-                  <p className="p-2 text-[11px] text-muted-foreground group-hover:text-emerald-400">
-                    {item.caption}
-                  </p>
-                </Link>
-              ))}
-            </div>
+              ]}
+            />
           </section>
         </div>
       ) : (

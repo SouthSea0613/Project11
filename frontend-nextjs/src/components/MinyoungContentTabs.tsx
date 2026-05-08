@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { ImageSlot } from "@/components/ImageSlot";
+import HighlightImageGrid from "@/components/HighlightImageGrid";
 import ProjectTabs from "@/components/ProjectTabs";
 import type { PortfolioProject } from "@/lib/portfolioData";
 import { categoryLabelToDot } from "@/lib/stackCategory";
@@ -187,11 +188,12 @@ export default function MinyoungContentTabs({ projects }: MinyoungContentTabsPro
             <div className="flex items-baseline justify-between">
               <h2 className="text-base font-semibold">사업 · 설계 자료</h2>
               <span className="text-[11px] text-muted-foreground">
-                실제 시스템 연동·워크플로우 도식
+                이미지를 클릭하면 크게 볼 수 있습니다
               </span>
             </div>
-            <div className="mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
-              {[
+            <HighlightImageGrid
+              accent="sky"
+              items={[
                 {
                   src: "/projects/kakao-carechat-integration/kakao-carechat-workflow.png",
                   caption: "카카오 케어챗 — 데이터 연동 워크플로우",
@@ -222,25 +224,8 @@ export default function MinyoungContentTabs({ projects }: MinyoungContentTabsPro
                   caption: "PlanIT 점프게임 — Unity 에디터 작업 환경",
                   href: "/projects/planit-jump-game",
                 },
-              ].map((item) => (
-                <Link
-                  key={item.src}
-                  href={item.href}
-                  className="group overflow-hidden rounded-lg border bg-background/40 transition hover:border-sky-400/60"
-                >
-                  <ImageSlot
-                    src={item.src}
-                    alt={item.caption}
-                    aspect="aspect-[16/10]"
-                    rounded="rounded-none"
-                    label="이미지 추가 예정"
-                  />
-                  <p className="p-2 text-[11px] text-muted-foreground group-hover:text-sky-400">
-                    {item.caption}
-                  </p>
-                </Link>
-              ))}
-            </div>
+              ]}
+            />
           </section>
         </div>
       ) : (
