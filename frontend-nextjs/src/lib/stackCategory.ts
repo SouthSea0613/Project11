@@ -36,13 +36,16 @@ export const STACK_DOT_CLASS: Record<StackCategory, string> = {
   etc: "bg-pink-500",
 };
 
-/** 칩(badge)용 Tailwind 클래스 */
+/** 칩(badge)용 Tailwind 클래스 — 라이트/다크 모두 대비 확보 */
 export const STACK_BADGE_CLASS: Record<StackCategory, string> = {
-  frontend: "border-sky-400/30 bg-sky-400/10 text-sky-300",
-  backend: "border-emerald-400/30 bg-emerald-400/10 text-emerald-300",
-  ai: "border-violet-400/30 bg-violet-400/10 text-violet-300",
-  infra: "border-amber-400/30 bg-amber-400/10 text-amber-300",
-  etc: "border-pink-400/30 bg-pink-400/10 text-pink-300",
+  frontend:
+    "border-sky-500/40 bg-sky-500/15 text-sky-700 dark:text-sky-300",
+  backend:
+    "border-emerald-500/40 bg-emerald-500/15 text-emerald-700 dark:text-emerald-300",
+  ai: "border-violet-500/40 bg-violet-500/15 text-violet-700 dark:text-violet-300",
+  infra:
+    "border-amber-500/40 bg-amber-500/15 text-amber-700 dark:text-amber-300",
+  etc: "border-pink-500/40 bg-pink-500/15 text-pink-700 dark:text-pink-300",
 };
 
 /** 개별 기술명(`Next.js`, `PostgreSQL` 등)을 카테고리 키로 분류 */

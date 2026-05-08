@@ -133,60 +133,66 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
         </h2>
         <div className="relative mt-3 grid gap-3 md:grid-cols-3">
           {/* Problem */}
-          <article className="relative rounded-2xl border border-rose-400/30 bg-rose-500/[0.06] p-5">
+          <article className="relative rounded-2xl border border-rose-400/40 bg-rose-500/10 p-5">
             <div className="flex items-center gap-2">
-              <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-rose-500/20 text-rose-300">
+              <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-rose-500/20 text-rose-600 dark:text-rose-300">
                 ⚠
               </span>
-              <h3 className="text-sm font-semibold text-rose-200">Problem</h3>
+              <h3 className="text-sm font-semibold text-rose-700 dark:text-rose-200">
+                Problem
+              </h3>
             </div>
-            <p className="mt-3 text-sm leading-7 text-slate-200">
+            <p className="mt-3 text-sm leading-7 text-foreground/90">
               {project.problem}
             </p>
             <span
               aria-hidden
-              className="absolute -right-2 top-1/2 hidden -translate-y-1/2 text-rose-300/70 md:block"
+              className="absolute -right-2 top-1/2 hidden -translate-y-1/2 text-rose-500/70 md:block"
             >
               →
             </span>
           </article>
 
           {/* Solution */}
-          <article className="relative rounded-2xl border border-emerald-400/30 bg-emerald-500/[0.06] p-5">
+          <article className="relative rounded-2xl border border-emerald-400/40 bg-emerald-500/10 p-5">
             <div className="flex items-center gap-2">
-              <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-300">
+              <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-300">
                 ⚙
               </span>
-              <h3 className="text-sm font-semibold text-emerald-200">Solution</h3>
+              <h3 className="text-sm font-semibold text-emerald-700 dark:text-emerald-200">
+                Solution
+              </h3>
             </div>
-            <ul className="mt-3 space-y-2 text-sm leading-6 text-slate-200">
+            <ul className="mt-3 space-y-2 text-sm leading-6 text-foreground/90">
               {project.solution.map((item) => (
                 <li key={item} className="flex gap-2">
-                  <span className="mt-1 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400" />
+                  <span className="mt-1.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500" />
                   <span>{item}</span>
                 </li>
               ))}
             </ul>
             <span
               aria-hidden
-              className="absolute -right-2 top-1/2 hidden -translate-y-1/2 text-emerald-300/70 md:block"
+              className="absolute -right-2 top-1/2 hidden -translate-y-1/2 text-emerald-500/70 md:block"
             >
               →
             </span>
           </article>
 
           {/* Outcome */}
-          <article className="rounded-2xl border border-sky-400/30 bg-sky-500/[0.06] p-5">
+          <article className="rounded-2xl border border-sky-400/40 bg-sky-500/10 p-5">
             <div className="flex items-center gap-2">
-              <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-sky-500/20 text-sky-300">
+              <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-sky-500/20 text-sky-600 dark:text-sky-300">
                 ✦
               </span>
-              <h3 className="text-sm font-semibold text-sky-200">Outcome</h3>
+              <h3 className="text-sm font-semibold text-sky-700 dark:text-sky-200">
+                Outcome
+              </h3>
             </div>
-            <ul className="mt-3 space-y-2 text-sm leading-6 text-slate-200">
+            <ul className="mt-3 space-y-2 text-sm leading-6 text-foreground/90">
               {project.outcome.map((item) => (
                 <li key={item} className="flex gap-2">
-                  <span className="mt-1 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-sky-400" />
+                  <span className="mt-1.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-sky-500" />
                   <span>{item}</span>
                 </li>
               ))}
