@@ -385,7 +385,7 @@ export default function MinyoungContentTabs({ projects }: MinyoungContentTabsPro
 
           {isShown("projects") && (
             <div className={isPrintMode ? "mt-6" : undefined}>
-              <ProjectTabs projects={projects} />
+              <ProjectTabs projects={projects} accent="sky" />
             </div>
           )}
 

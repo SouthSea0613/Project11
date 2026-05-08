@@ -321,12 +321,6 @@ export const portfolioProjects: PortfolioProject[] = [
     period: "2025.07 - 2025.08",
     role: "UI 개발 · 메타데이터 DB 설계",
     thumbnail: "/background.jpg",
-    heroImage: "/projects/hospital-option-admin/hero.jpg",
-    gallery: [
-      "/projects/hospital-option-admin/g1.jpg",
-      "/projects/hospital-option-admin/g2.jpg",
-      "/projects/hospital-option-admin/g3.jpg",
-    ],
     stack: ["C# WinForms", ".NET", "MS-SQL"],
     summary:
       "분산된 병원 옵션 설정을 그룹-리스트-상세 구조로 통합해 운영 효율을 높인 관리자 시스템.",
@@ -386,12 +380,6 @@ export const portfolioProjects: PortfolioProject[] = [
     period: "2026.01 - 2026.02",
     role: "리드 아키텍트 · 풀스택",
     thumbnail: "/background.jpg",
-    heroImage: "/projects/pet-health-llm/hero.jpg",
-    gallery: [
-      "/projects/pet-health-llm/g1.jpg",
-      "/projects/pet-health-llm/g2.jpg",
-      "/projects/pet-health-llm/g3.jpg",
-    ],
     stack: ["Java", "Spring Boot", "JPA", "PostgreSQL", "Next.js", "TypeScript", "Tailwind", "JWT", "Gemini API"],
     summary:
       "개·고양이 변 상태 데이터를 분석해 질병 가능성을 추론하고, 병원 방문 필요성을 제안하는 LLM 연동 웹앱.",
@@ -456,12 +444,6 @@ export const portfolioProjects: PortfolioProject[] = [
     period: "2025.02 - 2025.03",
     role: "팀장 · 풀스택 시스템 설계",
     thumbnail: "/background.jpg",
-    heroImage: "/projects/interior-matching-platform/hero.jpg",
-    gallery: [
-      "/projects/interior-matching-platform/g1.jpg",
-      "/projects/interior-matching-platform/g2.jpg",
-      "/projects/interior-matching-platform/g3.jpg",
-    ],
     stack: ["Spring Boot", "Thymeleaf", "MySQL", "jQuery", "AWS S3", "Git"],
     summary:
       "인천일보아카데미에서 예산·스타일·지역 기반 전문가 매칭과 견적 프로세스 표준화를 담당했습니다.",
@@ -484,12 +466,29 @@ export const portfolioProjects: PortfolioProject[] = [
     title: "Team Portfolio Platform",
     period: "2026.04 - 진행 중",
     role: "정보 구조 설계 · 프론트엔드",
-    thumbnail: "/background.jpg",
-    heroImage: "/projects/team-portfolio-platform/hero.jpg",
+    thumbnail: "/projects/team-portfolio-platform/team-portfolio-home.png",
+    heroImage: "/projects/team-portfolio-platform/team-portfolio-home.png",
     gallery: [
-      "/projects/team-portfolio-platform/g1.jpg",
-      "/projects/team-portfolio-platform/g2.jpg",
-      "/projects/team-portfolio-platform/g3.jpg",
+      {
+        src: "/projects/team-portfolio-platform/team-portfolio-home.png",
+        caption: "Team Portfolio — 홈 (팀 임팩트·대표 프로젝트·기술 트리맵)",
+      },
+      {
+        src: "/projects/team-portfolio-platform/team-portfolio-namhae.png",
+        caption: "Team Portfolio — 김남해 멤버 페이지 (한눈에 보기)",
+      },
+      {
+        src: "/projects/team-portfolio-platform/team-portfolio-minyoung.png",
+        caption: "Team Portfolio — 김민영 멤버 페이지 (한눈에 보기)",
+      },
+      {
+        src: "/projects/team-portfolio-platform/team-portfolio-project-planit.png",
+        caption: "Team Portfolio — 프로젝트 상세(PlanIT) 페이지",
+      },
+      {
+        src: "/projects/team-portfolio-platform/team-portfolio-project-rd-autonote.png",
+        caption: "Team Portfolio — 프로젝트 상세(R&D 오토노트) 페이지",
+      },
     ],
     stack: ["Next.js App Router", "TypeScript"],
     summary:

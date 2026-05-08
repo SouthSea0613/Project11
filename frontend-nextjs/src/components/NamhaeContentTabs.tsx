@@ -383,7 +383,7 @@ export default function NamhaeContentTabs({ projects }: NamhaeContentTabsProps) 
 
           {isShown("projects") && (
             <div className={isPrintMode ? "mt-6" : undefined}>
-              <ProjectTabs projects={projects} />
+              <ProjectTabs projects={projects} accent="emerald" />
             </div>
           )}
 
