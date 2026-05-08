@@ -49,13 +49,15 @@ export default function MinyoungContentTabs({ projects }: MinyoungContentTabsPro
   const topProjects = useMemo(() => {
     const featuredOrder = [
       "planit",
+      "planit-jump-game",
       "kakao-carechat-integration",
       "glucose-device-interface",
     ];
     const map = new Map(projects.map((p) => [p.slug, p]));
     return featuredOrder
       .map((slug) => map.get(slug))
-      .filter((p): p is PortfolioProject => !!p);
+      .filter((p): p is PortfolioProject => !!p)
+      .slice(0, 4);
   }, [projects]);
 
   return (
@@ -125,36 +127,117 @@ export default function MinyoungContentTabs({ projects }: MinyoungContentTabsPro
 
           <section className="rounded-xl border bg-card p-5 md:col-span-2">
             <h2 className="text-base font-semibold">대표 프로젝트</h2>
-            <div className="mt-3 grid gap-3 md:grid-cols-3">
-              {topProjects.map((project) => (
+            <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              {topProjects.map((project) => {
+                const galleryThumbs = (project.gallery ?? [])
+                  .filter((g) => g !== project.heroImage)
+                  .slice(0, 3);
+                return (
+                  <Link
+                    key={project.slug}
+                    href={`/projects/${project.slug}`}
+                    className="group overflow-hidden rounded-lg border bg-background/40 transition hover:border-sky-400/60"
+                  >
+                    <ImageSlot
+                      src={project.heroImage}
+                      alt={project.title}
+                      aspect="aspect-[16/9]"
+                      rounded="rounded-none"
+                      label="이미지 추가 예정"
+                    />
+                    {galleryThumbs.length > 0 && (
+                      <div className="grid grid-cols-3 gap-px bg-border/40">
+                        {galleryThumbs.map((src, idx) => (
+                          <ImageSlot
+                            key={src}
+                            src={src}
+                            alt={`${project.title} 미리보기 ${idx + 1}`}
+                            aspect="aspect-[4/3]"
+                            rounded="rounded-none"
+                            label=""
+                            className="!border-0"
+                          />
+                        ))}
+                      </div>
+                    )}
+                    <div className="p-3">
+                      <p className="text-[11px] text-muted-foreground">{project.period}</p>
+                      <h3 className="mt-1 text-sm font-semibold group-hover:text-sky-400">
+                        {project.title}
+                      </h3>
+                      <div className="mt-2 flex flex-wrap gap-1">
+                        {project.metrics.slice(0, 3).map((metric) => (
+                          <span
+                            key={metric}
+                            className="rounded-md border border-sky-400/30 bg-sky-400/10 px-1.5 py-0.5 text-[10px] font-medium text-sky-500"
+                          >
+                            {metric}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          </section>
+
+          {/* 사업 · 설명 자료 — minyoung 워크플로우/시스템 자료 노출 */}
+          <section className="rounded-xl border bg-card p-5 md:col-span-2">
+            <div className="flex items-baseline justify-between">
+              <h2 className="text-base font-semibold">사업 · 설계 자료</h2>
+              <span className="text-[11px] text-muted-foreground">
+                실제 시스템 연동·워크플로우 도식
+              </span>
+            </div>
+            <div className="mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+              {[
+                {
+                  src: "/projects/kakao-carechat-integration/kakao-carechat-workflow.png",
+                  caption: "카카오 케어챗 — 데이터 연동 워크플로우",
+                  href: "/projects/kakao-carechat-integration",
+                },
+                {
+                  src: "/projects/glucose-device-interface/glucose-device-workflow.png",
+                  caption: "혈당 기기 — 연동 흐름도",
+                  href: "/projects/glucose-device-interface",
+                },
+                {
+                  src: "/projects/glucose-device-interface/glucose-device-photo.png",
+                  caption: "혈당 기기 — 실제 사용 환경",
+                  href: "/projects/glucose-device-interface",
+                },
+                {
+                  src: "/projects/planit-jump-game/jump-game-gameplay.png",
+                  caption: "PlanIT 점프게임 — 실제 플레이",
+                  href: "/projects/planit-jump-game",
+                },
+                {
+                  src: "/projects/planit-jump-game/jump-game-character-select.png",
+                  caption: "PlanIT 점프게임 — 캐릭터 선택 / 어빌리티",
+                  href: "/projects/planit-jump-game",
+                },
+                {
+                  src: "/projects/planit-jump-game/jump-game-unity-editor.png",
+                  caption: "PlanIT 점프게임 — Unity 에디터 작업 환경",
+                  href: "/projects/planit-jump-game",
+                },
+              ].map((item) => (
                 <Link
-                  key={project.slug}
-                  href={`/projects/${project.slug}`}
+                  key={item.src}
+                  href={item.href}
                   className="group overflow-hidden rounded-lg border bg-background/40 transition hover:border-sky-400/60"
                 >
                   <ImageSlot
-                    src={project.heroImage}
-                    alt={project.title}
-                    aspect="aspect-[16/9]"
+                    src={item.src}
+                    alt={item.caption}
+                    aspect="aspect-[16/10]"
                     rounded="rounded-none"
                     label="이미지 추가 예정"
                   />
-                  <div className="p-3">
-                    <p className="text-[11px] text-muted-foreground">{project.period}</p>
-                    <h3 className="mt-1 text-sm font-semibold group-hover:text-sky-400">
-                      {project.title}
-                    </h3>
-                    <div className="mt-2 flex flex-wrap gap-1">
-                      {project.metrics.slice(0, 3).map((metric) => (
-                        <span
-                          key={metric}
-                          className="rounded-md border border-sky-400/30 bg-sky-400/10 px-1.5 py-0.5 text-[10px] font-medium text-sky-500"
-                        >
-                          {metric}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
+                  <p className="p-2 text-[11px] text-muted-foreground group-hover:text-sky-400">
+                    {item.caption}
+                  </p>
                 </Link>
               ))}
             </div>

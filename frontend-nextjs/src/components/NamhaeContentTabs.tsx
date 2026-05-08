@@ -124,35 +124,116 @@ export default function NamhaeContentTabs({ projects }: NamhaeContentTabsProps) 
           <section className="rounded-xl border bg-card p-5 md:col-span-2">
             <h2 className="text-base font-semibold">대표 프로젝트</h2>
             <div className="mt-3 grid gap-3 md:grid-cols-3">
-              {topProjects.map((project) => (
+              {topProjects.map((project) => {
+                const galleryThumbs = (project.gallery ?? [])
+                  .filter((g) => g !== project.heroImage)
+                  .slice(0, 3);
+                return (
+                  <Link
+                    key={project.slug}
+                    href={`/projects/${project.slug}`}
+                    className="group overflow-hidden rounded-lg border bg-background/40 transition hover:border-emerald-400/60"
+                  >
+                    <ImageSlot
+                      src={project.heroImage}
+                      alt={project.title}
+                      aspect="aspect-[16/9]"
+                      rounded="rounded-none"
+                      label="이미지 추가 예정"
+                    />
+                    {galleryThumbs.length > 0 && (
+                      <div className="grid grid-cols-3 gap-px bg-border/40">
+                        {galleryThumbs.map((src, idx) => (
+                          <ImageSlot
+                            key={src}
+                            src={src}
+                            alt={`${project.title} 미리보기 ${idx + 1}`}
+                            aspect="aspect-[4/3]"
+                            rounded="rounded-none"
+                            label=""
+                            className="!border-0"
+                          />
+                        ))}
+                      </div>
+                    )}
+                    <div className="p-3">
+                      <p className="text-[11px] text-muted-foreground">{project.period}</p>
+                      <h3 className="mt-1 text-sm font-semibold group-hover:text-emerald-400">
+                        {project.title}
+                      </h3>
+                      <div className="mt-2 flex flex-wrap gap-1">
+                        {project.metrics.slice(0, 3).map((metric) => (
+                          <span
+                            key={metric}
+                            className="rounded-md border border-emerald-400/30 bg-emerald-400/10 px-1.5 py-0.5 text-[10px] font-medium text-emerald-500"
+                          >
+                            {metric}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          </section>
+
+          {/* 비즈니스/설명 이미지 하이라이트 — namhae 사업 자료 노출 */}
+          <section className="rounded-xl border bg-card p-5 md:col-span-2">
+            <div className="flex items-baseline justify-between">
+              <h2 className="text-base font-semibold">사업 · 설계 자료</h2>
+              <span className="text-[11px] text-muted-foreground">
+                실제 사업 검증·아키텍처 설명 자료
+              </span>
+            </div>
+            <div className="mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+              {[
+                {
+                  src: "/projects/rd-autonote/rd-autonote-business-01.png",
+                  caption: "R&D 오토노트 — 사업 비전 1",
+                  href: "/projects/rd-autonote",
+                },
+                {
+                  src: "/projects/rd-autonote/rd-autonote-business-02.png",
+                  caption: "R&D 오토노트 — 사업 비전 2",
+                  href: "/projects/rd-autonote",
+                },
+                {
+                  src: "/projects/rd-autonote/rd-autonote-business-03.png",
+                  caption: "R&D 오토노트 — 사업 비전 3",
+                  href: "/projects/rd-autonote",
+                },
+                {
+                  src: "/projects/avis-tron-paradise/avis-tron-dashboard-02.png",
+                  caption: "avis-tron 4.0 — 통합 대시보드",
+                  href: "/projects/avis-tron-paradise",
+                },
+                {
+                  src: "/projects/avis-tron-paradise/avis-tron-dashboard-03.png",
+                  caption: "avis-tron 4.0 — 보안 지표 화면",
+                  href: "/projects/avis-tron-paradise",
+                },
+                {
+                  src: "/projects/planit/planit-scrumbot-03.png",
+                  caption: "PlanIT — ChatOps 스크럼봇",
+                  href: "/projects/planit",
+                },
+              ].map((item) => (
                 <Link
-                  key={project.slug}
-                  href={`/projects/${project.slug}`}
+                  key={item.src}
+                  href={item.href}
                   className="group overflow-hidden rounded-lg border bg-background/40 transition hover:border-emerald-400/60"
                 >
                   <ImageSlot
-                    src={project.heroImage}
-                    alt={project.title}
-                    aspect="aspect-[16/9]"
+                    src={item.src}
+                    alt={item.caption}
+                    aspect="aspect-[16/10]"
                     rounded="rounded-none"
                     label="이미지 추가 예정"
                   />
-                  <div className="p-3">
-                    <p className="text-[11px] text-muted-foreground">{project.period}</p>
-                    <h3 className="mt-1 text-sm font-semibold group-hover:text-emerald-400">
-                      {project.title}
-                    </h3>
-                    <div className="mt-2 flex flex-wrap gap-1">
-                      {project.metrics.slice(0, 3).map((metric) => (
-                        <span
-                          key={metric}
-                          className="rounded-md border border-emerald-400/30 bg-emerald-400/10 px-1.5 py-0.5 text-[10px] font-medium text-emerald-500"
-                        >
-                          {metric}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
+                  <p className="p-2 text-[11px] text-muted-foreground group-hover:text-emerald-400">
+                    {item.caption}
+                  </p>
                 </Link>
               ))}
             </div>

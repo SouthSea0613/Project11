@@ -73,11 +73,20 @@ export const teamMembers: TeamMemberProfile[] = [
     role: "백엔드·풀스택 엔지니어 · Backend / Full-stack",
     intro:
       "의료 데이터 연동 환경에서 데이터 무결성과 운영 효율을 중심으로 시스템을 설계·구현해 왔습니다. C# .NET, MS-SQL 기반 실무와 PlanIt 아키텍처 경험을 통해 신뢰성 높은 서비스를 지향합니다.",
-    skills: [".NET (C#)", "MS-SQL", "API Integration", "Query Tuning", "Next.js", "TypeScript"],
+    skills: [
+      ".NET (C#)",
+      "MS-SQL",
+      "API Integration",
+      "Query Tuning",
+      "Next.js",
+      "TypeScript",
+      "Unity 6",
+    ],
     highlights: [
       "카카오 케어챗 연동: 쿼리 구조 최적화로 응답 성능 30% 개선",
       "옵션 관리 구조화: 운영 대응 속도 50%+ 개선",
       "혈당 데이터 인터페이스: 다단계 검증으로 데이터 무결성 강화",
+      "PlanIT 게이미피케이션: 방꾸미기 모듈 + Unity 6 점프게임 개발",
     ],
     profilePath: "/Minyoung_Kim",
   },
@@ -210,12 +219,10 @@ export const portfolioProjects: PortfolioProject[] = [
     title: "카카오 케어챗 병원 예약/진료 정보 연동",
     period: "2025.09 - 2026.02",
     role: "API 인터페이스 설계 · DB 프로시저 · 연동 테스트",
-    thumbnail: "/background.jpg",
-    heroImage: "/projects/kakao-carechat-integration/hero.jpg",
+    thumbnail: "/projects/kakao-carechat-integration/kakao-carechat-workflow.png",
+    heroImage: "/projects/kakao-carechat-integration/kakao-carechat-workflow.png",
     gallery: [
-      "/projects/kakao-carechat-integration/g1.jpg",
-      "/projects/kakao-carechat-integration/g2.jpg",
-      "/projects/kakao-carechat-integration/g3.jpg",
+      "/projects/kakao-carechat-integration/kakao-carechat-workflow.png",
     ],
     stack: ["C# WinForms", ".NET", "MS-SQL", "REST API", "JSON"],
     summary:
@@ -271,12 +278,11 @@ export const portfolioProjects: PortfolioProject[] = [
     title: "혈당 기기 연동 및 데이터 관리 화면",
     period: "2026.01 - 2026.02",
     role: "풀스택 개발 · 데이터 연동 설계",
-    thumbnail: "/background.jpg",
-    heroImage: "/projects/glucose-device-interface/hero.jpg",
+    thumbnail: "/projects/glucose-device-interface/glucose-device-photo.png",
+    heroImage: "/projects/glucose-device-interface/glucose-device-photo.png",
     gallery: [
-      "/projects/glucose-device-interface/g1.jpg",
-      "/projects/glucose-device-interface/g2.jpg",
-      "/projects/glucose-device-interface/g3.jpg",
+      "/projects/glucose-device-interface/glucose-device-photo.png",
+      "/projects/glucose-device-interface/glucose-device-workflow.png",
     ],
     stack: ["C# WinForms", ".NET", "MS-SQL"],
     summary:
@@ -419,6 +425,41 @@ export const portfolioProjects: PortfolioProject[] = [
       "공통 데이터 소스로 유지보수 비용 절감",
     ],
     members: ["namhae", "minyoung"],
+    links: {},
+  },
+  {
+    slug: "planit-jump-game",
+    title: "PlanIT 미니게임 — 점프게임",
+    period: "2026.02 - 2026.04",
+    role: "Unity 클라이언트 개발 · 게임 시스템 설계",
+    thumbnail: "/projects/planit-jump-game/jump-game-gameplay.png",
+    heroImage: "/projects/planit-jump-game/jump-game-gameplay.png",
+    gallery: [
+      "/projects/planit-jump-game/jump-game-gameplay.png",
+      "/projects/planit-jump-game/jump-game-character-select.png",
+      "/projects/planit-jump-game/jump-game-unity-editor.png",
+    ],
+    stack: ["Unity 6", "C#", "Mobile (Android/iOS)", "ScriptableObject"],
+    summary:
+      "PlanIT 안에서 즐길 수 있는 모바일 아케이드 점프게임. 캐릭터별 어빌리티와 끝없이 올라가는 플랫폼 구조로 사용자가 짧은 시간에 몰입할 수 있는 미니게임 경험을 제공합니다.",
+    problem:
+      "협업 SaaS 사용자가 짧은 휴식 시간에 자연스럽게 머물 수 있는 게이미피케이션 요소가 필요했고, 캐릭터·어빌리티 시스템을 확장 가능하게 설계해야 했습니다.",
+    solution: [
+      "캐릭터 선택 시스템과 PhaseThrough/Revive 등 어빌리티를 ScriptableObject 기반 데이터 드리븐 구조로 설계",
+      "끝없이 올라가는 플랫폼 스포너·점프 물리·점수(현재/최고) UI 구현",
+      "Unity 6 UIRoot/Managers 구조로 게임 상태(GameManager·PlatformSpawner) 모듈화",
+      "모바일 시뮬레이터(Note20 Ultra) 기반으로 실제 디바이스 비율 검증",
+    ],
+    outcome: [
+      "어빌리티/캐릭터 추가가 데이터 작성만으로 가능한 확장형 구조 확보",
+      "PlanIT 본체와 분리된 클라이언트 빌드로 협업 SaaS의 게이미피케이션 컴포넌트 확보",
+    ],
+    metrics: [
+      "데이터 드리븐 어빌리티 시스템",
+      "확장 가능한 캐릭터 선택 구조",
+      "모바일 세로 화면 최적화",
+    ],
+    members: ["minyoung"],
     links: {},
   },
   {

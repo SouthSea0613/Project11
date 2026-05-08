@@ -41,8 +41,8 @@ export const minyoungSkillCategories: { label: string; items: string[] }[] = [
     items: ["REST API", "JSON", "Git", "Vercel", "Railway"],
   },
   {
-    label: "Etc",
-    items: ["JSP", "Thymeleaf", "Python"],
+    label: "Game / Etc",
+    items: ["Unity 6", "C# (Game)", "JSP", "Thymeleaf", "Python"],
   },
 ];
 
@@ -91,12 +91,22 @@ export const minyoungExperiences: MinyoungExperienceBlock[] = [
   {
     title: "PlanIt — 소셜 스크럼 SaaS",
     period: "2026.01 - 2026.04",
-    role: "아키텍처 설계 · 배포 리딩",
-    tech: ["Next.js", "TypeScript", "NestJS", "FastAPI", "PostgreSQL"],
+    role: "아키텍처 설계 · 배포 리딩 · 게이미피케이션 클라이언트",
+    tech: [
+      "Next.js",
+      "TypeScript",
+      "NestJS",
+      "FastAPI",
+      "PostgreSQL",
+      "Unity 6",
+      "C#",
+    ],
     bullets: [
       "JSON 매핑 기반 컴포넌트 구조로 유연한 화면 확장성 확보",
       "Metadata/Open Graph/Twitter Card 최적화로 Lighthouse SEO 100점 달성",
       "배포 파이프라인 정비를 통해 안정적 릴리스 구조 확립",
+      "방꾸미기(Room Customize) 모듈 설계 — 사용자가 자기 공간을 꾸미며 머무는 장치 구현",
+      "Unity 6 기반 점프게임 미니게임 개발 — 데이터 드리븐 어빌리티·캐릭터 시스템 설계",
     ],
   },
 ];
