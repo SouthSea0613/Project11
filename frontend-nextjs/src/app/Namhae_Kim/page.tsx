@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import JsonLd from "@/components/JsonLd";
 import NamhaeContentTabs from "@/components/NamhaeContentTabs";
 import PrintButton from "@/components/PrintButton";
 import ProfilePhotoViewer from "@/components/ProfilePhotoViewer";
+import { breadcrumbLd, personLd } from "@/lib/jsonLd";
 import { getMemberById, getProjectsByMember } from "@/lib/portfolioData";
 import {
   namhaeContact,
@@ -11,21 +13,72 @@ import {
   namhaeHeadline,
   namhaeImpactStats,
   namhaePhoto,
+  namhaeSkillCategories,
   namhaeSummary,
 } from "@/lib/namhaeResume";
+import { SITE_NAME } from "@/lib/siteConfig";
 
 const member = getMemberById("namhae");
 
+const pageTitle = "김남해 | HaeYoungLab Team Portfolio";
+const pageDesc = `${namhaeHeadline} — PlanIT, R&D 오토노트, 보안 SIEM 등 풀스택 제품 경험.`;
+
 export const metadata: Metadata = {
-  title: "김남해 | HaeYoungLab Team Portfolio",
-  description: `${namhaeHeadline} — PlanIT, R&D 오토노트, 보안 SIEM 등 풀스택 제품 경험.`,
+  title: pageTitle,
+  description: pageDesc,
+  keywords: [
+    "김남해",
+    "HaeYoungLab",
+    "PlanIT",
+    "R&D 오토노트",
+    "풀스택",
+    "백엔드",
+    "포트폴리오",
+  ],
+  alternates: { canonical: "/Namhae_Kim" },
+  openGraph: {
+    title: pageTitle,
+    description: pageDesc,
+    url: "/Namhae_Kim",
+    siteName: SITE_NAME,
+    locale: "ko_KR",
+    type: "profile",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: pageTitle,
+    description: pageDesc,
+  },
 };
 
 export default function NamhaeKimPage() {
   const projects = getProjectsByMember("namhae");
+  const allKnownTech = Array.from(
+    new Set(namhaeSkillCategories.flatMap((c) => c.items))
+  );
 
   return (
     <main className="mx-auto max-w-6xl px-4 pt-28 pb-24 sm:px-6">
+      <JsonLd
+        id="ld-namhae"
+        data={[
+          personLd({
+            member,
+            fallbackName: "김남해",
+            path: "/Namhae_Kim",
+            imagePath: namhaePhoto,
+            description: `${namhaeHeadline} — ${namhaeSummary}`,
+            email: namhaeContact.email,
+            sameAs: [namhaeGithubUrl],
+            jobTitle: "Backend / Full-stack Engineer",
+            knowsAbout: allKnownTech,
+          }),
+          breadcrumbLd([
+            { name: "Home", path: "/" },
+            { name: "김남해", path: "/Namhae_Kim" },
+          ]),
+        ]}
+      />
       {/* ── Profile Hero ── */}
       <section className="flex flex-col gap-6 sm:flex-row sm:gap-6 md:gap-8">
         <div className="flex shrink-0 flex-col items-start gap-3 sm:w-[160px] md:w-[180px] justify-between">

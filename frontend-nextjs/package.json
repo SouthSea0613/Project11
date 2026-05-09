@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "capture:portfolio": "node scripts/capture-portfolio.mjs"
+    "capture:portfolio": "node scripts/capture-portfolio.mjs",
+    "lh": "node scripts/lighthouse.mjs"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.1",
@@ -32,8 +33,10 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "chrome-launcher": "^1.2.1",
     "eslint": "^9",
     "eslint-config-next": "15.5.14",
+    "lighthouse": "^13.3.0",
     "playwright": "^1.59.1",
     "tailwindcss": "^4",
     "typescript": "^5"

@@ -2,13 +2,19 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ImageSlot } from "@/components/ImageSlot";
+import JsonLd from "@/components/JsonLd";
 import ProjectGallery from "@/components/ProjectGallery";
+import { breadcrumbLd, projectLd } from "@/lib/jsonLd";
 import {
   getProjectBySlug,
   normalizeGallery,
   portfolioProjects,
   teamMembers,
 } from "@/lib/portfolioData";
+import {
+  DEFAULT_OG_IMAGE_PATH,
+  SITE_NAME,
+} from "@/lib/siteConfig";
 import {
   STACK_BADGE_CLASS,
   STACK_CATEGORIES,
@@ -33,9 +39,27 @@ export async function generateMetadata({
     return { title: "Project Not Found" };
   }
 
+  const path = `/projects/${slug}`;
+  const title = `${project.title} | ${SITE_NAME} Team Portfolio`;
+
   return {
-    title: `${project.title} | Team Portfolio`,
+    title,
     description: project.summary,
+    keywords: [...project.stack, project.title, "HaeYoungLab", "포트폴리오"],
+    alternates: { canonical: path },
+    openGraph: {
+      title,
+      description: project.summary,
+      url: path,
+      siteName: SITE_NAME,
+      locale: "ko_KR",
+      type: "article",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description: project.summary,
+    },
   };
 }
 
@@ -54,8 +78,25 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
     items: project.stack.filter((s) => classifyTech(s) === key),
   }));
 
+  const ldImagePath =
+    project.heroImage ?? project.thumbnail ?? DEFAULT_OG_IMAGE_PATH;
+
   return (
     <main className="mx-auto max-w-5xl px-4 pt-24 pb-24 sm:px-6">
+      <JsonLd
+        id={`ld-project-${project.slug}`}
+        data={[
+          projectLd({
+            project,
+            authors: projectMembers,
+            imagePath: ldImagePath,
+          }),
+          breadcrumbLd([
+            { name: "Home", path: "/" },
+            { name: project.title, path: `/projects/${project.slug}` },
+          ]),
+        ]}
+      />
       {/* ── Hero ── */}
       <section className="relative overflow-hidden rounded-2xl border border-white/10">
         <div className="aspect-[21/9] w-full bg-slate-900">

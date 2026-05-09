@@ -1,27 +1,43 @@
-import { MetadataRoute } from "next";
-import { allSections } from "@/lib/data";
-
-const BASE_URL = "https://www.haeyounglab.com";
+import type { MetadataRoute } from "next";
+import { portfolioProjects } from "@/lib/portfolioData";
+import { SITE_URL } from "@/lib/siteConfig";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-    const staticRoutes: MetadataRoute.Sitemap = [
-        {
-            url: BASE_URL,
-            lastModified: new Date(),
-            changeFrequency: "weekly",
-            priority: 1,
-        },
-    ];
+  const now = new Date();
 
-    const detailRoutes: MetadataRoute.Sitemap = Object.entries(allSections).flatMap(
-        ([section, { items }]) =>
-            items.map((item) => ({
-                url: `${BASE_URL}/detail/${section}/${item.slug}`,
-                lastModified: new Date(),
-                changeFrequency: "monthly" as const,
-                priority: 0.7,
-            }))
-    );
+  const staticRoutes: MetadataRoute.Sitemap = [
+    {
+      url: SITE_URL,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 1,
+    },
+    {
+      url: `${SITE_URL}/Namhae_Kim`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+    {
+      url: `${SITE_URL}/Minyoung_Kim`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+    {
+      url: `${SITE_URL}/projects`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.85,
+    },
+  ];
 
-    return [...staticRoutes, ...detailRoutes];
+  const projectRoutes: MetadataRoute.Sitemap = portfolioProjects.map((p) => ({
+    url: `${SITE_URL}/projects/${p.slug}`,
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: 0.8,
+  }));
+
+  return [...staticRoutes, ...projectRoutes];
 }

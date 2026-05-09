@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import JsonLd from "@/components/JsonLd";
 import MinyoungContentTabs from "@/components/MinyoungContentTabs";
 import PrintButton from "@/components/PrintButton";
 import ProfilePhotoViewer from "@/components/ProfilePhotoViewer";
+import { breadcrumbLd, personLd } from "@/lib/jsonLd";
 import { getMemberById, getProjectsByMember } from "@/lib/portfolioData";
 import {
   minyoungContact,
@@ -11,21 +13,71 @@ import {
   minyoungHeadline,
   minyoungImpactStats,
   minyoungPhoto,
+  minyoungSkillCategories,
   minyoungSummary,
 } from "@/lib/minyoungResume";
+import { SITE_NAME } from "@/lib/siteConfig";
 
 const member = getMemberById("minyoung");
 
+const pageTitle = "김민영 | HaeYoungLab Team Portfolio";
+const pageDesc = `${minyoungHeadline} — 의료 데이터 연동, 시스템 최적화, 운영 효율화 경험.`;
+
 export const metadata: Metadata = {
-  title: "김민영 | HaeYoungLab Team Portfolio",
-  description: `${minyoungHeadline} — 의료 데이터 연동, 시스템 최적화, 운영 효율화 경험.`,
+  title: pageTitle,
+  description: pageDesc,
+  keywords: [
+    "김민영",
+    "HaeYoungLab",
+    "의료 IT",
+    "MS-SQL",
+    ".NET",
+    "포트폴리오",
+  ],
+  alternates: { canonical: "/Minyoung_Kim" },
+  openGraph: {
+    title: pageTitle,
+    description: pageDesc,
+    url: "/Minyoung_Kim",
+    siteName: SITE_NAME,
+    locale: "ko_KR",
+    type: "profile",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: pageTitle,
+    description: pageDesc,
+  },
 };
 
 export default function MinyoungKimPage() {
   const projects = getProjectsByMember("minyoung");
+  const allKnownTech = Array.from(
+    new Set(minyoungSkillCategories.flatMap((c) => c.items))
+  );
 
   return (
     <main className="mx-auto max-w-6xl px-4 pt-28 pb-24 sm:px-6">
+      <JsonLd
+        id="ld-minyoung"
+        data={[
+          personLd({
+            member,
+            fallbackName: "김민영",
+            path: "/Minyoung_Kim",
+            imagePath: minyoungPhoto,
+            description: `${minyoungHeadline} — ${minyoungSummary}`,
+            email: minyoungContact.email,
+            sameAs: [minyoungGithubUrl],
+            jobTitle: "Backend / Full-stack Engineer",
+            knowsAbout: allKnownTech,
+          }),
+          breadcrumbLd([
+            { name: "Home", path: "/" },
+            { name: "김민영", path: "/Minyoung_Kim" },
+          ]),
+        ]}
+      />
       {/* ── Profile Hero ── */}
       <section className="flex flex-col gap-6 sm:flex-row sm:gap-6 md:gap-8">
         <div className="flex shrink-0 flex-col items-start gap-3 sm:w-[160px] md:w-[180px] justify-between">

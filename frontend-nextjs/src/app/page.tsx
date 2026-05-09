@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ImageSlot } from "@/components/ImageSlot";
+import JsonLd from "@/components/JsonLd";
 import TeamStackTreemap from "@/components/TeamStackTreemap";
+import { organizationLd, websiteLd } from "@/lib/jsonLd";
 import {
   haeyoungLabPitch,
   portfolioProjects,
@@ -14,11 +16,13 @@ import {
   STACK_DOT_CLASS,
   STACK_LABEL,
 } from "@/lib/stackCategory";
+import { SITE_NAME, SITE_URL } from "@/lib/siteConfig";
 
 export const metadata: Metadata = {
   title: "Team Portfolio | HAEYOUNGLAB",
   description:
     "김남해, 김민영 팀의 프로젝트와 역할, 결과물을 한눈에 소개하는 팀 포트폴리오입니다.",
+  alternates: { canonical: "/" },
   keywords: [
     "포트폴리오",
     "팀 포트폴리오",
@@ -30,9 +34,8 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Team Portfolio | HAEYOUNGLAB",
     description: "팀의 대표 프로젝트, 담당 역할, 결과물을 소개하는 포트폴리오 페이지",
-    url: "https://www.haeyounglab.com",
-    siteName: "haeyounglab",
-    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "해영랩" }],
+    url: SITE_URL,
+    siteName: SITE_NAME,
     locale: "ko_KR",
     type: "website",
   },
@@ -40,7 +43,6 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Team Portfolio | HAEYOUNGLAB",
     description: "김남해, 김민영 팀의 프로젝트 포트폴리오",
-    images: ["/og-image.png"],
   },
 };
 
@@ -74,6 +76,10 @@ export default function Home() {
 
   return (
     <main className="relative">
+      <JsonLd
+        id="ld-organization"
+        data={[organizationLd(), websiteLd()]}
+      />
       <div className="pointer-events-none fixed inset-0 -z-20 bg-[#040916]" />
       <div
         className="pointer-events-none fixed inset-0 -z-10 bg-cover bg-center bg-no-repeat opacity-20"
@@ -286,13 +292,23 @@ export default function Home() {
         id="all-projects"
         className="mx-auto max-w-screen-2xl px-4 pb-20 sm:px-6 md:px-8 lg:px-6"
       >
-        <p className="text-xs font-semibold tracking-widest text-emerald-400 uppercase">
-          All Projects
-        </p>
-        <h2 className="mt-1 text-2xl font-semibold text-white md:text-3xl">
-          더 많은 작업
-        </h2>
-        <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div className="flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <p className="text-xs font-semibold tracking-widest text-emerald-400 uppercase">
+              All Projects
+            </p>
+            <h2 className="mt-1 text-2xl font-semibold text-white md:text-3xl">
+              더 많은 작업
+            </h2>
+          </div>
+          <Link
+            href="/projects"
+            className="rounded-md border border-emerald-400/40 bg-emerald-400/10 px-3 py-1.5 text-xs font-semibold text-emerald-200 transition hover:bg-emerald-400/20"
+          >
+            전체 프로젝트 검색·필터 →
+          </Link>
+        </div>
+        <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {others.map((project) => (
             <Link
               key={project.slug}
