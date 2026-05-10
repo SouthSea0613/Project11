@@ -34,6 +34,8 @@ export default function Navbar() {
   const isDark = resolvedTheme === "dark";
   const isNamhaePage = pathname.startsWith("/Namhae_Kim");
   const isMinyoungPage = pathname.startsWith("/Minyoung_Kim");
+  const isProjectsPage = pathname.startsWith("/projects");
+  const isCompare = pathname.startsWith("/team-compare");
 
   return (
     <div className="print-hide fixed top-0 left-0 w-full z-50 pointer-events-none">
@@ -75,8 +77,8 @@ export default function Navbar() {
                   aria-current={isNamhaePage ? "page" : undefined}
                   className={`group inline-flex items-center gap-1.5 rounded-full pl-0.5 pr-2 py-0.5 transition-colors underline-offset-4 ${
                     isNamhaePage
-                      ? "text-emerald-400 underline"
-                      : "hover:text-emerald-400"
+                      ? "text-emerald-500 underline"
+                      : "hover:text-emerald-500"
                   }`}
                 >
                   <span
@@ -104,15 +106,15 @@ export default function Navbar() {
                   aria-current={isMinyoungPage ? "page" : undefined}
                   className={`group inline-flex items-center gap-1.5 rounded-full pl-0.5 pr-2 py-0.5 transition-colors underline-offset-4 ${
                     isMinyoungPage
-                      ? "text-emerald-400 underline"
-                      : "hover:text-emerald-400"
+                      ? "text-sky-500 underline"
+                      : "hover:text-sky-500"
                   }`}
                 >
                   <span
                     className={`block h-7 w-7 overflow-hidden rounded-full ring-2 transition ${
                       isMinyoungPage
-                        ? "ring-emerald-400"
-                        : "ring-border group-hover:ring-emerald-400/60"
+                        ? "ring-sky-400"
+                        : "ring-border group-hover:ring-sky-400/60"
                     }`}
                   >
                     <ImageSlot
@@ -137,6 +139,28 @@ export default function Navbar() {
 
           {/* 우측 버튼 */}
           <div className="flex items-center gap-1 md:gap-2">
+            <Link
+              href="/projects"
+              aria-current={isProjectsPage ? "page" : undefined}
+              className={`hidden md:inline-flex items-center rounded-md px-2.5 h-8 text-xs md:text-sm font-medium transition underline-offset-4 ${
+                isProjectsPage
+                  ? "text-emerald-500 underline"
+                  : "text-muted-foreground hover:text-emerald-500"
+              }`}
+            >
+              Projects
+            </Link>
+            <Link
+              href="/team-compare"
+              aria-current={isCompare ? "page" : undefined}
+              className={`hidden md:inline-flex items-center rounded-md px-2.5 h-8 text-xs md:text-sm font-medium transition underline-offset-4 ${
+                isCompare
+                  ? "text-violet-500 underline"
+                  : "text-muted-foreground hover:text-violet-500"
+              }`}
+            >
+              Compare
+            </Link>
             {pathname.startsWith("/haeyoungsoftware") ? (
               <a
                 href="https://team.haeyounglab.com"
@@ -147,7 +171,7 @@ export default function Navbar() {
                 HaeYoungLab Team
               </a>
             ) : (
-              <Button asChild variant="ghost" size="sm" className="text-xs md:text-sm font-medium px-3 h-8 text-muted-foreground hover:text-foreground">
+              <Button asChild variant="ghost" size="sm" className="hidden md:inline-flex text-xs md:text-sm font-medium px-3 h-8 text-muted-foreground hover:text-foreground">
                 <Link href="/haeyoungsoftware">HAEYOUNGSOFTWARE</Link>
               </Button>
             )}

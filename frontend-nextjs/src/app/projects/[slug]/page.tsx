@@ -63,6 +63,17 @@ export async function generateMetadata({
   };
 }
 
+/** 메트릭 문자열에서 헤드라인용 숫자 부분을 분리합니다. */
+function pickHeadline(metric: string | undefined) {
+  if (!metric) return null;
+  const m = metric.match(/[+\-−]?\d+(?:\.\d+)?\s*(?:%|배|x|X|초|분|시간|주|일|점|회)/);
+  if (!m) return { number: null as string | null, rest: metric };
+  return {
+    number: m[0].replace(/\s+/g, ""),
+    rest: metric.replace(m[0], "").replace(/\s{2,}/g, " ").trim(),
+  };
+}
+
 export default async function ProjectDetailPage({ params }: ProjectDetailPageProps) {
   const { slug } = await params;
   const project = getProjectBySlug(slug);
@@ -80,6 +91,17 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
 
   const ldImagePath =
     project.heroImage ?? project.thumbnail ?? DEFAULT_OG_IMAGE_PATH;
+
+  const headline = pickHeadline(project.metrics[0]);
+
+  // 이전/다음 프로젝트 (portfolioProjects 순서 기준)
+  const currentIdx = portfolioProjects.findIndex((p) => p.slug === project.slug);
+  const prevProject =
+    currentIdx > 0 ? portfolioProjects[currentIdx - 1] : null;
+  const nextProject =
+    currentIdx >= 0 && currentIdx < portfolioProjects.length - 1
+      ? portfolioProjects[currentIdx + 1]
+      : null;
 
   return (
     <main className="mx-auto max-w-5xl px-4 pt-24 pb-24 sm:px-6">
@@ -111,24 +133,71 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
             priority
           />
         </div>
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
-        <div className="absolute inset-x-0 bottom-0 p-5 sm:p-7">
-          <p className="text-[11px] font-semibold tracking-[0.25em] uppercase text-emerald-300">
-            Project Detail
-          </p>
-          <h1 className="mt-2 text-2xl font-bold tracking-tight text-white md:text-4xl">
-            {project.title}
-          </h1>
-          <div className="mt-3 flex flex-wrap items-center gap-2">
-            <span className="rounded-full border border-white/20 bg-white/10 px-2.5 py-0.5 text-[11px] text-slate-200">
-              {project.period}
-            </span>
-            {project.role && (
-              <span className="rounded-full border border-emerald-400/30 bg-emerald-400/15 px-2.5 py-0.5 text-[11px] text-emerald-200">
-                {project.role}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+
+        {/* 좌하단 — 타이틀/메타 */}
+        <div className="absolute inset-x-0 bottom-0 grid gap-4 p-5 sm:p-7 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
+          <div className="min-w-0">
+            <p className="text-[11px] font-semibold tracking-[0.25em] uppercase text-emerald-300">
+              Project Detail
+            </p>
+            <h1 className="mt-2 text-2xl font-bold tracking-tight text-white md:text-4xl">
+              {project.title}
+            </h1>
+            <p className="mt-2 line-clamp-2 max-w-2xl text-sm leading-6 text-slate-200/90 md:text-base">
+              {project.summary}
+            </p>
+            <div className="mt-3 flex flex-wrap items-center gap-2">
+              <span className="rounded-full border border-white/20 bg-white/10 px-2.5 py-0.5 text-[11px] text-slate-200">
+                {project.period}
               </span>
-            )}
+              {project.role && (
+                <span className="rounded-full border border-emerald-400/30 bg-emerald-400/15 px-2.5 py-0.5 text-[11px] text-emerald-200">
+                  {project.role}
+                </span>
+              )}
+              {projectMembers.map((member) => (
+                <Link
+                  key={member.id}
+                  href={member.profilePath}
+                  className={`rounded-full border px-2.5 py-0.5 text-[11px] font-medium transition ${
+                    member.id === "namhae"
+                      ? "border-emerald-400/40 bg-emerald-400/15 text-emerald-100 hover:bg-emerald-400/25"
+                      : "border-sky-400/40 bg-sky-400/15 text-sky-100 hover:bg-sky-400/25"
+                  }`}
+                >
+                  {member.name}
+                </Link>
+              ))}
+            </div>
           </div>
+
+          {/* 우하단 — 헤드라인 메트릭 (가장 큰 결과 숫자) */}
+          {headline && (
+            <div className="md:max-w-[260px]">
+              <div className="rounded-2xl border border-emerald-400/40 bg-slate-950/80 p-4 backdrop-blur">
+                <p className="text-[10px] font-semibold tracking-widest uppercase text-emerald-300">
+                  Headline Result
+                </p>
+                {headline.number ? (
+                  <>
+                    <div className="mt-1 text-4xl font-bold leading-none tracking-tight text-emerald-300 md:text-5xl">
+                      {headline.number}
+                    </div>
+                    {headline.rest && (
+                      <p className="mt-2 line-clamp-2 text-xs leading-snug text-slate-200">
+                        {headline.rest}
+                      </p>
+                    )}
+                  </>
+                ) : (
+                  <p className="mt-1 text-sm font-semibold leading-snug text-emerald-200">
+                    {headline.rest}
+                  </p>
+                )}
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
@@ -318,8 +387,59 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
         </section>
       )}
 
+      {/* ── 이전/다음 프로젝트 ── */}
+      {(prevProject || nextProject) && (
+        <nav
+          aria-label="다른 프로젝트로 이동"
+          className="mt-12 grid gap-3 md:grid-cols-2"
+        >
+          {prevProject ? (
+            <Link
+              href={`/projects/${prevProject.slug}`}
+              className="group flex h-full flex-col rounded-2xl border bg-card p-4 transition hover:-translate-y-0.5 hover:border-emerald-400/60"
+            >
+              <span className="text-[10px] font-semibold tracking-widest uppercase text-muted-foreground">
+                ← 이전 프로젝트
+              </span>
+              <span className="mt-2 text-base font-semibold group-hover:text-emerald-500">
+                {prevProject.title}
+              </span>
+              <span className="mt-1 line-clamp-2 text-xs text-muted-foreground">
+                {prevProject.summary}
+              </span>
+              <span className="mt-2 text-[11px] text-muted-foreground">
+                {prevProject.period}
+              </span>
+            </Link>
+          ) : (
+            <span aria-hidden className="hidden md:block" />
+          )}
+          {nextProject ? (
+            <Link
+              href={`/projects/${nextProject.slug}`}
+              className="group flex h-full flex-col rounded-2xl border bg-card p-4 text-right transition hover:-translate-y-0.5 hover:border-emerald-400/60"
+            >
+              <span className="text-[10px] font-semibold tracking-widest uppercase text-muted-foreground">
+                다음 프로젝트 →
+              </span>
+              <span className="mt-2 text-base font-semibold group-hover:text-emerald-500">
+                {nextProject.title}
+              </span>
+              <span className="mt-1 line-clamp-2 text-xs text-muted-foreground">
+                {nextProject.summary}
+              </span>
+              <span className="mt-2 text-[11px] text-muted-foreground">
+                {nextProject.period}
+              </span>
+            </Link>
+          ) : (
+            <span aria-hidden className="hidden md:block" />
+          )}
+        </nav>
+      )}
+
       {/* ── Back ── */}
-      <div className="mt-10 flex items-center justify-between text-sm">
+      <div className="mt-8 flex items-center justify-between text-sm">
         <Link
           href="/"
           className="text-emerald-500 underline-offset-4 hover:underline"
@@ -327,7 +447,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
           ← 홈으로 돌아가기
         </Link>
         <Link
-          href="/#all-projects"
+          href="/projects"
           className="text-emerald-500 underline-offset-4 hover:underline"
         >
           모든 프로젝트 보기 →

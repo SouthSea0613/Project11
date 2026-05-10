@@ -79,16 +79,30 @@ export default function NamhaeKimPage() {
           ]),
         ]}
       />
-      {/* ── Profile Hero ── */}
-      <section className="flex flex-col gap-6 sm:flex-row sm:gap-6 md:gap-8">
-        <div className="flex shrink-0 flex-col items-start gap-3 sm:w-[160px] md:w-[180px] justify-between">
-          <div className="w-28 sm:w-full">
-            <ProfilePhotoViewer
-              src={namhaePhoto}
-              alt="김남해 프로필 사진"
-            />
+      <div className="grid gap-8 lg:grid-cols-[260px_minmax(0,1fr)] lg:gap-10">
+        {/* ── Sticky Left Profile ── */}
+        <aside className="lg:sticky lg:top-24 lg:self-start print:static">
+          <div className="flex gap-4 sm:flex-col sm:gap-3">
+            <div className="w-28 shrink-0 sm:w-full">
+              <ProfilePhotoViewer
+                src={namhaePhoto}
+                alt="김남해 프로필 사진"
+              />
+            </div>
+            <div className="min-w-0 flex-1 sm:flex-none">
+              <p className="text-[11px] font-semibold tracking-widest text-emerald-500 uppercase">
+                Team Member
+              </p>
+              <h1 className="mt-1 text-2xl font-bold tracking-tight">
+                {member?.name ?? "김남해"}
+              </h1>
+              <p className="mt-1 text-[11px] font-medium text-muted-foreground">
+                {member?.role}
+              </p>
+            </div>
           </div>
-          <div className="flex flex-wrap gap-2 text-xs">
+
+          <div className="mt-4 flex flex-wrap gap-2 text-xs">
             <a
               href={`mailto:${namhaeContact.email}`}
               className="rounded-md bg-emerald-500 px-3 py-1.5 font-semibold text-slate-950 hover:bg-emerald-400"
@@ -121,22 +135,34 @@ export default function NamhaeKimPage() {
               {namhaeContact.phoneDisplay}
             </a>
           </div>
-        </div>
 
-        <div className="min-w-0 flex-1">
+          {/* 다른 멤버 / 비교 */}
+          <div className="print-hide mt-4 flex flex-wrap gap-2 text-[11px]">
+            <Link
+              href="/Minyoung_Kim"
+              className="inline-flex items-center gap-1 rounded-md border border-sky-400/40 bg-sky-500/10 px-2.5 py-1 font-medium text-sky-500 transition hover:bg-sky-500/20"
+            >
+              김민영 →
+            </Link>
+            <Link
+              href="/team-compare"
+              className="inline-flex items-center gap-1 rounded-md border border-violet-400/40 bg-violet-500/10 px-2.5 py-1 font-medium text-violet-500 transition hover:bg-violet-500/20"
+            >
+              비교 보기
+            </Link>
+          </div>
+        </aside>
+
+        {/* ── Right Main ── */}
+        <div className="min-w-0">
           <p className="text-xs font-semibold tracking-widest text-emerald-500 uppercase">
             HaeYoungLab · Team Member
           </p>
-          <h1 className="mt-2 text-4xl font-bold tracking-tight md:text-5xl">
-            {member?.name ?? "김남해"}
-          </h1>
-          <p className="mt-1 text-sm font-medium text-muted-foreground md:text-base">
-            {member?.role}
-          </p>
-          <p className="mt-5 text-base font-semibold leading-relaxed md:text-lg">
+          <h2 className="sr-only">{member?.name ?? "김남해"} 포트폴리오</h2>
+          <p className="mt-3 text-2xl font-bold leading-snug tracking-tight md:text-3xl">
             {namhaeHeadline}
           </p>
-          <p className="mt-3 text-sm leading-7 text-muted-foreground md:text-base">
+          <p className="mt-4 text-sm leading-7 text-muted-foreground md:text-base">
             {namhaeSummary}
           </p>
 
@@ -156,40 +182,39 @@ export default function NamhaeKimPage() {
               </div>
             ))}
           </div>
+
+          <NamhaeContentTabs projects={projects} />
+
+          <section className="print-hide mt-10 rounded-xl border bg-card p-5">
+            <h2 className="text-lg font-semibold">외부 링크</h2>
+            <ul className="mt-3 space-y-2 text-sm">
+              {namhaeExternalLinks.map((link) => (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-emerald-500 underline-offset-4 hover:underline"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <div className="print-hide mt-10 flex items-center justify-between text-sm">
+            <Link href="/" className="text-emerald-500 underline-offset-4 hover:underline">
+              ← 홈으로 돌아가기
+            </Link>
+            <a
+              href={`mailto:${namhaeContact.email}`}
+              className="text-emerald-500 underline-offset-4 hover:underline"
+            >
+              {namhaeContact.email}
+            </a>
+          </div>
         </div>
-      </section>
-
-      <NamhaeContentTabs projects={projects} />
-
-      <section className="print-hide mt-10 rounded-xl border bg-card p-5">
-        <h2 className="text-lg font-semibold">외부 링크</h2>
-        <ul className="mt-3 space-y-2 text-sm">
-          {namhaeExternalLinks.map((link) => (
-            <li key={link.href}>
-              <a
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-emerald-500 underline-offset-4 hover:underline"
-              >
-                {link.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      {/* ── Footer Nav ── */}
-      <div className="print-hide mt-10 flex items-center justify-between text-sm">
-        <Link href="/" className="text-emerald-500 underline-offset-4 hover:underline">
-          ← 홈으로 돌아가기
-        </Link>
-        <a
-          href={`mailto:${namhaeContact.email}`}
-          className="text-emerald-500 underline-offset-4 hover:underline"
-        >
-          {namhaeContact.email}
-        </a>
       </div>
     </main>
   );

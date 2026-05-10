@@ -60,6 +60,8 @@ const teamImpact = [
   { value: "1분", label: "신규 기능 배포 주기", accent: "text-amber-400" },
 ];
 
+const heroHeadlineStats = teamImpact.slice(0, 2);
+
 const stackLegend = STACK_CATEGORIES.map((key) => ({
   color: STACK_DOT_CLASS[key],
   label: STACK_LABEL[key],
@@ -86,54 +88,88 @@ export default function Home() {
         style={{ backgroundImage: "url('/background.jpg')" }}
       />
 
-      {/* ── Hero ── */}
+      {/* ── Hero (통합) ── */}
       <section className="mx-auto max-w-screen-2xl px-4 pt-32 pb-12 sm:px-6 md:px-8 lg:px-6">
-        <p className="text-xs font-semibold tracking-[0.25em] uppercase text-emerald-400 md:text-sm">
-          {haeyoungLabPitch.tagline}
-        </p>
-        <h1 className="mt-3 text-3xl font-bold tracking-tight text-white md:text-5xl">
-          {haeyoungLabPitch.heroTitle}
-          <br />
-          <span className="text-2xl font-semibold text-slate-200 md:text-3xl">
-            {haeyoungLabPitch.heroSubtitle}
-          </span>
-        </h1>
-        <p className="mt-6 max-w-3xl text-sm leading-7 text-slate-300 md:text-base">
-          {haeyoungLabPitch.description}
-        </p>
-        <div className="mt-7 flex flex-wrap items-center gap-3">
-          {teamMembers.map((member) => (
-            <Link
-              key={member.id}
-              href={member.profilePath}
-              className="group inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/[0.06] py-1.5 pl-1.5 pr-4 text-sm font-medium text-white transition hover:border-emerald-400/60 hover:bg-emerald-500/10"
-            >
-              <span className="block h-8 w-8 overflow-hidden rounded-full ring-2 ring-emerald-400/30">
-                <ImageSlot
-                  src={memberPhotoMap[member.id]}
-                  alt={`${member.name} 프로필`}
-                  aspect="aspect-square"
-                  rounded="rounded-full"
-                  label=""
-                  className="!border-0"
-                  sizes="32px"
-                />
-              </span>
-              {member.name} 프로필
-            </Link>
-          ))}
-        </div>
-      </section>
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,420px)] lg:items-end">
+          {/* 좌: 가치제안 */}
+          <div>
+            <p className="text-xs font-semibold tracking-[0.25em] uppercase text-emerald-400 md:text-sm">
+              {haeyoungLabPitch.tagline}
+            </p>
+            <h1 className="mt-3 text-4xl font-bold leading-[1.1] tracking-tight text-white md:text-6xl">
+              {haeyoungLabPitch.heroTitle}
+            </h1>
+            <p className="mt-3 text-xl font-semibold text-slate-200 md:text-2xl">
+              {haeyoungLabPitch.heroSubtitle}
+            </p>
+            <p className="mt-6 max-w-2xl text-sm leading-7 text-slate-300 md:text-base">
+              {haeyoungLabPitch.description}
+            </p>
 
-      {/* ── Impact Stats Strip ── */}
-      <section className="mx-auto max-w-screen-2xl px-4 pb-16 sm:px-6 md:px-8 lg:px-6">
-        <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
-          {teamImpact.map((stat) => (
+            <div className="mt-7 flex flex-wrap items-center gap-3">
+              {teamMembers.map((member) => (
+                <Link
+                  key={member.id}
+                  href={member.profilePath}
+                  className={`group inline-flex items-center gap-2.5 rounded-full border py-1.5 pl-1.5 pr-4 text-sm font-medium text-white transition ${
+                    member.id === "namhae"
+                      ? "border-emerald-400/30 bg-emerald-500/10 hover:border-emerald-400/70 hover:bg-emerald-500/20"
+                      : "border-sky-400/30 bg-sky-500/10 hover:border-sky-400/70 hover:bg-sky-500/20"
+                  }`}
+                >
+                  <span
+                    className={`block h-8 w-8 overflow-hidden rounded-full ring-2 ${
+                      member.id === "namhae"
+                        ? "ring-emerald-400/40"
+                        : "ring-sky-400/40"
+                    }`}
+                  >
+                    <ImageSlot
+                      src={memberPhotoMap[member.id]}
+                      alt={`${member.name} 프로필`}
+                      aspect="aspect-square"
+                      rounded="rounded-full"
+                      label=""
+                      className="!border-0"
+                      sizes="32px"
+                    />
+                  </span>
+                  {member.name} 프로필
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          {/* 우: 거대 숫자 2개 (한눈 핵심 KPI) */}
+          <div className="grid grid-cols-2 gap-3">
+            {heroHeadlineStats.map((stat) => (
+              <div
+                key={stat.label}
+                className="rounded-2xl border border-white/10 bg-slate-950/70 p-5 backdrop-blur"
+              >
+                <div
+                  className={`text-4xl font-bold tracking-tight md:text-5xl ${stat.accent}`}
+                >
+                  {stat.value}
+                </div>
+                <div className="mt-2 text-[11px] font-semibold leading-snug tracking-wide text-slate-300 md:text-xs">
+                  {stat.label}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* 보조 KPI 2개 — 한 줄 strip */}
+        <div className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-4">
+          {teamImpact.slice(2).map((stat) => (
             <div
               key={stat.label}
-              className="rounded-xl border border-white/10 bg-slate-950/60 px-4 py-4 backdrop-blur"
+              className="rounded-xl border border-white/10 bg-slate-950/50 px-4 py-3 backdrop-blur md:col-span-2"
             >
-              <div className={`text-2xl font-bold tracking-tight md:text-3xl ${stat.accent}`}>
+              <div
+                className={`text-xl font-bold tracking-tight md:text-2xl ${stat.accent}`}
+              >
                 {stat.value}
               </div>
               <div className="mt-1 text-[11px] leading-snug text-slate-300 md:text-xs">
@@ -163,54 +199,82 @@ export default function Home() {
           </Link>
         </div>
         <div className="mt-6 grid gap-4 lg:grid-cols-3">
-          {featured.map((project, idx) => (
-            <Link
-              key={project.slug}
-              href={`/projects/${project.slug}`}
-              className="group flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-slate-950/60 transition hover:-translate-y-0.5 hover:border-emerald-400/50 hover:shadow-lg hover:shadow-emerald-500/10"
-            >
-              <ImageSlot
-                src={project.heroImage}
-                alt={project.title}
-                aspect="aspect-[16/9]"
-                rounded="rounded-none"
-                label="이미지 추가 예정"
-                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                priority={idx === 0}
-              />
-              <div className="flex flex-1 flex-col p-5">
-                <div className="flex flex-wrap items-center gap-2">
-                  <span className="rounded-full border border-white/15 bg-white/5 px-2 py-0.5 text-[10px] text-slate-300">
-                    {project.period}
-                  </span>
-                  {project.role && (
-                    <span className="rounded-full border border-emerald-400/30 bg-emerald-400/10 px-2 py-0.5 text-[10px] text-emerald-300">
-                      {project.role}
+          {featured.map((project, idx) => {
+            const isHero = idx === 0;
+            return (
+              <Link
+                key={project.slug}
+                href={`/projects/${project.slug}`}
+                className={`group flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-slate-950/60 transition hover:-translate-y-0.5 hover:border-emerald-400/50 hover:shadow-lg hover:shadow-emerald-500/10 ${
+                  isHero ? "lg:col-span-2 lg:row-span-2" : ""
+                }`}
+              >
+                <div className="relative">
+                  <ImageSlot
+                    src={project.heroImage}
+                    alt={project.title}
+                    aspect={isHero ? "aspect-[16/9]" : "aspect-[16/9]"}
+                    rounded="rounded-none"
+                    label="이미지 추가 예정"
+                    sizes={
+                      isHero
+                        ? "(min-width: 1024px) 66vw, (min-width: 640px) 100vw, 100vw"
+                        : "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                    }
+                    priority={isHero}
+                  />
+                  {isHero && (
+                    <span className="absolute left-3 top-3 rounded-full border border-emerald-400/40 bg-slate-950/80 px-2 py-0.5 text-[10px] font-semibold tracking-wider uppercase text-emerald-300 backdrop-blur">
+                      ★ Flagship
                     </span>
                   )}
                 </div>
-                <h3 className="mt-3 text-lg font-semibold text-white group-hover:text-emerald-300">
-                  {project.title}
-                </h3>
-                <p className="mt-2 line-clamp-2 text-sm text-slate-300">
-                  {project.summary}
-                </p>
-                <div className="mt-4 flex flex-wrap gap-1.5">
-                  {project.metrics.slice(0, 3).map((metric) => (
-                    <span
-                      key={metric}
-                      className="rounded-md border border-emerald-400/30 bg-emerald-400/10 px-2 py-0.5 text-[10px] font-medium text-emerald-200"
-                    >
-                      {metric}
+                <div className="flex flex-1 flex-col p-5">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="rounded-full border border-white/15 bg-white/5 px-2 py-0.5 text-[10px] text-slate-300">
+                      {project.period}
                     </span>
-                  ))}
+                    {project.role && (
+                      <span className="rounded-full border border-emerald-400/30 bg-emerald-400/10 px-2 py-0.5 text-[10px] text-emerald-300">
+                        {project.role}
+                      </span>
+                    )}
+                  </div>
+                  <h3
+                    className={`mt-3 font-semibold text-white group-hover:text-emerald-300 ${
+                      isHero ? "text-2xl md:text-3xl" : "text-lg"
+                    }`}
+                  >
+                    {project.title}
+                  </h3>
+                  <p
+                    className={`mt-2 text-slate-300 ${
+                      isHero
+                        ? "line-clamp-3 text-sm md:text-base"
+                        : "line-clamp-2 text-sm"
+                    }`}
+                  >
+                    {project.summary}
+                  </p>
+                  <div className="mt-4 flex flex-wrap gap-1.5">
+                    {project.metrics
+                      .slice(0, isHero ? 4 : 3)
+                      .map((metric) => (
+                        <span
+                          key={metric}
+                          className="rounded-md border border-emerald-400/30 bg-emerald-400/10 px-2 py-0.5 text-[10px] font-medium text-emerald-200"
+                        >
+                          {metric}
+                        </span>
+                      ))}
+                  </div>
+                  <div className="mt-auto pt-4 text-xs text-emerald-400">
+                    상세 보기 →
+                  </div>
                 </div>
-                <div className="mt-auto pt-4 text-xs text-emerald-400">
-                  상세 보기 →
-                </div>
-              </div>
-            </Link>
-          ))}
+              </Link>
+            );
+          })}
         </div>
       </section>
 
@@ -350,6 +414,86 @@ export default function Home() {
               </div>
             </Link>
           ))}
+        </div>
+      </section>
+
+      {/* ── 다음 행선지 (3-CTA) ── */}
+      <section className="mx-auto max-w-screen-2xl px-4 pb-12 sm:px-6 md:px-8 lg:px-6">
+        <div className="grid gap-3 md:grid-cols-3">
+          <Link
+            href="/projects"
+            className="group rounded-2xl border border-white/10 bg-slate-950/60 p-5 transition hover:-translate-y-0.5 hover:border-emerald-400/60"
+          >
+            <p className="text-[10px] font-semibold tracking-widest uppercase text-emerald-400">
+              Browse
+            </p>
+            <h3 className="mt-1 text-lg font-semibold text-white group-hover:text-emerald-300">
+              전체 프로젝트 검색·필터
+            </h3>
+            <p className="mt-1 text-xs text-slate-400">
+              스택 / 멤버 / 키워드로 좁혀 보기
+            </p>
+            <span className="mt-3 inline-block text-xs text-emerald-400">
+              열기 →
+            </span>
+          </Link>
+          <Link
+            href="/team-compare"
+            className="group rounded-2xl border border-violet-400/30 bg-violet-500/10 p-5 transition hover:-translate-y-0.5 hover:border-violet-400/70"
+          >
+            <p className="text-[10px] font-semibold tracking-widest uppercase text-violet-300">
+              Compare
+            </p>
+            <h3 className="mt-1 text-lg font-semibold text-white group-hover:text-violet-200">
+              팀원 비교 — 능력치 · 임팩트 · 스택
+            </h3>
+            <p className="mt-1 text-xs text-slate-300">
+              김남해 · 김민영을 한 화면에서 비교
+            </p>
+            <span className="mt-3 inline-block text-xs text-violet-300">
+              열기 →
+            </span>
+          </Link>
+          <div className="grid grid-cols-2 gap-3">
+            {teamMembers.map((member) => (
+              <Link
+                key={member.id}
+                href={member.profilePath}
+                className={`group flex flex-col justify-between rounded-2xl border bg-slate-950/60 p-4 transition hover:-translate-y-0.5 ${
+                  member.id === "namhae"
+                    ? "border-emerald-400/30 hover:border-emerald-400/70"
+                    : "border-sky-400/30 hover:border-sky-400/70"
+                }`}
+              >
+                <div>
+                  <p
+                    className={`text-[10px] font-semibold tracking-widest uppercase ${
+                      member.id === "namhae"
+                        ? "text-emerald-400"
+                        : "text-sky-400"
+                    }`}
+                  >
+                    Profile
+                  </p>
+                  <h3 className="mt-1 text-sm font-semibold text-white">
+                    {member.name}
+                  </h3>
+                  <p className="mt-0.5 line-clamp-2 text-[11px] text-slate-400">
+                    {member.role}
+                  </p>
+                </div>
+                <span
+                  className={`mt-3 text-[11px] ${
+                    member.id === "namhae"
+                      ? "text-emerald-400"
+                      : "text-sky-400"
+                  }`}
+                >
+                  열기 →
+                </span>
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 

@@ -40,28 +40,33 @@ export default function ProjectsIndex({
   );
   const [sort, setSort] = useState<SortKey>("recent");
 
+  /** 인기 스택 — 전체 프로젝트 사용 빈도 기준 상위 7개 */
+  const popularStacks = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const p of projects) {
+      for (const s of p.stack) {
+        counts.set(s, (counts.get(s) ?? 0) + 1);
+      }
+    }
+    return Array.from(counts.entries())
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 7);
+  }, [projects]);
+
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     const list = projects.filter((p) => {
-      // 멤버 필터
       if (memberFilter !== "all" && !p.members.includes(memberFilter)) {
         return false;
       }
-      // 카테고리 필터 — stack 중 하나라도 해당 카테고리이면 통과
       if (categoryFilter !== "all") {
         const hasCategory = p.stack.some(
           (s) => classifyTech(s) === categoryFilter
         );
         if (!hasCategory) return false;
       }
-      // 검색 — title / summary / stack / role
       if (q) {
-        const haystack = [
-          p.title,
-          p.summary,
-          p.role ?? "",
-          ...p.stack,
-        ]
+        const haystack = [p.title, p.summary, p.role ?? "", ...p.stack]
           .join(" ")
           .toLowerCase();
         if (!haystack.includes(q)) return false;
@@ -71,13 +76,17 @@ export default function ProjectsIndex({
 
     return list.sort((a, b) => {
       if (sort === "title") return a.title.localeCompare(b.title);
-      // recent — period start 기준 내림차순
       return periodStart(b.period) - periodStart(a.period);
     });
   }, [projects, query, memberFilter, categoryFilter, sort]);
 
   const total = projects.length;
   const visible = filtered.length;
+  const isFiltered =
+    !!query ||
+    memberFilter !== "all" ||
+    categoryFilter !== "all" ||
+    sort !== "recent";
 
   return (
     <div>
@@ -150,18 +159,68 @@ export default function ProjectsIndex({
           </select>
         </div>
 
-        {/* 결과 카운트 + 초기화 */}
-        <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">
-          <span>
-            전체 <span className="font-semibold text-foreground">{total}</span>
-            개 중{" "}
-            <span className="font-semibold text-emerald-500">{visible}</span>
-            개 표시
-          </span>
-          {(query ||
-            memberFilter !== "all" ||
-            categoryFilter !== "all" ||
-            sort !== "recent") && (
+        {/* 인기 스택 — 빠른 필터 */}
+        {popularStacks.length > 0 && (
+          <div className="mt-3 flex flex-wrap items-center gap-1.5">
+            <span className="mr-1 text-[10px] font-semibold tracking-widest uppercase text-muted-foreground">
+              빠른 검색
+            </span>
+            {popularStacks.map(([stack, count]) => {
+              const isActive = query.toLowerCase() === stack.toLowerCase();
+              return (
+                <button
+                  key={stack}
+                  type="button"
+                  onClick={() => setQuery(isActive ? "" : stack)}
+                  className={`inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[11px] transition ${
+                    isActive
+                      ? "border-emerald-400/60 bg-emerald-400/15 text-emerald-500"
+                      : "border-border bg-muted/40 text-muted-foreground hover:border-emerald-400/40 hover:text-foreground"
+                  }`}
+                >
+                  {stack}
+                  <span className="text-[9px] opacity-70">{count}</span>
+                </button>
+              );
+            })}
+          </div>
+        )}
+
+        {/* 결과 status bar */}
+        <div className="mt-3 flex flex-wrap items-center justify-between gap-2 text-xs">
+          <div className="flex flex-wrap items-center gap-2 text-muted-foreground">
+            <span>
+              전체 <span className="font-semibold text-foreground">{total}</span>{" "}
+              중{" "}
+              <span className="font-semibold text-emerald-500">{visible}</span>
+              개
+            </span>
+            {memberFilter !== "all" && (
+              <span
+                className={`inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[10px] ${
+                  memberFilter === "namhae"
+                    ? "border-emerald-400/40 bg-emerald-500/10 text-emerald-500"
+                    : "border-sky-400/40 bg-sky-500/10 text-sky-500"
+                }`}
+              >
+                멤버: {memberLabels[memberFilter]}
+              </span>
+            )}
+            {categoryFilter !== "all" && (
+              <span className="inline-flex items-center gap-1 rounded-full border border-violet-400/40 bg-violet-500/10 px-2 py-0.5 text-[10px] text-violet-500">
+                카테고리: {STACK_LABEL[categoryFilter]}
+              </span>
+            )}
+            {query && (
+              <span className="inline-flex items-center gap-1 rounded-full border border-amber-400/40 bg-amber-500/10 px-2 py-0.5 text-[10px] text-amber-500">
+                검색: “{query}”
+              </span>
+            )}
+            <span className="text-[10px] opacity-70">
+              · 정렬: {sort === "recent" ? "최신순" : "이름순"}
+            </span>
+          </div>
+          {isFiltered && (
             <button
               type="button"
               onClick={() => {
@@ -170,7 +229,7 @@ export default function ProjectsIndex({
                 setCategoryFilter("all");
                 setSort("recent");
               }}
-              className="rounded px-2 py-1 text-[11px] hover:bg-muted hover:text-foreground"
+              className="rounded px-2 py-1 text-[11px] text-muted-foreground hover:bg-muted hover:text-foreground"
             >
               필터 초기화
             </button>
@@ -207,8 +266,17 @@ export default function ProjectsIndex({
                     {p.members.map((id) => (
                       <span
                         key={id}
-                        className="rounded-full border border-border bg-muted/40 px-1.5 py-0.5 text-[10px]"
+                        className={`inline-flex items-center gap-1 rounded-full border px-1.5 py-0.5 text-[10px] ${
+                          id === "namhae"
+                            ? "border-emerald-400/40 bg-emerald-500/10 text-emerald-500"
+                            : "border-sky-400/40 bg-sky-500/10 text-sky-500"
+                        }`}
                       >
+                        <span
+                          className={`inline-block h-1.5 w-1.5 rounded-full ${
+                            id === "namhae" ? "bg-emerald-400" : "bg-sky-400"
+                          }`}
+                        />
                         {memberLabels[id]}
                       </span>
                     ))}

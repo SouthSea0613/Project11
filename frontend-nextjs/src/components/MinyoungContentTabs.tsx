@@ -118,60 +118,72 @@ export default function MinyoungContentTabs({ projects }: MinyoungContentTabsPro
       </div>
 
       {showOverview && (
-        <div className="mt-5 grid gap-4 md:grid-cols-2">
-          <section className="rounded-xl border bg-card p-5">
-            <div className="flex items-baseline justify-between">
-              <h2 className="text-base font-semibold">핵심 역량</h2>
-              <span className="text-[11px] text-muted-foreground">5축 · 100점 환산</span>
-            </div>
-            <MinyoungAbilityRadar />
-          </section>
+        <div className="mt-5 grid gap-4">
+          {/* 1단: 능력치 레이더 + 비즈니스 임팩트 */}
+          <div className="grid gap-4 md:grid-cols-5">
+            <section className="rounded-xl border bg-card p-5 md:col-span-2">
+              <div className="flex items-baseline justify-between">
+                <h2 className="text-base font-semibold">핵심 역량</h2>
+                <span className="text-[11px] text-muted-foreground">5축 · 100점</span>
+              </div>
+              <MinyoungAbilityRadar />
+            </section>
 
-          <section className="rounded-xl border bg-card p-5">
-            <h2 className="text-base font-semibold">기술 맵</h2>
-            <div className="mt-3 space-y-2">
+            <section className="rounded-xl border bg-card p-5 md:col-span-3">
+              <div className="flex items-baseline justify-between">
+                <h2 className="text-base font-semibold">비즈니스 임팩트</h2>
+                <span className="text-[11px] text-muted-foreground">
+                  실제 적용 후 측정·체감 수치
+                </span>
+              </div>
+              <div className="mt-3">
+                <MemberImpactChart metrics={minyoungImpactMetrics} accent="sky" />
+              </div>
+              <p className="mt-2 text-[11px] text-muted-foreground">
+                + 성능·처리량 증가 / − 비용·시간 절감
+              </p>
+            </section>
+          </div>
+
+          {/* 2단: 기술 맵 (horizontal ribbon) */}
+          <section className="rounded-xl border bg-card p-4">
+            <div className="flex items-baseline justify-between">
+              <h2 className="text-sm font-semibold">기술 맵</h2>
+              <span className="text-[11px] text-muted-foreground">
+                카테고리별 핵심 스택
+              </span>
+            </div>
+            <div className="mt-2 flex flex-wrap gap-x-4 gap-y-2">
               {minyoungSkillCategories.map((cat) => (
-                <div key={cat.label} className="flex items-start gap-2">
+                <div key={cat.label} className="flex items-center gap-2">
                   <span
-                    className={`mt-1 inline-block h-2 w-2 shrink-0 rounded-full ${categoryLabelToDot(cat.label)}`}
+                    className={`inline-block h-2 w-2 shrink-0 rounded-full ${categoryLabelToDot(cat.label)}`}
                   />
-                  <div className="min-w-0 flex-1">
-                    <p className="text-[11px] font-semibold tracking-wider uppercase text-muted-foreground">
-                      {cat.label}
-                    </p>
-                    <div className="mt-1 flex flex-wrap gap-1">
-                      {cat.items.map((s) => (
-                        <span
-                          key={s}
-                          className="rounded-full border border-border bg-muted/40 px-2 py-0.5 text-[11px]"
-                        >
-                          {s}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
+                  <span className="text-[11px] font-semibold tracking-wider uppercase text-muted-foreground">
+                    {cat.label}
+                  </span>
+                  <span className="flex flex-wrap gap-1">
+                    {cat.items.slice(0, 6).map((s) => (
+                      <span
+                        key={s}
+                        className="rounded-full border border-border bg-muted/40 px-2 py-0.5 text-[11px]"
+                      >
+                        {s}
+                      </span>
+                    ))}
+                    {cat.items.length > 6 && (
+                      <span className="text-[11px] text-muted-foreground">
+                        +{cat.items.length - 6}
+                      </span>
+                    )}
+                  </span>
                 </div>
               ))}
             </div>
           </section>
 
-          {/* 비즈니스 임팩트 — % 단위 BarChart */}
-          <section className="rounded-xl border bg-card p-5 md:col-span-2">
-            <div className="flex items-baseline justify-between">
-              <h2 className="text-base font-semibold">비즈니스 임팩트</h2>
-              <span className="text-[11px] text-muted-foreground">
-                실제 프로젝트 적용 후 측정·체감 수치
-              </span>
-            </div>
-            <div className="mt-3">
-              <MemberImpactChart metrics={minyoungImpactMetrics} accent="sky" />
-            </div>
-            <p className="mt-2 text-[11px] text-muted-foreground">
-              + 표기는 성능·운영 처리량 증가, − 표기는 비용·시간 절감
-            </p>
-          </section>
-
-          <section className="rounded-xl border bg-card p-5 md:col-span-2">
+          {/* 3단: 대표 프로젝트 */}
+          <section className="rounded-xl border bg-card p-5">
             <h2 className="text-base font-semibold">대표 프로젝트</h2>
             <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
               {topProjects.map((project) => {
@@ -230,8 +242,8 @@ export default function MinyoungContentTabs({ projects }: MinyoungContentTabsPro
             </div>
           </section>
 
-          {/* 사업 · 설명 자료 — minyoung 워크플로우/시스템 자료 노출 */}
-          <section className="rounded-xl border bg-card p-5 md:col-span-2">
+          {/* 4단: 사업 · 설계 자료 */}
+          <section className="rounded-xl border bg-card p-5">
             <div className="flex items-baseline justify-between">
               <h2 className="text-base font-semibold">사업 · 설계 자료</h2>
               <span className="text-[11px] text-muted-foreground">

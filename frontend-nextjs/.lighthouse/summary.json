@@ -1,26 +1,20 @@
 [
   {
     "route": "home",
-    "url": "http://localhost:3000/",
+    "url": "http://localhost:3100/",
     "scores": {
-      "performance": 0.9,
+      "performance": 0.86,
       "accessibility": 0.96,
       "best-practices": 0.77,
-      "seo": 0.92
+      "seo": 1
     },
     "issues": {
       "performance": [
         {
           "id": "total-blocking-time",
           "title": "Total Blocking Time",
-          "score": 0.7,
-          "displayValue": "250 ms"
-        },
-        {
-          "id": "speed-index",
-          "title": "Speed Index",
-          "score": 0.88,
-          "displayValue": "1.4 s"
+          "score": 0.53,
+          "displayValue": "330 ms"
         },
         {
           "id": "cache-insight",
@@ -37,13 +31,13 @@
           "id": "image-delivery-insight",
           "title": "Improve image delivery",
           "score": 0.5,
-          "displayValue": "Est savings of 11,081 KiB"
+          "displayValue": "Est savings of 11,014 KiB"
         },
         {
           "id": "legacy-javascript-insight",
           "title": "Legacy JavaScript",
           "score": 0.5,
-          "displayValue": "Est savings of 8 KiB"
+          "displayValue": "Est savings of 11 KiB"
         },
         {
           "id": "network-dependency-tree-insight",
@@ -53,43 +47,26 @@
         {
           "id": "render-blocking-insight",
           "title": "Render-blocking requests",
-          "score": 0.5
+          "score": 0,
+          "displayValue": "Est savings of 130 ms"
         },
         {
           "id": "max-potential-fid",
           "title": "Max Potential First Input Delay",
-          "score": 0.57,
-          "displayValue": "230 ms"
-        },
-        {
-          "id": "unminified-css",
-          "title": "Minify CSS",
-          "score": 0.5,
-          "displayValue": "Est savings of 7 KiB"
-        },
-        {
-          "id": "unminified-javascript",
-          "title": "Minify JavaScript",
-          "score": 0,
-          "displayValue": "Est savings of 330 KiB"
+          "score": 0.62,
+          "displayValue": "210 ms"
         },
         {
           "id": "unused-javascript",
           "title": "Reduce unused JavaScript",
           "score": 0.5,
-          "displayValue": "Est savings of 565 KiB"
+          "displayValue": "Est savings of 220 KiB"
         },
         {
           "id": "total-byte-weight",
           "title": "Avoid enormous network payloads",
           "score": 0.5,
-          "displayValue": "Total size was 15,501 KiB"
-        },
-        {
-          "id": "bf-cache",
-          "title": "Page prevented back/forward cache restoration",
-          "score": 0,
-          "displayValue": "5 failure reasons"
+          "displayValue": "Total size was 14,782 KiB"
         }
       ],
       "accessibility": [
@@ -107,20 +84,8 @@
           "displayValue": "1 cookie found"
         },
         {
-          "id": "valid-source-maps",
-          "title": "Missing source maps for large first-party JavaScript",
-          "score": 0
-        },
-        {
           "id": "inspector-issues",
           "title": "Issues were logged in the `Issues` panel in Chrome Devtools",
-          "score": 0
-        }
-      ],
-      "seo": [
-        {
-          "id": "meta-description",
-          "title": "Document does not have a meta description",
           "score": 0
         }
       ]
@@ -128,20 +93,20 @@
   },
   {
     "route": "namhae",
-    "url": "http://localhost:3000/Namhae_Kim",
+    "url": "http://localhost:3100/Namhae_Kim",
     "scores": {
-      "performance": 0.95,
+      "performance": 0.78,
       "accessibility": 0.96,
       "best-practices": 0.77,
-      "seo": 0.92
+      "seo": 1
     },
     "issues": {
       "performance": [
         {
-          "id": "speed-index",
-          "title": "Speed Index",
-          "score": 0.61,
-          "displayValue": "2.0 s"
+          "id": "largest-contentful-paint",
+          "title": "Largest Contentful Paint",
+          "score": 0.16,
+          "displayValue": "4.1 s"
         },
         {
           "id": "cache-insight",
@@ -157,14 +122,14 @@
         {
           "id": "image-delivery-insight",
           "title": "Improve image delivery",
-          "score": 0.5,
-          "displayValue": "Est savings of 21,146 KiB"
+          "score": 0,
+          "displayValue": "Est savings of 21,203 KiB"
         },
         {
           "id": "legacy-javascript-insight",
           "title": "Legacy JavaScript",
-          "score": 0.5,
-          "displayValue": "Est savings of 8 KiB"
+          "score": 0,
+          "displayValue": "Est savings of 11 KiB"
         },
         {
           "id": "network-dependency-tree-insight",
@@ -174,55 +139,26 @@
         {
           "id": "render-blocking-insight",
           "title": "Render-blocking requests",
-          "score": 0.5
+          "score": 0,
+          "displayValue": "Est savings of 130 ms"
         },
         {
           "id": "interactive",
           "title": "Time to Interactive",
-          "score": 0.63,
-          "displayValue": "3.8 s"
-        },
-        {
-          "id": "unminified-css",
-          "title": "Minify CSS",
-          "score": 0.5,
-          "displayValue": "Est savings of 7 KiB"
-        },
-        {
-          "id": "unminified-javascript",
-          "title": "Minify JavaScript",
-          "score": 0,
-          "displayValue": "Est savings of 401 KiB"
+          "score": 0.56,
+          "displayValue": "4.2 s"
         },
         {
           "id": "unused-javascript",
           "title": "Reduce unused JavaScript",
-          "score": 0,
-          "displayValue": "Est savings of 750 KiB"
+          "score": 0.5,
+          "displayValue": "Est savings of 209 KiB"
         },
         {
           "id": "total-byte-weight",
           "title": "Avoid enormous network payloads",
           "score": 0.5,
-          "displayValue": "Total size was 23,042 KiB"
-        },
-        {
-          "id": "bootup-time",
-          "title": "Reduce JavaScript execution time",
-          "score": 0,
-          "displayValue": "1.4 s"
-        },
-        {
-          "id": "mainthread-work-breakdown",
-          "title": "Minimize main-thread work",
-          "score": 0,
-          "displayValue": "2.3 s"
-        },
-        {
-          "id": "bf-cache",
-          "title": "Page prevented back/forward cache restoration",
-          "score": 0,
-          "displayValue": "5 failure reasons"
+          "displayValue": "Total size was 21,970 KiB"
         }
       ],
       "accessibility": [
@@ -240,20 +176,8 @@
           "displayValue": "2 cookies found"
         },
         {
-          "id": "valid-source-maps",
-          "title": "Missing source maps for large first-party JavaScript",
-          "score": 0
-        },
-        {
           "id": "inspector-issues",
           "title": "Issues were logged in the `Issues` panel in Chrome Devtools",
-          "score": 0
-        }
-      ],
-      "seo": [
-        {
-          "id": "meta-description",
-          "title": "Document does not have a meta description",
           "score": 0
         }
       ]
@@ -261,21 +185,15 @@
   },
   {
     "route": "minyoung",
-    "url": "http://localhost:3000/Minyoung_Kim",
+    "url": "http://localhost:3100/Minyoung_Kim",
     "scores": {
-      "performance": 0.97,
+      "performance": 0.99,
       "accessibility": 0.96,
       "best-practices": 0.77,
-      "seo": 0.92
+      "seo": 1
     },
     "issues": {
       "performance": [
-        {
-          "id": "speed-index",
-          "title": "Speed Index",
-          "score": 0.77,
-          "displayValue": "1.7 s"
-        },
         {
           "id": "cache-insight",
           "title": "Use efficient cache lifetimes",
@@ -291,13 +209,13 @@
           "id": "image-delivery-insight",
           "title": "Improve image delivery",
           "score": 0.5,
-          "displayValue": "Est savings of 9,101 KiB"
+          "displayValue": "Est savings of 9,129 KiB"
         },
         {
           "id": "legacy-javascript-insight",
           "title": "Legacy JavaScript",
           "score": 0.5,
-          "displayValue": "Est savings of 8 KiB"
+          "displayValue": "Est savings of 11 KiB"
         },
         {
           "id": "network-dependency-tree-insight",
@@ -307,55 +225,20 @@
         {
           "id": "render-blocking-insight",
           "title": "Render-blocking requests",
-          "score": 0.5
-        },
-        {
-          "id": "interactive",
-          "title": "Time to Interactive",
-          "score": 0.77,
-          "displayValue": "3.1 s"
-        },
-        {
-          "id": "unminified-css",
-          "title": "Minify CSS",
-          "score": 0.5,
-          "displayValue": "Est savings of 7 KiB"
-        },
-        {
-          "id": "unminified-javascript",
-          "title": "Minify JavaScript",
           "score": 0,
-          "displayValue": "Est savings of 401 KiB"
+          "displayValue": "Est savings of 130 ms"
         },
         {
           "id": "unused-javascript",
           "title": "Reduce unused JavaScript",
           "score": 0.5,
-          "displayValue": "Est savings of 753 KiB"
+          "displayValue": "Est savings of 209 KiB"
         },
         {
           "id": "total-byte-weight",
           "title": "Avoid enormous network payloads",
           "score": 0.5,
-          "displayValue": "Total size was 10,935 KiB"
-        },
-        {
-          "id": "bootup-time",
-          "title": "Reduce JavaScript execution time",
-          "score": 0,
-          "displayValue": "1.3 s"
-        },
-        {
-          "id": "mainthread-work-breakdown",
-          "title": "Minimize main-thread work",
-          "score": 0,
-          "displayValue": "2.2 s"
-        },
-        {
-          "id": "bf-cache",
-          "title": "Page prevented back/forward cache restoration",
-          "score": 0,
-          "displayValue": "5 failure reasons"
+          "displayValue": "Total size was 9,864 KiB"
         }
       ],
       "accessibility": [
@@ -373,20 +256,8 @@
           "displayValue": "1 cookie found"
         },
         {
-          "id": "valid-source-maps",
-          "title": "Missing source maps for large first-party JavaScript",
-          "score": 0
-        },
-        {
           "id": "inspector-issues",
           "title": "Issues were logged in the `Issues` panel in Chrome Devtools",
-          "score": 0
-        }
-      ],
-      "seo": [
-        {
-          "id": "meta-description",
-          "title": "Document does not have a meta description",
           "score": 0
         }
       ]
@@ -394,21 +265,15 @@
   },
   {
     "route": "project-planit",
-    "url": "http://localhost:3000/projects/planit",
+    "url": "http://localhost:3100/projects/planit",
     "scores": {
-      "performance": 0.94,
+      "performance": 1,
       "accessibility": 0.96,
       "best-practices": 0.77,
-      "seo": 0.92
+      "seo": 1
     },
     "issues": {
       "performance": [
-        {
-          "id": "largest-contentful-paint",
-          "title": "Largest Contentful Paint",
-          "score": 0.8,
-          "displayValue": "1.5 s"
-        },
         {
           "id": "cache-insight",
           "title": "Use efficient cache lifetimes",
@@ -435,7 +300,7 @@
           "id": "legacy-javascript-insight",
           "title": "Legacy JavaScript",
           "score": 0.5,
-          "displayValue": "Est savings of 8 KiB"
+          "displayValue": "Est savings of 11 KiB"
         },
         {
           "id": "network-dependency-tree-insight",
@@ -445,37 +310,20 @@
         {
           "id": "render-blocking-insight",
           "title": "Render-blocking requests",
-          "score": 0.5
-        },
-        {
-          "id": "unminified-css",
-          "title": "Minify CSS",
-          "score": 0.5,
-          "displayValue": "Est savings of 7 KiB"
-        },
-        {
-          "id": "unminified-javascript",
-          "title": "Minify JavaScript",
           "score": 0,
-          "displayValue": "Est savings of 270 KiB"
+          "displayValue": "Est savings of 130 ms"
         },
         {
           "id": "unused-javascript",
           "title": "Reduce unused JavaScript",
-          "score": 0,
-          "displayValue": "Est savings of 447 KiB"
+          "score": 0.5,
+          "displayValue": "Est savings of 234 KiB"
         },
         {
           "id": "total-byte-weight",
           "title": "Avoid enormous network payloads",
           "score": 0.5,
-          "displayValue": "Total size was 5,362 KiB"
-        },
-        {
-          "id": "bf-cache",
-          "title": "Page prevented back/forward cache restoration",
-          "score": 0,
-          "displayValue": "5 failure reasons"
+          "displayValue": "Total size was 4,901 KiB"
         }
       ],
       "accessibility": [
@@ -498,20 +346,8 @@
           "displayValue": "1 cookie found"
         },
         {
-          "id": "valid-source-maps",
-          "title": "Missing source maps for large first-party JavaScript",
-          "score": 0
-        },
-        {
           "id": "inspector-issues",
           "title": "Issues were logged in the `Issues` panel in Chrome Devtools",
-          "score": 0
-        }
-      ],
-      "seo": [
-        {
-          "id": "meta-description",
-          "title": "Document does not have a meta description",
           "score": 0
         }
       ]
@@ -519,21 +355,15 @@
   },
   {
     "route": "project-rd-autonote",
-    "url": "http://localhost:3000/projects/rd-autonote",
+    "url": "http://localhost:3100/projects/rd-autonote",
     "scores": {
-      "performance": 0.88,
+      "performance": 0.97,
       "accessibility": 0.96,
       "best-practices": 0.77,
-      "seo": 0.92
+      "seo": 1
     },
     "issues": {
       "performance": [
-        {
-          "id": "largest-contentful-paint",
-          "title": "Largest Contentful Paint",
-          "score": 0.67,
-          "displayValue": "1.9 s"
-        },
         {
           "id": "cache-insight",
           "title": "Use efficient cache lifetimes",
@@ -548,7 +378,7 @@
         {
           "id": "image-delivery-insight",
           "title": "Improve image delivery",
-          "score": 0,
+          "score": 0.5,
           "displayValue": "Est savings of 20,724 KiB"
         },
         {
@@ -560,7 +390,7 @@
           "id": "legacy-javascript-insight",
           "title": "Legacy JavaScript",
           "score": 0.5,
-          "displayValue": "Est savings of 8 KiB"
+          "displayValue": "Est savings of 11 KiB"
         },
         {
           "id": "network-dependency-tree-insight",
@@ -570,49 +400,32 @@
         {
           "id": "render-blocking-insight",
           "title": "Render-blocking requests",
-          "score": 0.5
+          "score": 0,
+          "displayValue": "Est savings of 130 ms"
         },
         {
           "id": "interactive",
           "title": "Time to Interactive",
-          "score": 0.89,
-          "displayValue": "2.5 s"
+          "score": 0.76,
+          "displayValue": "3.2 s"
         },
         {
           "id": "max-potential-fid",
           "title": "Max Potential First Input Delay",
-          "score": 0.82,
-          "displayValue": "160 ms"
-        },
-        {
-          "id": "unminified-css",
-          "title": "Minify CSS",
-          "score": 0.5,
-          "displayValue": "Est savings of 7 KiB"
-        },
-        {
-          "id": "unminified-javascript",
-          "title": "Minify JavaScript",
-          "score": 0,
-          "displayValue": "Est savings of 270 KiB"
+          "score": 0.86,
+          "displayValue": "140 ms"
         },
         {
           "id": "unused-javascript",
           "title": "Reduce unused JavaScript",
-          "score": 0,
-          "displayValue": "Est savings of 447 KiB"
+          "score": 0.5,
+          "displayValue": "Est savings of 234 KiB"
         },
         {
           "id": "total-byte-weight",
           "title": "Avoid enormous network payloads",
           "score": 0.5,
-          "displayValue": "Total size was 22,069 KiB"
-        },
-        {
-          "id": "bf-cache",
-          "title": "Page prevented back/forward cache restoration",
-          "score": 0,
-          "displayValue": "5 failure reasons"
+          "displayValue": "Total size was 21,608 KiB"
         }
       ],
       "accessibility": [
@@ -635,20 +448,8 @@
           "displayValue": "1 cookie found"
         },
         {
-          "id": "valid-source-maps",
-          "title": "Missing source maps for large first-party JavaScript",
-          "score": 0
-        },
-        {
           "id": "inspector-issues",
           "title": "Issues were logged in the `Issues` panel in Chrome Devtools",
-          "score": 0
-        }
-      ],
-      "seo": [
-        {
-          "id": "meta-description",
-          "title": "Document does not have a meta description",
           "score": 0
         }
       ]

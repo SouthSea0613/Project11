@@ -87,11 +87,26 @@ export default function TeamComparePage() {
 
       {/* ── Header ── */}
       <header className="rounded-2xl border bg-card p-5 md:p-7">
-        <p className="text-[11px] font-semibold tracking-widest uppercase text-emerald-500">
-          Team Compare
-        </p>
-        <h1 className="mt-1 text-2xl font-bold tracking-tight md:text-4xl">
-          김남해 <span className="text-muted-foreground">vs</span> 김민영
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <p className="text-[11px] font-semibold tracking-widest uppercase text-violet-500">
+            Team Compare
+          </p>
+          {/* 컬러 가이드 — 어느 색이 누구인지 즉시 인지 */}
+          <div className="flex flex-wrap items-center gap-2 text-[11px] font-medium">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/40 bg-emerald-500/10 px-2 py-0.5 text-emerald-500">
+              <span className="inline-block h-2 w-2 rounded-full bg-emerald-400" />
+              김남해
+            </span>
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-sky-400/40 bg-sky-500/10 px-2 py-0.5 text-sky-500">
+              <span className="inline-block h-2 w-2 rounded-full bg-sky-400" />
+              김민영
+            </span>
+          </div>
+        </div>
+        <h1 className="mt-2 text-3xl font-bold tracking-tight md:text-5xl">
+          <span className="text-emerald-500">김남해</span>{" "}
+          <span className="text-muted-foreground">vs</span>{" "}
+          <span className="text-sky-500">김민영</span>
         </h1>
         <p className="mt-3 max-w-3xl text-sm leading-7 text-muted-foreground md:text-base">
           두 멤버가 어떤 능력치를 보유하고, 어떤 비즈니스 임팩트를 만들었으며,

@@ -78,16 +78,30 @@ export default function MinyoungKimPage() {
           ]),
         ]}
       />
-      {/* ── Profile Hero ── */}
-      <section className="flex flex-col gap-6 sm:flex-row sm:gap-6 md:gap-8">
-        <div className="flex shrink-0 flex-col items-start gap-3 sm:w-[160px] md:w-[180px] justify-between">
-          <div className="w-28 sm:w-full">
-            <ProfilePhotoViewer
-              src={minyoungPhoto}
-              alt="김민영 프로필 사진"
-            />
+      <div className="grid gap-8 lg:grid-cols-[260px_minmax(0,1fr)] lg:gap-10">
+        {/* ── Sticky Left Profile ── */}
+        <aside className="lg:sticky lg:top-24 lg:self-start print:static">
+          <div className="flex gap-4 sm:flex-col sm:gap-3">
+            <div className="w-28 shrink-0 sm:w-full">
+              <ProfilePhotoViewer
+                src={minyoungPhoto}
+                alt="김민영 프로필 사진"
+              />
+            </div>
+            <div className="min-w-0 flex-1 sm:flex-none">
+              <p className="text-[11px] font-semibold tracking-widest text-sky-500 uppercase">
+                Team Member
+              </p>
+              <h1 className="mt-1 text-2xl font-bold tracking-tight">
+                {member?.name ?? "김민영"}
+              </h1>
+              <p className="mt-1 text-[11px] font-medium text-muted-foreground">
+                {member?.role}
+              </p>
+            </div>
           </div>
-          <div className="flex flex-wrap gap-2 text-xs">
+
+          <div className="mt-4 flex flex-wrap gap-2 text-xs">
             <a
               href={`mailto:${minyoungContact.email}`}
               className="rounded-md bg-sky-500 px-3 py-1.5 font-semibold text-slate-950 hover:bg-sky-400"
@@ -120,22 +134,32 @@ export default function MinyoungKimPage() {
               {minyoungContact.phoneDisplay}
             </a>
           </div>
-        </div>
 
-        <div className="min-w-0 flex-1">
+          <div className="print-hide mt-4 flex flex-wrap gap-2 text-[11px]">
+            <Link
+              href="/Namhae_Kim"
+              className="inline-flex items-center gap-1 rounded-md border border-emerald-400/40 bg-emerald-500/10 px-2.5 py-1 font-medium text-emerald-500 transition hover:bg-emerald-500/20"
+            >
+              김남해 →
+            </Link>
+            <Link
+              href="/team-compare"
+              className="inline-flex items-center gap-1 rounded-md border border-violet-400/40 bg-violet-500/10 px-2.5 py-1 font-medium text-violet-500 transition hover:bg-violet-500/20"
+            >
+              비교 보기
+            </Link>
+          </div>
+        </aside>
+
+        <div className="min-w-0">
           <p className="text-xs font-semibold tracking-widest text-sky-500 uppercase">
             HaeYoungLab · Team Member
           </p>
-          <h1 className="mt-2 text-4xl font-bold tracking-tight md:text-5xl">
-            {member?.name ?? "김민영"}
-          </h1>
-          <p className="mt-1 text-sm font-medium text-muted-foreground md:text-base">
-            {member?.role}
-          </p>
-          <p className="mt-5 text-base font-semibold leading-relaxed md:text-lg">
+          <h2 className="sr-only">{member?.name ?? "김민영"} 포트폴리오</h2>
+          <p className="mt-3 text-2xl font-bold leading-snug tracking-tight md:text-3xl">
             {minyoungHeadline}
           </p>
-          <p className="mt-3 text-sm leading-7 text-muted-foreground md:text-base">
+          <p className="mt-4 text-sm leading-7 text-muted-foreground md:text-base">
             {minyoungSummary}
           </p>
 
@@ -154,40 +178,39 @@ export default function MinyoungKimPage() {
               </div>
             ))}
           </div>
+
+          <MinyoungContentTabs projects={projects} />
+
+          <section className="print-hide mt-10 rounded-xl border bg-card p-5">
+            <h2 className="text-lg font-semibold">외부 링크</h2>
+            <ul className="mt-3 space-y-2 text-sm">
+              {minyoungExternalLinks.map((link) => (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sky-500 underline-offset-4 hover:underline"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <div className="print-hide mt-10 flex items-center justify-between text-sm">
+            <Link href="/" className="text-sky-500 underline-offset-4 hover:underline">
+              ← 홈으로 돌아가기
+            </Link>
+            <a
+              href={`mailto:${minyoungContact.email}`}
+              className="text-sky-500 underline-offset-4 hover:underline"
+            >
+              {minyoungContact.email}
+            </a>
+          </div>
         </div>
-      </section>
-
-      <MinyoungContentTabs projects={projects} />
-
-      <section className="print-hide mt-10 rounded-xl border bg-card p-5">
-        <h2 className="text-lg font-semibold">외부 링크</h2>
-        <ul className="mt-3 space-y-2 text-sm">
-          {minyoungExternalLinks.map((link) => (
-            <li key={link.href}>
-              <a
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sky-500 underline-offset-4 hover:underline"
-              >
-                {link.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      {/* ── Footer Nav ── */}
-      <div className="print-hide mt-10 flex items-center justify-between text-sm">
-        <Link href="/" className="text-sky-500 underline-offset-4 hover:underline">
-          ← 홈으로 돌아가기
-        </Link>
-        <a
-          href={`mailto:${minyoungContact.email}`}
-          className="text-sky-500 underline-offset-4 hover:underline"
-        >
-          {minyoungContact.email}
-        </a>
       </div>
     </main>
   );
