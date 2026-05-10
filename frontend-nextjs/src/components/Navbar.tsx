@@ -93,6 +93,7 @@ export default function Navbar() {
                       rounded="rounded-full"
                       label=""
                       className="!border-0"
+                      sizes="28px"
                     />
                   </span>
                   김남해
@@ -121,6 +122,7 @@ export default function Navbar() {
                       rounded="rounded-full"
                       label=""
                       className="!border-0"
+                      sizes="28px"
                     />
                   </span>
                   김민영

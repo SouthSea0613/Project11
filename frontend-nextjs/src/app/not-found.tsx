@@ -83,6 +83,12 @@ export default function NotFound() {
           >
             김민영 프로필
           </Link>
+          <Link
+            href="/team-compare"
+            className="rounded-md border border-violet-400/40 bg-violet-400/10 px-3.5 py-2 font-medium text-violet-200 transition hover:bg-violet-400/20"
+          >
+            팀원 비교
+          </Link>
         </div>
       </section>
 
@@ -105,6 +111,7 @@ export default function NotFound() {
                 rounded="rounded-none"
                 label="이미지 추가 예정"
                 className="!border-0"
+                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
               />
               <div className="p-4">
                 <p className="text-[10px] text-slate-400">{project.period}</p>
@@ -145,6 +152,7 @@ export default function NotFound() {
                   rounded="rounded-full"
                   label=""
                   className="!border-0"
+                  sizes="56px"
                 />
               </span>
               <div className="min-w-0 flex-1">

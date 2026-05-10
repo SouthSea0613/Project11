@@ -186,6 +186,7 @@ export default function NamhaeContentTabs({ projects }: NamhaeContentTabsProps) 
                       aspect="aspect-[16/9]"
                       rounded="rounded-none"
                       label="이미지 추가 예정"
+                      sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                     />
                     {galleryThumbs.length > 0 && (
                       <div className="grid grid-cols-3 gap-px bg-border/40">
@@ -198,6 +199,7 @@ export default function NamhaeContentTabs({ projects }: NamhaeContentTabsProps) 
                             rounded="rounded-none"
                             label=""
                             className="!border-0"
+                            sizes="(min-width: 1024px) 110px, (min-width: 640px) 16vw, 33vw"
                           />
                         ))}
                       </div>

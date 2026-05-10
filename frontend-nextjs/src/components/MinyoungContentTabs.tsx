@@ -79,9 +79,9 @@ export default function MinyoungContentTabs({ projects }: MinyoungContentTabsPro
   const topProjects = useMemo(() => {
     const featuredOrder = [
       "planit",
+      "planit-room-customize",
       "planit-jump-game",
       "kakao-carechat-integration",
-      "glucose-device-interface",
     ];
     const map = new Map(projects.map((p) => [p.slug, p]));
     return featuredOrder
@@ -188,6 +188,7 @@ export default function MinyoungContentTabs({ projects }: MinyoungContentTabsPro
                       src={project.heroImage}
                       alt={project.title}
                       aspect="aspect-[16/9]"
+                      sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                       rounded="rounded-none"
                       label="이미지 추가 예정"
                     />
@@ -202,6 +203,7 @@ export default function MinyoungContentTabs({ projects }: MinyoungContentTabsPro
                             rounded="rounded-none"
                             label=""
                             className="!border-0"
+                            sizes="(min-width: 1024px) 110px, (min-width: 640px) 16vw, 33vw"
                           />
                         ))}
                       </div>

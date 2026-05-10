@@ -74,6 +74,7 @@ export default function HighlightImageGrid({
                 rounded="rounded-none"
                 label="이미지 추가 예정"
                 className="transition group-hover:opacity-90"
+                sizes="(min-width: 1024px) 320px, (min-width: 640px) 45vw, 100vw"
               />
               <span className="pointer-events-none absolute inset-x-0 bottom-0 flex justify-end bg-gradient-to-t from-black/60 to-transparent p-1.5 opacity-0 transition group-hover:opacity-100">
                 <span className="rounded-full bg-white/15 px-2 py-0.5 text-[10px] font-semibold text-white backdrop-blur">

@@ -13,6 +13,12 @@ type ImageSlotProps = {
   className?: string;
   /** 라운드 강도 (rounded-md / rounded-xl 등) */
   rounded?: string;
+  /** next/image sizes — viewport별 실제 렌더 폭 */
+  sizes?: string;
+  /** LCP 후보(히어로) 등은 priority=true */
+  priority?: boolean;
+  /** lazy/eager 명시. priority=true면 자동으로 eager로 동작 */
+  loading?: "lazy" | "eager";
 };
 
 /**
@@ -26,6 +32,9 @@ export function ImageSlot({
   label = "이미지 추가 예정",
   className = "",
   rounded = "rounded-xl",
+  sizes = "(min-width: 1024px) 800px, (min-width: 640px) 70vw, 100vw",
+  priority = false,
+  loading,
 }: ImageSlotProps) {
   const [errored, setErrored] = useState(false);
   const showImage = !!src && !errored;
@@ -42,6 +51,9 @@ export function ImageSlot({
           src={src!}
           alt={alt}
           fill
+          sizes={sizes}
+          priority={priority}
+          {...(priority ? {} : { loading: loading ?? "lazy" })}
           className="object-cover"
           onError={() => setErrored(true)}
           unoptimized

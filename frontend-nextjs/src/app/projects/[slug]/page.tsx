@@ -107,6 +107,8 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
             rounded="rounded-none"
             label="히어로 이미지 추가 예정"
             className="!border-0"
+            sizes="(min-width: 1280px) 1024px, (min-width: 640px) 90vw, 100vw"
+            priority
           />
         </div>
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />

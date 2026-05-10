@@ -27,6 +27,8 @@ export default function ProfilePhotoViewer({ src, alt }: ProfilePhotoViewerProps
           rounded="rounded-2xl"
           label="프로필 사진"
           className="transition hover:opacity-90"
+          sizes="(min-width: 768px) 280px, 60vw"
+          priority
         />
       </button>
 
@@ -54,8 +56,10 @@ export default function ProfilePhotoViewer({ src, alt }: ProfilePhotoViewerProps
                 src={src}
                 alt={alt}
                 fill
+                sizes="(min-width: 1024px) 720px, 90vw"
                 className="object-contain"
                 unoptimized
+                priority
               />
             </div>
           </div>

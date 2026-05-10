@@ -558,6 +558,45 @@ export const portfolioProjects: PortfolioProject[] = [
     links: {},
   },
   {
+    slug: "planit-room-customize",
+    title: "PlanIT 방꾸미기 (Room Customize)",
+    period: "2026.02 - 2026.04",
+    role: "프론트엔드 모듈 설계 · 게이미피케이션 UX",
+    thumbnail: "/projects/planit/planit-gallery-04.png",
+    heroImage: "/projects/planit/planit-gallery-04.png",
+    gallery: [],
+    stack: [
+      "Next.js",
+      "TypeScript",
+      "Tailwind",
+      "Zustand",
+      "Drag & Drop",
+    ],
+    summary:
+      "PlanIT 사용자가 자신의 가상 공간을 자유롭게 꾸미며 머무는 시간을 늘리도록 설계한 게이미피케이션 모듈. 가구 배치·테마 변경·아이템 잠금 해제로 SaaS 사용 동기를 만듭니다.",
+    problem:
+      "협업 SaaS는 작성·확인 후 곧바로 이탈하는 패턴이 반복되어 재방문·체류 시간이 약했습니다. 가벼운 휴식·자기표현 장치 없이 ‘업무 도구’ 정체성에 머무르는 한계.",
+    solution: [
+      "사용자 개인 공간(룸)과 가구 카탈로그를 데이터 드리븐 구조로 설계해 신규 아이템을 데이터 추가만으로 확장",
+      "드래그앤드롭 기반 배치 UI와 미리보기 그리드로 즉각적 인터랙션 피드백 제공",
+      "스크럼 작성·연속 출석 등 행동 보상으로 가구·테마를 잠금 해제하는 게이미피케이션 루프 설계",
+      "PlanIT 본체 라우트와 분리된 모듈 구조로 추후 점프게임처럼 독립 확장 가능",
+    ],
+    outcome: [
+      "PlanIT 사용자가 작성 이외에 머무를 수 있는 1차 체류 장치 확보",
+      "스크럼 보상 → 룸 커스터마이즈 → 재방문으로 이어지는 동기 루프 정립",
+    ],
+    metrics: [
+      "데이터 드리븐 가구·테마 카탈로그",
+      "행동 보상 기반 잠금 해제 시스템",
+      "독립 확장 가능한 모듈 구조",
+    ],
+    members: ["minyoung"],
+    links: {
+      demo: "https://planit.haeyounglab.com/",
+    },
+  },
+  {
     slug: "internal-dashboard",
     title: "Internal Dashboard",
     period: "2025.11 - 2026.02",

@@ -43,6 +43,7 @@ export default function ProjectGallery({ images, title }: ProjectGalleryProps) {
                 rounded="rounded-xl"
                 label={`이미지 ${idx + 1} 추가 예정`}
                 className="transition group-hover:opacity-90"
+                sizes="(min-width: 1024px) 320px, (min-width: 640px) 45vw, 100vw"
               />
               <span className="pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-between bg-gradient-to-t from-black/70 to-transparent p-2 opacity-0 transition group-hover:opacity-100">
                 <span className="text-[11px] font-medium text-white/90">

@@ -76,9 +76,35 @@ export function ImageLightbox({
     };
   }, [open, close, next, prev]);
 
+  // D-2: 다음/이전 이미지 프리로드 — ← → 이동을 부드럽게.
+  useEffect(() => {
+    if (!open || items.length <= 1) return;
+    const neighbors = [
+      items[(index + 1) % items.length],
+      items[(index - 1 + items.length) % items.length],
+    ];
+    for (const n of neighbors) {
+      if (!n?.src) continue;
+      const img = new window.Image();
+      img.decoding = "async";
+      img.src = n.src;
+    }
+  }, [open, index, items]);
+
   if (!open || items.length === 0) return null;
 
   const current = items[index];
+
+  // 파일명 추출 — 다운로드 시 사용. URL 마지막 segment를 그대로 사용.
+  const downloadFilename = (() => {
+    try {
+      const u = new URL(current.src, "http://_");
+      const last = u.pathname.split("/").filter(Boolean).pop();
+      return last || "image.png";
+    } catch {
+      return "image.png";
+    }
+  })();
 
   return (
     <div
@@ -96,6 +122,55 @@ export function ImageLightbox({
         <span className="rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs text-white">
           {index + 1} / {items.length}
         </span>
+        <a
+          href={current.src}
+          download={downloadFilename}
+          className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-xs font-medium text-white hover:bg-white/20"
+          aria-label="이미지 다운로드"
+          title="다운로드"
+        >
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="7 10 12 15 17 10" />
+            <line x1="12" y1="15" x2="12" y2="3" />
+          </svg>
+          다운로드
+        </a>
+        <a
+          href={current.src}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-xs font-medium text-white hover:bg-white/20"
+          aria-label="원본 새 탭에서 열기"
+          title="새 탭에서 원본 보기"
+        >
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+            <polyline points="15 3 21 3 21 9" />
+            <line x1="10" y1="14" x2="21" y2="3" />
+          </svg>
+          원본
+        </a>
         <button
           type="button"
           onClick={close}
@@ -167,6 +242,10 @@ type ZoomableImageProps = {
   /** 클릭 시 라이트박스에 함께 노출할 시리즈 (현재 src가 들어 있어야 함) */
   group?: LightboxItem[];
   caption?: string;
+  /** next/image sizes — 호출 위치에 맞게 정밀화 */
+  sizes?: string;
+  priority?: boolean;
+  loading?: "lazy" | "eager";
 };
 
 /**
@@ -181,6 +260,9 @@ export default function ZoomableImage({
   className = "",
   group,
   caption,
+  sizes,
+  priority,
+  loading,
 }: ZoomableImageProps) {
   const [open, setOpen] = useState(false);
 
@@ -203,6 +285,9 @@ export default function ZoomableImage({
         rounded={rounded}
         label={label}
         className={className}
+        sizes={sizes}
+        priority={priority}
+        loading={loading}
       />
     );
   }
@@ -226,6 +311,9 @@ export default function ZoomableImage({
           rounded={rounded}
           label={label}
           className={`transition hover:opacity-90 ${className}`}
+          sizes={sizes}
+          priority={priority}
+          loading={loading}
         />
       </button>
       <ImageLightbox

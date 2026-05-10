@@ -116,6 +116,7 @@ export default function Home() {
                   rounded="rounded-full"
                   label=""
                   className="!border-0"
+                  sizes="32px"
                 />
               </span>
               {member.name} 프로필
@@ -162,7 +163,7 @@ export default function Home() {
           </Link>
         </div>
         <div className="mt-6 grid gap-4 lg:grid-cols-3">
-          {featured.map((project) => (
+          {featured.map((project, idx) => (
             <Link
               key={project.slug}
               href={`/projects/${project.slug}`}
@@ -174,6 +175,8 @@ export default function Home() {
                 aspect="aspect-[16/9]"
                 rounded="rounded-none"
                 label="이미지 추가 예정"
+                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                priority={idx === 0}
               />
               <div className="flex flex-1 flex-col p-5">
                 <div className="flex flex-wrap items-center gap-2">
@@ -243,12 +246,22 @@ export default function Home() {
 
       {/* ── Team Members ── */}
       <section className="mx-auto max-w-screen-2xl px-4 pb-20 sm:px-6 md:px-8 lg:px-6">
-        <p className="text-xs font-semibold tracking-widest text-emerald-400 uppercase">
-          Members
-        </p>
-        <h2 className="mt-1 text-2xl font-semibold text-white md:text-3xl">
-          팀 구성
-        </h2>
+        <div className="flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <p className="text-xs font-semibold tracking-widest text-emerald-400 uppercase">
+              Members
+            </p>
+            <h2 className="mt-1 text-2xl font-semibold text-white md:text-3xl">
+              팀 구성
+            </h2>
+          </div>
+          <Link
+            href="/team-compare"
+            className="rounded-md border border-emerald-400/40 bg-emerald-400/10 px-3 py-1.5 text-xs font-semibold text-emerald-200 transition hover:bg-emerald-400/20"
+          >
+            두 멤버 비교 보기 →
+          </Link>
+        </div>
         <div className="mt-6 grid gap-4 md:grid-cols-2">
           {teamMembers.map((member) => (
             <article
@@ -262,6 +275,7 @@ export default function Home() {
                   aspect="aspect-square"
                   rounded="rounded-2xl"
                   label="프로필"
+                  sizes="112px"
                 />
               </div>
               <div className="min-w-0 flex-1">
@@ -321,6 +335,7 @@ export default function Home() {
                 aspect="aspect-[16/9]"
                 rounded="rounded-none"
                 label="이미지 추가 예정"
+                sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
               />
               <div className="p-3">
                 <p className="text-[10px] text-slate-400">{project.period}</p>
