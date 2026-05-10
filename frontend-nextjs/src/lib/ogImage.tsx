@@ -268,6 +268,53 @@ function OgImageTree({
   );
 }
 
-export function renderOgImage(payload: OgPayload) {
-  return new ImageResponse(<OgImageTree {...payload} />, OG_SIZE);
+/**
+ * Pretendard 한글 폰트(otf) 로드.
+ * `@vercel/og`(satori)는 ttf/otf만 지원합니다.
+ * jsDelivr CDN의 라이선스 OK 한글 폰트 — `Failed to download dynamic font`
+ * 경고를 없애고 한글 글리프가 정상 렌더되도록 합니다.
+ */
+const FONT_URL =
+  "https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/packages/pretendard/dist/public/static/Pretendard-Bold.otf";
+const FONT_URL_REGULAR =
+  "https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/packages/pretendard/dist/public/static/Pretendard-Medium.otf";
+
+let cached: { bold: ArrayBuffer; medium: ArrayBuffer } | null = null;
+
+async function loadFonts() {
+  if (cached) return cached;
+  try {
+    const [bold, medium] = await Promise.all([
+      fetch(FONT_URL).then((r) => (r.ok ? r.arrayBuffer() : null)),
+      fetch(FONT_URL_REGULAR).then((r) => (r.ok ? r.arrayBuffer() : null)),
+    ]);
+    if (!bold || !medium) return null;
+    cached = { bold, medium };
+    return cached;
+  } catch {
+    return null;
+  }
+}
+
+export async function renderOgImage(payload: OgPayload) {
+  const fonts = await loadFonts();
+  return new ImageResponse(<OgImageTree {...payload} />, {
+    ...OG_SIZE,
+    fonts: fonts
+      ? [
+          {
+            name: "Pretendard",
+            data: fonts.medium,
+            weight: 500,
+            style: "normal",
+          },
+          {
+            name: "Pretendard",
+            data: fonts.bold,
+            weight: 700,
+            style: "normal",
+          },
+        ]
+      : undefined,
+  });
 }

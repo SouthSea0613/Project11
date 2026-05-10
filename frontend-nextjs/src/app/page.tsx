@@ -5,8 +5,10 @@ import JsonLd from "@/components/JsonLd";
 import TeamStackTreemap from "@/components/TeamStackTreemap";
 import { organizationLd, websiteLd } from "@/lib/jsonLd";
 import {
+  haeyoungLabAbout,
   haeyoungLabPitch,
   portfolioProjects,
+  teamContact,
   teamMembers,
 } from "@/lib/portfolioData";
 import { namhaePhoto } from "@/lib/namhaeResume";
@@ -16,6 +18,7 @@ import {
   STACK_DOT_CLASS,
   STACK_LABEL,
 } from "@/lib/stackCategory";
+import { classifyMetric } from "@/lib/metric";
 import { SITE_NAME, SITE_URL } from "@/lib/siteConfig";
 
 export const metadata: Metadata = {
@@ -259,14 +262,28 @@ export default function Home() {
                   <div className="mt-4 flex flex-wrap gap-1.5">
                     {project.metrics
                       .slice(0, isHero ? 4 : 3)
-                      .map((metric) => (
-                        <span
-                          key={metric}
-                          className="rounded-md border border-emerald-400/30 bg-emerald-400/10 px-2 py-0.5 text-[10px] font-medium text-emerald-200"
-                        >
-                          {metric}
-                        </span>
-                      ))}
+                      .map((metric) => {
+                        const m = classifyMetric(metric);
+                        if (m.kind === "numeric") {
+                          return (
+                            <span
+                              key={metric}
+                              className="inline-flex items-baseline gap-1 rounded-md border border-emerald-400/40 bg-emerald-400/15 px-2 py-0.5 text-[11px] font-semibold text-emerald-200"
+                            >
+                              <span className="text-emerald-300">{m.number}</span>
+                              <span className="font-medium opacity-90">{m.rest}</span>
+                            </span>
+                          );
+                        }
+                        return (
+                          <span
+                            key={metric}
+                            className="rounded-md border border-dashed border-white/15 bg-white/5 px-2 py-0.5 text-[10px] text-slate-400"
+                          >
+                            {m.raw}
+                          </span>
+                        );
+                      })}
                   </div>
                   <div className="mt-auto pt-4 text-xs text-emerald-400">
                     상세 보기 →
@@ -417,6 +434,41 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── About / Story ── */}
+      <section className="mx-auto max-w-screen-2xl px-4 pb-20 sm:px-6 md:px-8 lg:px-6">
+        <div className="grid gap-8 rounded-2xl border border-white/10 bg-slate-950/60 p-6 md:p-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] lg:gap-10">
+          <div>
+            <p className="text-xs font-semibold tracking-widest uppercase text-emerald-400">
+              {haeyoungLabAbout.kicker}
+            </p>
+            <h2 className="mt-2 text-2xl font-bold tracking-tight text-white md:text-3xl">
+              {haeyoungLabAbout.heading}
+            </h2>
+            <div className="mt-4 space-y-3 text-sm leading-7 text-slate-300 md:text-base">
+              {haeyoungLabAbout.paragraphs.map((p, i) => (
+                <p key={i}>{p}</p>
+              ))}
+            </div>
+          </div>
+          <ul className="grid gap-3 self-center sm:grid-cols-3 lg:grid-cols-1">
+            {haeyoungLabAbout.pillars.map((pillar) => (
+              <li
+                key={pillar.title}
+                className="rounded-xl border border-white/10 bg-slate-900/50 p-4"
+              >
+                <div className="text-2xl leading-none">{pillar.icon}</div>
+                <h3 className="mt-2 text-sm font-semibold text-white">
+                  {pillar.title}
+                </h3>
+                <p className="mt-1 text-xs leading-6 text-slate-400">
+                  {pillar.desc}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
       {/* ── 다음 행선지 (3-CTA) ── */}
       <section className="mx-auto max-w-screen-2xl px-4 pb-12 sm:px-6 md:px-8 lg:px-6">
         <div className="grid gap-3 md:grid-cols-3">
@@ -497,21 +549,64 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── CTA ── */}
-      <section className="mx-auto max-w-screen-2xl px-4 pb-24 sm:px-6 md:px-8 lg:px-6">
-        <div className="rounded-2xl border border-emerald-400/30 bg-emerald-500/10 p-6 md:p-8">
-          <h2 className="text-2xl font-semibold text-white md:text-3xl">
-            함께 만들 프로젝트를 찾고 있나요?
-          </h2>
-          <p className="mt-3 text-sm text-slate-200 md:text-base">
-            기획부터 개발, 출시 후 개선까지 팀 단위로 빠르게 실행합니다. 협업 문의는 아래 메일로 연락주세요.
-          </p>
-          <a
-            href="mailto:contact@haeyounglab.com"
-            className="mt-6 inline-block rounded-md bg-emerald-500 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-emerald-400"
-          >
-            contact@haeyounglab.com
-          </a>
+      {/* ── Contact ── */}
+      <section
+        id="contact"
+        className="mx-auto max-w-screen-2xl px-4 pb-24 sm:px-6 md:px-8 lg:px-6"
+      >
+        <div className="grid gap-6 rounded-2xl border border-emerald-400/30 bg-emerald-500/10 p-6 md:p-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:gap-10">
+          <div>
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-300/30 bg-emerald-300/10 px-2 py-0.5 text-[10px] font-semibold tracking-widest uppercase text-emerald-200">
+              <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-300" />
+              Open for work
+            </span>
+            <h2 className="mt-3 text-2xl font-bold text-white md:text-3xl">
+              함께 만들 프로젝트를 찾고 있나요?
+            </h2>
+            <p className="mt-3 text-sm text-slate-200 md:text-base">
+              기획부터 개발, 출시 후 개선까지 팀 단위로 빠르게 실행합니다.
+              아래 채널로 편하게 연락 주세요 —{" "}
+              <span className="font-semibold text-emerald-200">
+                {teamContact.responseSla}
+              </span>
+              .
+            </p>
+            <div className="mt-5 flex flex-wrap gap-2">
+              {teamContact.channels.map((c) => (
+                <a
+                  key={c.label}
+                  href={c.href}
+                  target={c.href.startsWith("http") ? "_blank" : undefined}
+                  rel={
+                    c.href.startsWith("http")
+                      ? "noopener noreferrer"
+                      : undefined
+                  }
+                  className={
+                    c.primary
+                      ? "rounded-md bg-emerald-500 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-emerald-400"
+                      : "rounded-md border border-white/15 bg-white/5 px-4 py-2 text-sm font-medium text-white transition hover:bg-white/10"
+                  }
+                >
+                  {c.label}
+                  {c.primary ? ` · ${teamContact.email}` : " →"}
+                </a>
+              ))}
+            </div>
+          </div>
+          <ul className="grid gap-2 self-center">
+            <li className="text-[10px] font-semibold tracking-widest uppercase text-emerald-200">
+              자주 받는 문의
+            </li>
+            {teamContact.inquiryTypes.map((q) => (
+              <li
+                key={q}
+                className="rounded-lg border border-white/10 bg-slate-950/40 px-3 py-2 text-xs text-slate-200 md:text-sm"
+              >
+                · {q}
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
     </main>

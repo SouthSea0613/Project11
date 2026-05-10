@@ -10,7 +10,7 @@ export const alt = "HaeYoungLab Team Portfolio";
 export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
 
-export default function HomeOpengraphImage() {
+export default async function HomeOpengraphImage() {
   return renderOgImage({
     kicker: "Team Portfolio",
     title: "리스크를 줄이고, 제품으로 증명하는 팀",

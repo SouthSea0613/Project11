@@ -10,7 +10,7 @@ export const alt = "팀원 비교 — 김남해 vs 김민영 | HaeYoungLab";
 export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
 
-export default function TeamCompareOpengraphImage() {
+export default async function TeamCompareOpengraphImage() {
   const namhaeProjects = getProjectsByMember("namhae");
   const minyoungProjects = getProjectsByMember("minyoung");
   const shared = namhaeProjects.filter((np) =>

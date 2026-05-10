@@ -31,6 +31,7 @@ const MemberImpactChart = dynamic(
 );
 import type { PortfolioProject } from "@/lib/portfolioData";
 import { normalizeGallery } from "@/lib/portfolioData";
+import { classifyMetric } from "@/lib/metric";
 import { categoryLabelToDot } from "@/lib/stackCategory";
 import {
   namhaeEducation,
@@ -117,9 +118,14 @@ export default function NamhaeContentTabs({ projects }: NamhaeContentTabsProps) 
             <section className="rounded-xl border bg-card p-5 md:col-span-2">
               <div className="flex items-baseline justify-between">
                 <h2 className="text-base font-semibold">핵심 역량</h2>
-                <span className="text-[11px] text-muted-foreground">5축 · 100점</span>
+                <span className="text-[11px] text-muted-foreground">자기보고</span>
               </div>
               <NamhaeAbilityRadar />
+              <p className="mt-2 text-[10px] leading-snug text-muted-foreground">
+                ※ 자기보고 기반 상대 척도 · 객관 수치는{" "}
+                <span className="font-medium text-foreground">비즈니스 임팩트</span>
+                {" "}그래프 참고
+              </p>
             </section>
 
             <section className="rounded-xl border bg-card p-5 md:col-span-3">
@@ -219,14 +225,30 @@ export default function NamhaeContentTabs({ projects }: NamhaeContentTabsProps) 
                         {project.title}
                       </h3>
                       <div className="mt-2 flex flex-wrap gap-1">
-                        {project.metrics.slice(0, 3).map((metric) => (
-                          <span
-                            key={metric}
-                            className="rounded-md border border-emerald-400/30 bg-emerald-400/10 px-1.5 py-0.5 text-[10px] font-medium text-emerald-500"
-                          >
-                            {metric}
-                          </span>
-                        ))}
+                        {project.metrics.slice(0, 3).map((metric) => {
+                          const m = classifyMetric(metric);
+                          if (m.kind === "numeric") {
+                            return (
+                              <span
+                                key={metric}
+                                className="inline-flex items-baseline gap-1 rounded-md border border-emerald-400/40 bg-emerald-400/15 px-1.5 py-0.5 text-[10px] font-semibold text-emerald-500"
+                              >
+                                <span>{m.number}</span>
+                                <span className="font-medium opacity-90">
+                                  {m.rest}
+                                </span>
+                              </span>
+                            );
+                          }
+                          return (
+                            <span
+                              key={metric}
+                              className="rounded-md border border-dashed border-border bg-muted/30 px-1.5 py-0.5 text-[10px] text-muted-foreground"
+                            >
+                              {m.raw}
+                            </span>
+                          );
+                        })}
                       </div>
                     </div>
                   </Link>

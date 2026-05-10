@@ -53,8 +53,8 @@ export default async function ProjectOpengraphImage({ params }: Props) {
     subtitle: project.summary,
     footer: authorNames || project.period,
     accent,
-    stats: project.metrics.slice(0, 3).map((m) => ({
-      value: "✓",
+    stats: project.metrics.slice(0, 3).map((m, i) => ({
+      value: String(i + 1),
       label: m,
     })),
   });

@@ -54,8 +54,63 @@ export const haeyoungLabPitch = {
   tagline: "HaeYoungLab Team",
   heroTitle: "리스크를 줄이고, 제품으로 증명하는 팀",
   heroSubtitle: "김남해 · 김민영",
+  /** 두 줄 안에 끝나는 짧은 핵심 카피 */
   description:
-    "HaeYoungLab은 B2B SaaS와 실험적 웹 제품을 통해 기업의 재무·운영 리스크를 기술로 줄이는 것을 목표로 합니다. 공개 스크럼·협업 데이터·세무 증빙 자동화처럼 실제 비즈니스 임팩트가 있는 영역에서 0→1 제품을 만들고, 팀 포트폴리오로 과정과 결과를 투명하게 공유합니다.",
+    "기업의 재무·운영 리스크를 0→1 SaaS와 자동화 제품으로 풉니다. 코드와 결과를 공개해 팀의 실행력을 증명합니다.",
+};
+
+/** About — 팀 서사 (왜 함께 일하는가) */
+export const haeyoungLabAbout = {
+  kicker: "About the Team",
+  heading: "왜 우리는 함께 일하는가",
+  paragraphs: [
+    "HaeYoungLab은 백엔드·풀스택을 중심으로 두 명이 운영하는 작은 제품팀입니다. 한 명은 0→1 실행과 AI·운영 자동화를, 한 명은 데이터 무결성과 도메인 신뢰성을 맡습니다.",
+    "함께 만든 PlanIT·R&D 오토노트·avis-tron 등은 모두 \u201C현장 문제를 코드로 치환\u201D한 결과입니다. 회의·문서가 아니라 배포된 제품과 측정 가능한 숫자로 협업의 가치를 증명하려 합니다.",
+  ],
+  pillars: [
+    {
+      icon: "🎯",
+      title: "비즈니스 → 기술",
+      desc: "추상적 계획이 아니라 측정 가능한 결과로 옮깁니다",
+    },
+    {
+      icon: "🛡️",
+      title: "신뢰성 우선",
+      desc: "데이터 무결성과 운영 안정을 비기능 요구로 다룹니다",
+    },
+    {
+      icon: "🚀",
+      title: "0 → 1 실행",
+      desc: "기획·개발·배포·운영 풀사이클을 둘이서 끝까지 책임집니다",
+    },
+  ],
+} as const;
+
+/** 연락·협업 정보 */
+type ContactChannel = {
+  label: string;
+  href: string;
+  primary?: boolean;
+};
+
+export const teamContact: {
+  email: string;
+  responseSla: string;
+  channels: ContactChannel[];
+  inquiryTypes: string[];
+} = {
+  email: "contact@haeyounglab.com",
+  responseSla: "보통 24시간 이내 회신",
+  channels: [
+    { label: "이메일", href: "mailto:contact@haeyounglab.com", primary: true },
+    { label: "PlanIT 데모", href: "https://planit.haeyounglab.com/" },
+    { label: "GitHub", href: "https://github.com/SouthSea0613" },
+  ],
+  inquiryTypes: [
+    "B2B SaaS 도입 / 커스터마이즈",
+    "AI·자동화 PoC (RAG / 데이터 파이프라인)",
+    "팀·외주 프로젝트 협업",
+  ],
 };
 
 export const teamMembers: TeamMemberProfile[] = [

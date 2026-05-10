@@ -13,7 +13,7 @@ export const alt = "김민영 — HaeYoungLab Team Portfolio";
 export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
 
-export default function MinyoungOpengraphImage() {
+export default async function MinyoungOpengraphImage() {
   return renderOgImage({
     kicker: "Team Member · 김민영",
     title: "김민영",

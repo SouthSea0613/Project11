@@ -21,6 +21,7 @@ import {
   STACK_LABEL,
   classifyTech,
 } from "@/lib/stackCategory";
+import { classifyMetrics, pickHeadlineMetric } from "@/lib/metric";
 
 type ProjectDetailPageProps = {
   params: Promise<{ slug: string }>;
@@ -63,17 +64,6 @@ export async function generateMetadata({
   };
 }
 
-/** 메트릭 문자열에서 헤드라인용 숫자 부분을 분리합니다. */
-function pickHeadline(metric: string | undefined) {
-  if (!metric) return null;
-  const m = metric.match(/[+\-−]?\d+(?:\.\d+)?\s*(?:%|배|x|X|초|분|시간|주|일|점|회)/);
-  if (!m) return { number: null as string | null, rest: metric };
-  return {
-    number: m[0].replace(/\s+/g, ""),
-    rest: metric.replace(m[0], "").replace(/\s{2,}/g, " ").trim(),
-  };
-}
-
 export default async function ProjectDetailPage({ params }: ProjectDetailPageProps) {
   const { slug } = await params;
   const project = getProjectBySlug(slug);
@@ -92,7 +82,8 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
   const ldImagePath =
     project.heroImage ?? project.thumbnail ?? DEFAULT_OG_IMAGE_PATH;
 
-  const headline = pickHeadline(project.metrics[0]);
+  const headline = pickHeadlineMetric(project.metrics);
+  const parsedMetrics = classifyMetrics(project.metrics);
 
   // 이전/다음 프로젝트 (portfolioProjects 순서 기준)
   const currentIdx = portfolioProjects.findIndex((p) => p.slug === project.slug);
@@ -179,7 +170,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
                 <p className="text-[10px] font-semibold tracking-widest uppercase text-emerald-300">
                   Headline Result
                 </p>
-                {headline.number ? (
+                {headline.kind === "numeric" && headline.number ? (
                   <>
                     <div className="mt-1 text-4xl font-bold leading-none tracking-tight text-emerald-300 md:text-5xl">
                       {headline.number}
@@ -201,42 +192,88 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
         </div>
       </section>
 
-      {/* ── Summary + Metrics ── */}
+      {/* ── Project Facts (요약은 hero에 있으므로 본문은 메타+메트릭만) ── */}
       <section className="mt-6 grid gap-4 md:grid-cols-5">
-        <div className="rounded-xl border bg-card p-5 md:col-span-3">
-          <h2 className="text-sm font-semibold text-emerald-500">한 줄 요약</h2>
-          <p className="mt-2 text-sm leading-7 text-muted-foreground md:text-base">
-            {project.summary}
-          </p>
-          {projectMembers.length > 0 && (
-            <div className="mt-4 flex flex-wrap items-center gap-2">
-              <span className="text-[11px] font-semibold tracking-wider uppercase text-muted-foreground">
-                참여 멤버
-              </span>
-              {projectMembers.map((member) => (
-                <Link
-                  key={member.id}
-                  href={member.profilePath}
-                  className="inline-flex items-center gap-1 rounded-full border bg-muted/40 px-2.5 py-0.5 text-xs hover:border-emerald-400/50 hover:text-emerald-500"
-                >
-                  {member.name}
-                </Link>
-              ))}
+        {/* 좌: 기본 메타 */}
+        <dl className="grid grid-cols-2 gap-3 rounded-xl border bg-card p-5 md:col-span-2 md:grid-cols-1">
+          <div>
+            <dt className="text-[10px] font-semibold tracking-widest uppercase text-muted-foreground">
+              기간
+            </dt>
+            <dd className="mt-1 text-sm font-medium">{project.period}</dd>
+          </div>
+          {project.role && (
+            <div>
+              <dt className="text-[10px] font-semibold tracking-widest uppercase text-muted-foreground">
+                역할
+              </dt>
+              <dd className="mt-1 text-sm font-medium">{project.role}</dd>
             </div>
           )}
-        </div>
-        <div className="grid gap-2 md:col-span-2 md:grid-cols-1">
-          {project.metrics.slice(0, 3).map((metric, idx) => (
-            <div
-              key={metric}
-              className="rounded-xl border bg-card px-4 py-3"
-            >
-              <span className="text-[10px] font-semibold tracking-wider text-emerald-500">
-                METRIC #{idx + 1}
-              </span>
-              <p className="mt-1 text-sm font-medium leading-snug">{metric}</p>
+          {projectMembers.length > 0 && (
+            <div className="col-span-2 md:col-span-1">
+              <dt className="text-[10px] font-semibold tracking-widest uppercase text-muted-foreground">
+                참여 멤버
+              </dt>
+              <dd className="mt-2 flex flex-wrap gap-1.5">
+                {projectMembers.map((member) => (
+                  <Link
+                    key={member.id}
+                    href={member.profilePath}
+                    className={`inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[11px] font-medium transition ${
+                      member.id === "namhae"
+                        ? "border-emerald-400/40 bg-emerald-500/10 text-emerald-500 hover:bg-emerald-500/20"
+                        : "border-sky-400/40 bg-sky-500/10 text-sky-500 hover:bg-sky-500/20"
+                    }`}
+                  >
+                    <span
+                      className={`inline-block h-1.5 w-1.5 rounded-full ${
+                        member.id === "namhae" ? "bg-emerald-400" : "bg-sky-400"
+                      }`}
+                    />
+                    {member.name}
+                  </Link>
+                ))}
+              </dd>
             </div>
-          ))}
+          )}
+        </dl>
+
+        {/* 우: 결과 메트릭 — 숫자형 / 정성형 위계 분리 */}
+        <div className="md:col-span-3">
+          <h2 className="text-[11px] font-semibold tracking-widest uppercase text-muted-foreground">
+            결과 지표
+          </h2>
+          {parsedMetrics.length === 0 ? (
+            <p className="mt-2 text-xs italic text-muted-foreground">
+              결과 메트릭이 등록되지 않았습니다.
+            </p>
+          ) : (
+            <ul className="mt-2 grid gap-2">
+              {parsedMetrics.map((m) =>
+                m.kind === "numeric" ? (
+                  <li
+                    key={m.raw}
+                    className="flex items-baseline gap-3 rounded-xl border border-emerald-400/40 bg-emerald-500/5 px-4 py-3"
+                  >
+                    <span className="text-2xl font-bold tabular-nums leading-none text-emerald-500 md:text-3xl">
+                      {m.number}
+                    </span>
+                    <span className="text-sm leading-snug text-foreground">
+                      {m.rest || m.raw}
+                    </span>
+                  </li>
+                ) : (
+                  <li
+                    key={m.raw}
+                    className="rounded-lg border border-dashed bg-muted/20 px-3 py-2 text-xs text-muted-foreground"
+                  >
+                    {m.raw}
+                  </li>
+                )
+              )}
+            </ul>
+          )}
         </div>
       </section>
 

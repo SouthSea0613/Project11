@@ -13,7 +13,7 @@ export const alt = "김남해 — HaeYoungLab Team Portfolio";
 export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
 
-export default function NamhaeOpengraphImage() {
+export default async function NamhaeOpengraphImage() {
   return renderOgImage({
     kicker: "Team Member · 김남해",
     title: "김남해",
