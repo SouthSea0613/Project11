@@ -1,7 +1,7 @@
 import { namhaeOtaku } from "@/lib/namhaeOtaku";
 
 type Props = {
-  /** 섹션 제목 (페이지 컨텍스트에 맞춰 조절) */
+  /** 섹션 제목 (페이지 컨텍스트에 맞춰 조절). 비우면 헤더 영역 자체를 숨김 */
   heading?: string;
   /** 헤딩 위 키커 텍스트 */
   kicker?: string;
@@ -16,28 +16,37 @@ type Props = {
  * 메인 프로필(/Namhae_Kim)·래빗홀 제출 페이지에서 동일 데이터를 공유합니다.
  */
 export default function NamhaeOtakuSection({
-  heading = "덕력 · 서브컬쳐",
+  heading = "취향 · 몰입의 깊이",
   kicker,
   subtitle,
   className = "",
 }: Props) {
+  const showHeader = heading || kicker || subtitle;
   return (
     <section className={className}>
-      <div className="flex items-baseline justify-between gap-3">
-        <div>
-          {kicker ? (
-            <p className="text-[11px] font-semibold tracking-widest text-violet-600 uppercase dark:text-violet-300">
-              {kicker}
-            </p>
-          ) : null}
-          <h2 className="mt-0.5 text-lg font-semibold">{heading}</h2>
-          {subtitle ? (
-            <p className="mt-1 text-sm text-muted-foreground">{subtitle}</p>
-          ) : null}
+      {showHeader ? (
+        <div className="flex items-baseline justify-between gap-3">
+          <div>
+            {kicker ? (
+              <p className="text-[11px] font-semibold tracking-widest text-violet-600 uppercase dark:text-violet-300">
+                {kicker}
+              </p>
+            ) : null}
+            {heading ? (
+              <h2 className="mt-0.5 text-lg font-semibold">{heading}</h2>
+            ) : null}
+            {subtitle ? (
+              <p className="mt-1 text-sm text-muted-foreground">{subtitle}</p>
+            ) : null}
+          </div>
         </div>
-      </div>
+      ) : null}
 
-      <div className="mt-5 overflow-hidden rounded-2xl border border-violet-400/30 bg-gradient-to-br from-violet-500/10 via-background to-background">
+      <div
+        className={`${
+          showHeader ? "mt-5" : ""
+        } overflow-hidden rounded-2xl border border-violet-400/30 bg-gradient-to-br from-violet-500/10 via-background to-background`}
+      >
         {/* 레벨 헤더 */}
         <div className="flex flex-wrap items-baseline gap-3 border-b border-violet-400/20 bg-violet-500/10 px-5 py-4">
           <span className="rounded-md border border-violet-400/50 bg-violet-500/20 px-2 py-0.5 font-mono text-xs font-bold tracking-wider text-violet-700 dark:text-violet-300">
@@ -47,7 +56,7 @@ export default function NamhaeOtakuSection({
             {namhaeOtaku.type}
           </span>
           <span className="ml-auto text-[10px] font-semibold tracking-widest uppercase text-violet-600 dark:text-violet-300">
-            오타쿠 레벨 및 사유
+            몰입 레벨 · 깊이
           </span>
         </div>
 

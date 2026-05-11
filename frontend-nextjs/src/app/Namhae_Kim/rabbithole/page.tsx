@@ -293,11 +293,11 @@ export default function RabbitholeSubmissionPage() {
         </ol>
       </section>
 
-      {/* ── 4. 덕력 / 서브컬쳐 어필 ── */}
+      {/* ── 4. 취향 · 몰입의 깊이 ── */}
       <NamhaeOtakuSection
         className="mt-14"
-        heading="4. 덕력 · 서브컬쳐 어필"
-        subtitle="채용 공고의 작성 Tip(서브컬쳐 덕력 어필) 대응 영역입니다."
+        heading="4. 취향 · 몰입의 깊이"
+        subtitle="채용 공고의 작성 Tip(서브컬쳐 어필) 대응 영역. 긴 호흡을 견디는 집중력이 개발 작업에도 동일하게 쓰입니다."
       />
 
       <footer className="mt-14 border-t pt-8 text-center text-xs text-muted-foreground">

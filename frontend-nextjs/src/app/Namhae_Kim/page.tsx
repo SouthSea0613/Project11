@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import JsonLd from "@/components/JsonLd";
 import NamhaeContentTabs from "@/components/NamhaeContentTabs";
-import NamhaeOtakuSection from "@/components/NamhaeOtakuSection";
 import PrintButton from "@/components/PrintButton";
 import ProfilePhotoViewer from "@/components/ProfilePhotoViewer";
 import { breadcrumbLd, personLd } from "@/lib/jsonLd";
@@ -178,13 +177,6 @@ export default function NamhaeKimPage() {
           </div>
 
           <NamhaeContentTabs projects={projects} />
-
-          <NamhaeOtakuSection
-            className="mt-10"
-            kicker="Beyond the Code"
-            heading="덕력 · 서브컬쳐"
-            subtitle="긴 호흡을 견디는 끈기·집중력은 개발에서도 동일하게 쓰입니다."
-          />
 
           <section className="print-hide mt-10 rounded-xl border bg-card p-5">
             <h2 className="text-lg font-semibold">외부 링크</h2>

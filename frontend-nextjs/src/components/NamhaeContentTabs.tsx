@@ -5,6 +5,7 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 import { ImageSlot } from "@/components/ImageSlot";
 import HighlightImageGrid from "@/components/HighlightImageGrid";
+import NamhaeOtakuSection from "@/components/NamhaeOtakuSection";
 import ProjectTabs from "@/components/ProjectTabs";
 
 const NamhaeAbilityRadar = dynamic(
@@ -48,7 +49,7 @@ type NamhaeContentTabsProps = {
 };
 
 type PrimaryTab = "overview" | "detail";
-type DetailTab = "intro" | "career" | "projects" | "education";
+type DetailTab = "intro" | "career" | "projects" | "education" | "interests";
 
 const motivationHighlights = [
   { icon: "🎯", title: "비즈니스 → 기술", desc: "현장 문제를 코드로 치환" },
@@ -312,6 +313,7 @@ export default function NamhaeContentTabs({ projects }: NamhaeContentTabsProps) 
               { id: "career", label: "실제 경력" },
               { id: "projects", label: "프로젝트" },
               { id: "education", label: "학력 / 기타" },
+              { id: "interests", label: "취향" },
             ].map((tab) => (
               <button
                 key={tab.id}
@@ -445,6 +447,13 @@ export default function NamhaeContentTabs({ projects }: NamhaeContentTabsProps) 
                 </div>
               </section>
             </div>
+          )}
+
+          {isShown("interests") && (
+            <NamhaeOtakuSection
+              heading=""
+              subtitle="긴 호흡을 견디는 끈기·집중력은 개발에서도 동일하게 쓰입니다."
+            />
           )}
         </div>
       )}
