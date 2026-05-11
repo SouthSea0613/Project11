@@ -5,9 +5,7 @@ import PrintButton from "@/components/PrintButton";
 import { ImageSlot } from "@/components/ImageSlot";
 import { breadcrumbLd } from "@/lib/jsonLd";
 import {
-  rabbitholeAiCaseStudies,
-  rabbitholeChatLinks,
-  rabbitholeFigures,
+  rabbitholeCases,
   rabbitholeMeta,
   rabbitholeProductContext,
 } from "@/lib/rabbitholeSubmission";
@@ -15,14 +13,14 @@ import { SITE_NAME, SITE_URL } from "@/lib/siteConfig";
 
 const title = "김남해 — 래빗홀컴퍼니 제출용 · AI 도구 활용 사례";
 const description =
-  "서류 전형 보완: AI(챗봇·코딩 에이전트)를 활용해 문제를 해결한 경험 및 대화·산출물 제출 안내.";
+  "서류 전형 보완: ChatGPT·Claude·Cursor를 활용해 PlanIT, 비트코인 시뮬레이터, 팀 포트폴리오에서 문제를 해결한 사례 모음.";
 
 export const metadata: Metadata = {
   title,
   description,
   robots: { index: false, follow: false },
   alternates: {
-    canonical: `${SITE_URL}${rabbitholeMeta.pagePath}`,
+    canonical: `${SITE_URL.replace(/\/$/, "")}${rabbitholeMeta.pagePath}`,
   },
   openGraph: {
     title,
@@ -50,6 +48,7 @@ export default function RabbitholeSubmissionPage() {
         ]}
       />
 
+      {/* ── Header ── */}
       <header className="border-b border-border pb-8">
         <p className="text-[11px] font-semibold tracking-widest text-amber-600 uppercase">
           For Rabbithole Company
@@ -58,9 +57,11 @@ export default function RabbitholeSubmissionPage() {
           AI 도구 활용 사례 · 대화 로그 제출
         </h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          지원자 <span className="font-semibold text-foreground">{rabbitholeMeta.applicantName}</span>
-          {" · "}
-          이메일 제출:{" "}
+          지원자{" "}
+          <span className="font-semibold text-foreground">
+            {rabbitholeMeta.applicantName}
+          </span>
+          {" · 이메일 제출: "}
           <a
             href={`mailto:${rabbitholeMeta.submitToEmail}`}
             className="font-medium text-emerald-600 underline-offset-4 hover:underline"
@@ -78,10 +79,11 @@ export default function RabbitholeSubmissionPage() {
           </Link>
         </div>
         <p className="mt-4 rounded-lg border border-amber-500/30 bg-amber-500/5 px-4 py-3 text-sm leading-relaxed text-foreground">
-          래빗홀컴퍼니 서류 전형 안내에 따라,{" "}
+          래빗홀컴퍼니 서류 안내에 따라{" "}
           <strong>ChatGPT·Claude 등 AI로 문제를 해결한 경험</strong>과{" "}
-          <strong>대화 로그 또는 산출물</strong>을 제출합니다. 본 페이지는 요약·URL 공유용이며,
-          상세 로그는 아래 링크·첨부 또는 별도 메일 본문으로 함께 전달드립니다.
+          <strong>대화 로그·산출물</strong>을 제출합니다. 아래 사례들은 모두 본
+          포트폴리오의 실제 프로젝트와 연결되어 있으며, 각 카드 하단의 링크에서
+          최종 결과물을 확인할 수 있습니다.
         </p>
         <p className="mt-3 text-xs text-muted-foreground">
           공유 URL:{" "}
@@ -89,22 +91,28 @@ export default function RabbitholeSubmissionPage() {
         </p>
       </header>
 
+      {/* ── 1. 사용한 AI 환경 ── */}
       <section className="mt-10">
         <h2 className="text-lg font-semibold">1. 사용한 AI 환경</h2>
         <ul className="mt-3 list-disc space-y-2 pl-5 text-sm leading-relaxed text-muted-foreground">
           <li>
-            <strong className="text-foreground">Cursor</strong> IDE — Claude / GPT 계열 모델을 사용한
-            에이전트·채팅으로 코드 탐색, 패치 적용, 빌드 로그 해석, 타입 오류 수정을 병행했습니다.
+            <strong className="text-foreground">ChatGPT · Claude</strong> —
+            장문의 기획안·사양을 그대로 전달해 시스템 구조·우선순위·리스크를
+            정리받는 용도. 본문 캡처(요청·응답)는 아래 케이스에 첨부.
           </li>
           <li>
-            별도의 ChatGPT·Claude 웹 세션에서 아이디어 정리·문서 초안을 낸 경우, 해당{" "}
-            <strong className="text-foreground">공유 링크</strong>를 아래 섹션에 추가합니다.
+            <strong className="text-foreground">Cursor IDE (Claude / GPT
+            에이전트)</strong> — 실제 코드 베이스에서 탐색·패치·빌드 로그 해석을
+            수행한 운영 도구.
           </li>
         </ul>
       </section>
 
+      {/* ── 2. 제품·보안 맥락 ── */}
       <section className="mt-10">
-        <h2 className="text-lg font-semibold">2. 제품·보안 맥락 (JWT / 클라우드 / AI API)</h2>
+        <h2 className="text-lg font-semibold">
+          2. 제품·보안 맥락 (JWT / 클라우드 / AI API / Firebase)
+        </h2>
         <ul className="mt-3 space-y-2 text-sm leading-relaxed text-muted-foreground">
           {rabbitholeProductContext.map((line) => (
             <li key={line} className="rounded-lg border bg-card px-4 py-3">
@@ -114,131 +122,165 @@ export default function RabbitholeSubmissionPage() {
         </ul>
         <p className="mt-3 text-xs text-muted-foreground">
           상세 스택·역할은{" "}
-          <Link href="/Namhae_Kim" className="text-emerald-600 underline-offset-4 hover:underline">
+          <Link
+            href="/Namhae_Kim"
+            className="text-emerald-600 underline-offset-4 hover:underline"
+          >
             김남해 프로필
           </Link>
           {" · "}
-          <Link href="/projects" className="text-emerald-600 underline-offset-4 hover:underline">
+          <Link
+            href="/projects"
+            className="text-emerald-600 underline-offset-4 hover:underline"
+          >
             프로젝트 목록
           </Link>
-          을 참고해 주세요.
+          참고.
         </p>
       </section>
 
-      <section className="mt-10">
-        <h2 className="text-lg font-semibold">3. AI 협업으로 해결한 문제 (요약)</h2>
+      {/* ── 3. 프로젝트별 AI 협업 사례 ── */}
+      <section className="mt-12">
+        <h2 className="text-lg font-semibold">
+          3. AI 협업 사례 (프로젝트 연결)
+        </h2>
         <p className="mt-2 text-sm text-muted-foreground">
-          아래는 본 포트폴리오 웹앱(Next.js) 구축·운영 과정에서 에이전트와 함께 처리한 대표 사례입니다.
-          세부 프롬프트·응답은 대화 로그 링크 또는 캡처로 제출합니다.
+          각 카드는 <strong className="text-foreground">직접 작성한 요청</strong>
+          {" → "}
+          <strong className="text-foreground">AI 응답 요약</strong>
+          {" → "}
+          <strong className="text-foreground">실제 제품 반영</strong>
+          {" "}흐름으로 정리되어 있습니다. 캡처는 원본 대화의 핵심 화면입니다.
         </p>
-        <ol className="mt-6 space-y-6">
-          {rabbitholeAiCaseStudies.map((c, i) => (
+
+        <ol className="mt-6 space-y-10">
+          {rabbitholeCases.map((c, i) => (
             <li
-              key={c.title}
-              className="rounded-xl border bg-card p-5"
+              key={c.id}
+              id={c.id}
+              className="overflow-hidden rounded-2xl border bg-card"
             >
-              <p className="text-[10px] font-semibold tracking-widest text-emerald-600 uppercase">
-                Case {i + 1}
-              </p>
-              <h3 className="mt-1 text-base font-semibold text-foreground">{c.title}</h3>
-              <dl className="mt-4 space-y-3 text-sm">
-                <div>
-                  <dt className="text-[11px] font-semibold uppercase text-muted-foreground">
-                    도구·맥락
-                  </dt>
-                  <dd className="mt-0.5 text-muted-foreground">{c.toolContext}</dd>
+              {/* 카드 헤더 */}
+              <div className="flex items-start justify-between gap-3 border-b bg-muted/30 px-5 py-4">
+                <div className="min-w-0">
+                  <p className="text-[10px] font-semibold tracking-widest text-emerald-600 uppercase">
+                    Case {i + 1} · {c.kind}
+                  </p>
+                  <h3 className="mt-1 text-base font-semibold leading-snug text-foreground">
+                    {c.title}
+                  </h3>
+                  <p className="mt-1 text-[11px] text-muted-foreground">
+                    도구·맥락: {c.tool}
+                  </p>
                 </div>
+                {c.linkedProject ? (
+                  <Link
+                    href={c.linkedProject.href}
+                    className="shrink-0 rounded-md border border-emerald-400/40 bg-emerald-500/10 px-2.5 py-1 text-[11px] font-medium text-emerald-600 transition hover:bg-emerald-500/20"
+                  >
+                    {c.linkedProject.label}
+                  </Link>
+                ) : null}
+              </div>
+
+              {/* 본문 */}
+              <div className="space-y-5 p-5">
+                {/* 프롬프트 */}
                 <div>
-                  <dt className="text-[11px] font-semibold uppercase text-muted-foreground">
-                    문제
-                  </dt>
-                  <dd className="mt-0.5 text-muted-foreground">{c.problem}</dd>
+                  <p className="text-[11px] font-semibold uppercase text-muted-foreground">
+                    내가 작성한 요청
+                  </p>
+                  <p className="mt-1 text-sm leading-relaxed text-foreground">
+                    {c.prompt}
+                  </p>
                 </div>
+
+                {/* 응답 bullet */}
                 <div>
-                  <dt className="text-[11px] font-semibold uppercase text-muted-foreground">
-                    접근
-                  </dt>
-                  <dd className="mt-0.5 text-muted-foreground">{c.approach}</dd>
+                  <p className="text-[11px] font-semibold uppercase text-muted-foreground">
+                    AI 응답 — 핵심
+                  </p>
+                  <ul className="mt-2 space-y-1.5 text-sm leading-relaxed text-muted-foreground">
+                    {c.responseBullets.map((b) => (
+                      <li
+                        key={b}
+                        className="flex gap-2 before:mt-2 before:h-1 before:w-1 before:shrink-0 before:rounded-full before:bg-emerald-500"
+                      >
+                        <span>{b}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <div>
-                  <dt className="text-[11px] font-semibold uppercase text-muted-foreground">
-                    결과
-                  </dt>
-                  <dd className="mt-0.5 font-medium text-foreground">{c.outcome}</dd>
+
+                {/* 결과 */}
+                <div className="rounded-lg border border-emerald-400/40 bg-emerald-500/5 px-4 py-3">
+                  <p className="text-[11px] font-semibold uppercase text-emerald-700 dark:text-emerald-400">
+                    실제 제품 반영
+                  </p>
+                  <p className="mt-1 text-sm leading-relaxed text-foreground">
+                    {c.outcome}
+                  </p>
                 </div>
-              </dl>
+
+                {/* 캡처 */}
+                {c.figures.length > 0 ? (
+                  <div>
+                    <p className="text-[11px] font-semibold uppercase text-muted-foreground">
+                      대화 캡처
+                    </p>
+                    <ul
+                      className={`mt-2 grid gap-4 ${
+                        c.figures.length > 1 ? "sm:grid-cols-2" : ""
+                      }`}
+                    >
+                      {c.figures.map((fig) => (
+                        <li
+                          key={fig.src}
+                          className="overflow-hidden rounded-lg border bg-background"
+                        >
+                          <ImageSlot
+                            src={fig.src}
+                            alt={fig.caption}
+                            aspect="aspect-[4/3]"
+                            rounded="rounded-none"
+                            label={fig.caption}
+                            sizes="(max-width: 640px) 100vw, 50vw"
+                          />
+                          <p className="border-t px-3 py-2 text-[11px] leading-snug text-muted-foreground">
+                            {fig.caption}
+                          </p>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : null}
+
+                {/* 원본 대화 링크 */}
+                {c.chatLinks && c.chatLinks.length > 0 ? (
+                  <div>
+                    <p className="text-[11px] font-semibold uppercase text-muted-foreground">
+                      원본 대화
+                    </p>
+                    <ul className="mt-1 space-y-1 text-sm">
+                      {c.chatLinks.map((l) => (
+                        <li key={l.href}>
+                          <a
+                            href={l.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-emerald-600 underline-offset-4 hover:underline"
+                          >
+                            {l.label}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : null}
+              </div>
             </li>
           ))}
         </ol>
-      </section>
-
-      <section className="mt-10">
-        <h2 className="text-lg font-semibold">4. 대화 로그 · 산출물 링크</h2>
-        {rabbitholeChatLinks.length === 0 ? (
-          <div className="mt-4 rounded-xl border border-dashed bg-muted/30 px-4 py-6 text-sm text-muted-foreground">
-            <p>
-              아직 공개 링크가 없습니다.{" "}
-              <code className="rounded bg-muted px-1.5 py-0.5 text-xs text-foreground">
-                src/lib/rabbitholeSubmission.ts
-              </code>
-              의 <code className="rounded bg-muted px-1.5 py-0.5 text-xs">rabbitholeChatLinks</code> 배열에
-              ChatGPT·Claude 공유 URL을 추가하거나, PDF/Notion 링크를 넣어 주세요.
-            </p>
-            <p className="mt-3">
-              동시에{" "}
-              <a
-                href={`mailto:${rabbitholeMeta.submitToEmail}?subject=${encodeURIComponent("[김남해] AI 대화 로그 제출")}`}
-                className="font-medium text-emerald-600 underline-offset-4 hover:underline"
-              >
-                메일로 첨부
-              </a>
-              해 주시면 됩니다.
-            </p>
-          </div>
-        ) : (
-          <ul className="mt-4 space-y-2">
-            {rabbitholeChatLinks.map((item) => (
-              <li key={item.href}>
-                <a
-                  href={item.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm font-medium text-emerald-600 underline-offset-4 hover:underline"
-                >
-                  {item.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        )}
-      </section>
-
-      <section className="mt-10">
-        <h2 className="text-lg font-semibold">5. 보충 이미지</h2>
-        {rabbitholeFigures.length === 0 ? (
-          <p className="mt-3 text-sm text-muted-foreground">
-            캡처를{" "}
-            <code className="rounded bg-muted px-1.5 py-0.5 text-xs">public/rabbithole/</code> 등에 두고{" "}
-            <code className="rounded bg-muted px-1.5 py-0.5 text-xs">rabbitholeFigures</code>에 등록하면
-            이 영역에 갤러리로 표시됩니다.
-          </p>
-        ) : (
-          <ul className="mt-4 grid gap-6 sm:grid-cols-2">
-            {rabbitholeFigures.map((fig) => (
-              <li key={fig.src} className="overflow-hidden rounded-xl border bg-card">
-                <ImageSlot
-                  src={fig.src}
-                  alt={fig.caption}
-                  aspect="aspect-video"
-                  rounded="rounded-none"
-                  label={fig.caption}
-                  sizes="(max-width: 640px) 100vw, 50vw"
-                />
-                <p className="border-t px-3 py-2 text-xs text-muted-foreground">{fig.caption}</p>
-              </li>
-            ))}
-          </ul>
-        )}
       </section>
 
       <footer className="mt-14 border-t pt-8 text-center text-xs text-muted-foreground">
