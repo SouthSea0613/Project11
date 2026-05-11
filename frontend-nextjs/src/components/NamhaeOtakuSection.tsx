@@ -1,0 +1,170 @@
+import { namhaeOtaku } from "@/lib/namhaeOtaku";
+
+type Props = {
+  /** 섹션 제목 (페이지 컨텍스트에 맞춰 조절) */
+  heading?: string;
+  /** 헤딩 위 키커 텍스트 */
+  kicker?: string;
+  /** 헤딩 아래 보조 설명 */
+  subtitle?: string;
+  /** 외부 여백 조절을 위한 className */
+  className?: string;
+};
+
+/**
+ * 김남해 서브컬쳐 '덕력' 어필 섹션 (FFXIV·고전 문학).
+ * 메인 프로필(/Namhae_Kim)·래빗홀 제출 페이지에서 동일 데이터를 공유합니다.
+ */
+export default function NamhaeOtakuSection({
+  heading = "덕력 · 서브컬쳐",
+  kicker,
+  subtitle,
+  className = "",
+}: Props) {
+  return (
+    <section className={className}>
+      <div className="flex items-baseline justify-between gap-3">
+        <div>
+          {kicker ? (
+            <p className="text-[11px] font-semibold tracking-widest text-violet-600 uppercase dark:text-violet-300">
+              {kicker}
+            </p>
+          ) : null}
+          <h2 className="mt-0.5 text-lg font-semibold">{heading}</h2>
+          {subtitle ? (
+            <p className="mt-1 text-sm text-muted-foreground">{subtitle}</p>
+          ) : null}
+        </div>
+      </div>
+
+      <div className="mt-5 overflow-hidden rounded-2xl border border-violet-400/30 bg-gradient-to-br from-violet-500/10 via-background to-background">
+        {/* 레벨 헤더 */}
+        <div className="flex flex-wrap items-baseline gap-3 border-b border-violet-400/20 bg-violet-500/10 px-5 py-4">
+          <span className="rounded-md border border-violet-400/50 bg-violet-500/20 px-2 py-0.5 font-mono text-xs font-bold tracking-wider text-violet-700 dark:text-violet-300">
+            {namhaeOtaku.level}
+          </span>
+          <span className="text-base font-semibold text-foreground">
+            {namhaeOtaku.type}
+          </span>
+          <span className="ml-auto text-[10px] font-semibold tracking-widest uppercase text-violet-600 dark:text-violet-300">
+            오타쿠 레벨 및 사유
+          </span>
+        </div>
+
+        <div className="p-5">
+          <p className="text-sm leading-relaxed text-foreground">
+            {namhaeOtaku.intro}
+          </p>
+
+          <ol className="mt-6 space-y-5">
+            {namhaeOtaku.pillars.map((p, i) => (
+              <li key={p.title} className="rounded-xl border bg-card p-5">
+                <div className="flex items-start gap-3">
+                  <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-violet-400/40 bg-violet-500/10 text-lg">
+                    {p.icon}
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-[10px] font-semibold tracking-widest text-violet-600 uppercase dark:text-violet-300">
+                      Pillar {i + 1}
+                    </p>
+                    <h3 className="mt-0.5 text-base font-semibold leading-snug text-foreground">
+                      {p.title}
+                    </h3>
+                  </div>
+                </div>
+
+                {/* 캐릭터 메타 */}
+                {p.meta && p.meta.length > 0 ? (
+                  <dl className="mt-4 grid gap-2 rounded-lg border bg-muted/30 p-3 text-xs sm:grid-cols-2">
+                    {p.meta.map((m) => (
+                      <div key={m.label} className="flex gap-2">
+                        <dt className="shrink-0 font-semibold tracking-wide text-muted-foreground">
+                          {m.label}
+                        </dt>
+                        <dd className="min-w-0 font-medium text-foreground">
+                          {m.value}
+                        </dd>
+                      </div>
+                    ))}
+                  </dl>
+                ) : null}
+
+                <dl className="mt-4 space-y-3 text-sm">
+                  <div>
+                    <dt className="text-[11px] font-semibold uppercase text-muted-foreground">
+                      집착의 깊이
+                    </dt>
+                    <dd className="mt-0.5 leading-relaxed text-foreground">
+                      {p.depth}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt className="text-[11px] font-semibold uppercase text-muted-foreground">
+                      사유
+                    </dt>
+                    <dd className="mt-0.5 leading-relaxed text-muted-foreground">
+                      {p.reason}
+                    </dd>
+                  </div>
+
+                  {p.lists
+                    ? p.lists.map((list) => (
+                        <div key={list.label}>
+                          <dt className="text-[11px] font-semibold uppercase text-muted-foreground">
+                            {list.label}
+                          </dt>
+                          <dd className="mt-2 flex flex-wrap gap-1.5">
+                            {list.items.map((it) => (
+                              <span
+                                key={it}
+                                className="inline-flex rounded-md border border-violet-400/30 bg-violet-500/10 px-2 py-0.5 text-[11px] font-medium text-violet-700 dark:text-violet-300"
+                              >
+                                {it}
+                              </span>
+                            ))}
+                          </dd>
+                        </div>
+                      ))
+                    : null}
+                </dl>
+
+                {/* 외부 증빙 링크 */}
+                {p.links && p.links.length > 0 ? (
+                  <div className="mt-4 space-y-2">
+                    <p className="text-[11px] font-semibold uppercase text-muted-foreground">
+                      증빙 링크
+                    </p>
+                    <ul className="space-y-1.5">
+                      {p.links.map((l) => (
+                        <li key={l.href} className="text-sm leading-snug">
+                          <a
+                            href={l.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1 font-medium text-violet-600 underline-offset-4 hover:underline dark:text-violet-300"
+                          >
+                            {l.label}
+                            <span aria-hidden="true" className="text-[10px] opacity-70">↗</span>
+                          </a>
+                          {l.note ? (
+                            <span className="ml-2 text-xs text-muted-foreground">
+                              — {l.note}
+                            </span>
+                          ) : null}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : null}
+              </li>
+            ))}
+          </ol>
+
+          <p className="mt-6 rounded-lg border border-violet-400/30 bg-violet-500/5 px-4 py-3 text-sm leading-relaxed text-foreground">
+            {namhaeOtaku.closing}
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}

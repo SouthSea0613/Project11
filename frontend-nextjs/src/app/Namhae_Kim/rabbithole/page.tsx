@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import JsonLd from "@/components/JsonLd";
+import NamhaeOtakuSection from "@/components/NamhaeOtakuSection";
 import PrintButton from "@/components/PrintButton";
-import { ImageSlot } from "@/components/ImageSlot";
+import ZoomableImage from "@/components/ImageLightbox";
 import { breadcrumbLd } from "@/lib/jsonLd";
 import {
   rabbitholeCases,
@@ -222,11 +223,14 @@ export default function RabbitholeSubmissionPage() {
                   </p>
                 </div>
 
-                {/* 캡처 */}
+                {/* 캡처 — 클릭 시 라이트박스 확대 (← → 로 케이스 내 이동) */}
                 {c.figures.length > 0 ? (
                   <div>
                     <p className="text-[11px] font-semibold uppercase text-muted-foreground">
-                      대화 캡처
+                      대화 캡처{" "}
+                      <span className="ml-1 text-[10px] font-normal normal-case text-muted-foreground/70">
+                        (클릭하면 크게 보기)
+                      </span>
                     </p>
                     <ul
                       className={`mt-2 grid gap-4 ${
@@ -238,12 +242,18 @@ export default function RabbitholeSubmissionPage() {
                           key={fig.src}
                           className="overflow-hidden rounded-lg border bg-background"
                         >
-                          <ImageSlot
+                          <ZoomableImage
                             src={fig.src}
                             alt={fig.caption}
                             aspect="aspect-[4/3]"
                             rounded="rounded-none"
                             label={fig.caption}
+                            caption={fig.caption}
+                            group={c.figures.map((f) => ({
+                              src: f.src,
+                              alt: f.caption,
+                              caption: f.caption,
+                            }))}
                             sizes="(max-width: 640px) 100vw, 50vw"
                           />
                           <p className="border-t px-3 py-2 text-[11px] leading-snug text-muted-foreground">
@@ -282,6 +292,13 @@ export default function RabbitholeSubmissionPage() {
           ))}
         </ol>
       </section>
+
+      {/* ── 4. 덕력 / 서브컬쳐 어필 ── */}
+      <NamhaeOtakuSection
+        className="mt-14"
+        heading="4. 덕력 · 서브컬쳐 어필"
+        subtitle="채용 공고의 작성 Tip(서브컬쳐 덕력 어필) 대응 영역입니다."
+      />
 
       <footer className="mt-14 border-t pt-8 text-center text-xs text-muted-foreground">
         본 페이지는 채용 서류 보완용으로 제작되었습니다. ({SITE_NAME})

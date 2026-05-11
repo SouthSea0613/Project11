@@ -175,3 +175,6 @@ export const rabbitholeProductContext: string[] = [
   "AWS S3 등 인프라 연동 경험: 레거시·내부 도메인 프로젝트(이력서·프로젝트 상세 참고).",
   "Firebase Auth(Google Sign-In)·Firestore 랭킹 시스템: 기존 라이브 서비스 프로젝트에서 적용 사례 보유.",
 ];
+
+/** 서브컬쳐 '덕력' 어필 — 김남해 메인 프로필과 동일 데이터 재사용 */
+export { namhaeOtaku as rabbitholeOtaku } from "@/lib/namhaeOtaku";
