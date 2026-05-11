@@ -137,14 +137,6 @@ export default function NamhaeKimPage() {
           </div>
 
           {/* 다른 멤버 / 비교 */}
-          <div className="print-hide mt-4 flex flex-wrap gap-2 text-[11px]">
-            <Link
-              href="/Minyoung_Kim"
-              className="inline-flex items-center gap-1 rounded-md border border-sky-400/40 bg-sky-500/10 px-2.5 py-1 font-medium text-sky-500 transition hover:bg-sky-500/20"
-            >
-              김민영 →
-            </Link>
-          </div>
         </aside>
 
         {/* ── Right Main ── */}

@@ -135,14 +135,6 @@ export default function MinyoungKimPage() {
             </a>
           </div>
 
-          <div className="print-hide mt-4 flex flex-wrap gap-2 text-[11px]">
-            <Link
-              href="/Namhae_Kim"
-              className="inline-flex items-center gap-1 rounded-md border border-emerald-400/40 bg-emerald-500/10 px-2.5 py-1 font-medium text-emerald-500 transition hover:bg-emerald-500/20"
-            >
-              김남해 →
-            </Link>
-          </div>
         </aside>
 
         <div className="min-w-0">
