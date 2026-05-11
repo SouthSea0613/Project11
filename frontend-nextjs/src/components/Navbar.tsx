@@ -35,7 +35,6 @@ export default function Navbar() {
   const isNamhaePage = pathname.startsWith("/Namhae_Kim");
   const isMinyoungPage = pathname.startsWith("/Minyoung_Kim");
   const isProjectsPage = pathname.startsWith("/projects");
-  const isCompare = pathname.startsWith("/team-compare");
 
   return (
     <div className="print-hide fixed top-0 left-0 w-full z-50 pointer-events-none">
@@ -150,17 +149,26 @@ export default function Navbar() {
             >
               Projects
             </Link>
-            <Link
-              href="/team-compare"
-              aria-current={isCompare ? "page" : undefined}
-              className={`hidden md:inline-flex items-center rounded-md px-2.5 h-8 text-xs md:text-sm font-medium transition underline-offset-4 ${
-                isCompare
-                  ? "text-violet-500 underline"
-                  : "text-muted-foreground hover:text-violet-500"
-              }`}
+            <a
+              href="https://haeyounglab.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="HaeYoungLab 메인 사이트로 이동"
+              className="hidden md:inline-flex items-center gap-1 rounded-md px-2.5 h-8 text-xs md:text-sm font-medium text-muted-foreground transition hover:text-emerald-500"
             >
-              Compare
-            </Link>
+              Lab
+              <span aria-hidden="true" className="text-[10px] opacity-70">↗</span>
+            </a>
+            <a
+              href="https://planit.haeyounglab.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="PlanIT 라이브 데모로 이동"
+              className="hidden md:inline-flex items-center gap-1 rounded-md border border-emerald-400/30 bg-emerald-400/10 px-2.5 h-8 text-xs md:text-sm font-semibold text-emerald-500 transition hover:border-emerald-400/60 hover:bg-emerald-400/20"
+            >
+              PlanIT
+              <span aria-hidden="true" className="text-[10px] opacity-80">↗</span>
+            </a>
             {pathname.startsWith("/haeyoungsoftware") ? (
               <a
                 href="https://team.haeyounglab.com"

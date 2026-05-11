@@ -103,7 +103,8 @@ export const teamContact: {
   responseSla: "보통 24시간 이내 회신",
   channels: [
     { label: "이메일", href: "mailto:contact@haeyounglab.com", primary: true },
-    { label: "PlanIT 데모", href: "https://planit.haeyounglab.com/" },
+    { label: "Lab 사이트", href: "https://haeyounglab.com" },
+    { label: "PlanIT 데모", href: "https://planit.haeyounglab.com" },
     { label: "GitHub", href: "https://github.com/SouthSea0613" },
   ],
   inquiryTypes: [

@@ -144,12 +144,6 @@ export default function NamhaeKimPage() {
             >
               김민영 →
             </Link>
-            <Link
-              href="/team-compare"
-              className="inline-flex items-center gap-1 rounded-md border border-violet-400/40 bg-violet-500/10 px-2.5 py-1 font-medium text-violet-500 transition hover:bg-violet-500/20"
-            >
-              비교 보기
-            </Link>
           </div>
         </aside>
 

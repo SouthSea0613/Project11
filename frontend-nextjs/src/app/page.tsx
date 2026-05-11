@@ -141,6 +141,31 @@ export default function Home() {
                 </Link>
               ))}
             </div>
+
+            {/* 외부 사이트 빠른 이동 */}
+            <div className="mt-4 flex flex-wrap items-center gap-2 text-xs">
+              <span className="text-[10px] font-semibold tracking-widest uppercase text-slate-400">
+                Live
+              </span>
+              <a
+                href="https://haeyounglab.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 rounded-md border border-white/10 bg-white/5 px-2.5 py-1 font-medium text-slate-200 transition hover:border-emerald-400/40 hover:text-emerald-300"
+              >
+                haeyounglab.com
+                <span aria-hidden="true" className="text-[10px] opacity-70">↗</span>
+              </a>
+              <a
+                href="https://planit.haeyounglab.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 rounded-md border border-emerald-400/30 bg-emerald-400/10 px-2.5 py-1 font-semibold text-emerald-300 transition hover:border-emerald-400/60 hover:bg-emerald-400/20"
+              >
+                planit.haeyounglab.com
+                <span aria-hidden="true" className="text-[10px] opacity-80">↗</span>
+              </a>
+            </div>
           </div>
 
           {/* 우: 거대 숫자 2개 (한눈 핵심 KPI) */}
@@ -327,21 +352,13 @@ export default function Home() {
 
       {/* ── Team Members ── */}
       <section className="mx-auto max-w-screen-2xl px-4 pb-20 sm:px-6 md:px-8 lg:px-6">
-        <div className="flex flex-wrap items-end justify-between gap-3">
-          <div>
-            <p className="text-xs font-semibold tracking-widest text-emerald-400 uppercase">
-              Members
-            </p>
-            <h2 className="mt-1 text-2xl font-semibold text-white md:text-3xl">
-              팀 구성
-            </h2>
-          </div>
-          <Link
-            href="/team-compare"
-            className="rounded-md border border-emerald-400/40 bg-emerald-400/10 px-3 py-1.5 text-xs font-semibold text-emerald-200 transition hover:bg-emerald-400/20"
-          >
-            두 멤버 비교 보기 →
-          </Link>
+        <div>
+          <p className="text-xs font-semibold tracking-widest text-emerald-400 uppercase">
+            Members
+          </p>
+          <h2 className="mt-1 text-2xl font-semibold text-white md:text-3xl">
+            팀 구성
+          </h2>
         </div>
         <div className="mt-6 grid gap-4 md:grid-cols-2">
           {teamMembers.map((member) => (
@@ -469,9 +486,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── 다음 행선지 (3-CTA) ── */}
+      {/* ── 다음 행선지 (2-CTA) ── */}
       <section className="mx-auto max-w-screen-2xl px-4 pb-12 sm:px-6 md:px-8 lg:px-6">
-        <div className="grid gap-3 md:grid-cols-3">
+        <div className="grid gap-3 md:grid-cols-2">
           <Link
             href="/projects"
             className="group rounded-2xl border border-white/10 bg-slate-950/60 p-5 transition hover:-translate-y-0.5 hover:border-emerald-400/60"
@@ -486,23 +503,6 @@ export default function Home() {
               스택 / 멤버 / 키워드로 좁혀 보기
             </p>
             <span className="mt-3 inline-block text-xs text-emerald-400">
-              열기 →
-            </span>
-          </Link>
-          <Link
-            href="/team-compare"
-            className="group rounded-2xl border border-violet-400/30 bg-violet-500/10 p-5 transition hover:-translate-y-0.5 hover:border-violet-400/70"
-          >
-            <p className="text-[10px] font-semibold tracking-widest uppercase text-violet-300">
-              Compare
-            </p>
-            <h3 className="mt-1 text-lg font-semibold text-white group-hover:text-violet-200">
-              팀원 비교 — 능력치 · 임팩트 · 스택
-            </h3>
-            <p className="mt-1 text-xs text-slate-300">
-              김남해 · 김민영을 한 화면에서 비교
-            </p>
-            <span className="mt-3 inline-block text-xs text-violet-300">
               열기 →
             </span>
           </Link>

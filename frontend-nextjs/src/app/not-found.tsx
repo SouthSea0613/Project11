@@ -83,12 +83,6 @@ export default function NotFound() {
           >
             김민영 프로필
           </Link>
-          <Link
-            href="/team-compare"
-            className="rounded-md border border-violet-400/40 bg-violet-400/10 px-3.5 py-2 font-medium text-violet-200 transition hover:bg-violet-400/20"
-          >
-            팀원 비교
-          </Link>
         </div>
       </section>
 
