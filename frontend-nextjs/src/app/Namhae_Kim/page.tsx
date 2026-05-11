@@ -136,7 +136,14 @@ export default function NamhaeKimPage() {
             </a>
           </div>
 
-          {/* 다른 멤버 / 비교 */}
+          <div className="print-hide mt-4 border-t border-border pt-4">
+            <Link
+              href="/Namhae_Kim/rabbithole"
+              className="inline-flex text-[11px] font-semibold text-amber-700 underline-offset-4 hover:underline dark:text-amber-400"
+            >
+              래빗홀 제출용 · AI 사례 (URL)
+            </Link>
+          </div>
         </aside>
 
         {/* ── Right Main ── */}
