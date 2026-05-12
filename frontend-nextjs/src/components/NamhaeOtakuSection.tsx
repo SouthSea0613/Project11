@@ -1,4 +1,30 @@
+import { Fragment } from "react";
 import { namhaeOtaku } from "@/lib/namhaeOtaku";
+
+/**
+ * 텍스트 내 **...** 구간을 보라톤 하이라이트로 렌더링.
+ * 데이터 레이어에서는 단순 문자열로 두고, 표시 시에만 강조를 적용합니다.
+ */
+function Emphasized({ text, tone = "violet" }: { text: string; tone?: "violet" | "emerald" }) {
+  const parts = text.split(/(\*\*[^*]+\*\*)/g);
+  const cls =
+    tone === "emerald"
+      ? "rounded bg-emerald-500/15 px-1 font-semibold text-emerald-700 dark:text-emerald-200"
+      : "rounded bg-violet-500/15 px-1 font-semibold text-violet-700 dark:text-violet-200";
+  return (
+    <>
+      {parts.map((p, i) =>
+        p.startsWith("**") && p.endsWith("**") ? (
+          <mark key={i} className={cls}>
+            {p.slice(2, -2)}
+          </mark>
+        ) : (
+          <Fragment key={i}>{p}</Fragment>
+        )
+      )}
+    </>
+  );
+}
 
 type Props = {
   /** 섹션 제목 (페이지 컨텍스트에 맞춰 조절). 비우면 헤더 영역 자체를 숨김 */
@@ -62,7 +88,7 @@ export default function NamhaeOtakuSection({
 
         <div className="p-5">
           <p className="text-sm leading-relaxed text-foreground">
-            {namhaeOtaku.intro}
+            <Emphasized text={namhaeOtaku.intro} />
           </p>
 
           <ol className="mt-6 space-y-5">
@@ -91,7 +117,7 @@ export default function NamhaeOtakuSection({
                           {m.label}
                         </dt>
                         <dd className="min-w-0 font-medium text-foreground">
-                          {m.value}
+                          <Emphasized text={m.value} />
                         </dd>
                       </div>
                     ))}
@@ -104,7 +130,7 @@ export default function NamhaeOtakuSection({
                       집착의 깊이
                     </dt>
                     <dd className="mt-0.5 leading-relaxed text-foreground">
-                      {p.depth}
+                      <Emphasized text={p.depth} />
                     </dd>
                   </div>
                   <div>
@@ -112,7 +138,7 @@ export default function NamhaeOtakuSection({
                       사유
                     </dt>
                     <dd className="mt-0.5 leading-relaxed text-muted-foreground">
-                      {p.reason}
+                      <Emphasized text={p.reason} />
                     </dd>
                   </div>
 
@@ -136,6 +162,51 @@ export default function NamhaeOtakuSection({
                       ))
                     : null}
                 </dl>
+
+                {/* 역할 풀사이클 (공대장 책임 등) */}
+                {p.roleBlock ? (
+                  <div className="mt-5 rounded-xl border border-violet-400/30 bg-violet-500/5 p-4">
+                    <p className="text-sm font-semibold text-foreground">
+                      {p.roleBlock.title}
+                    </p>
+                    {p.roleBlock.subtitle ? (
+                      <p className="mt-0.5 text-xs text-muted-foreground">
+                        {p.roleBlock.subtitle}
+                      </p>
+                    ) : null}
+                    <ul className="mt-3 grid gap-2 sm:grid-cols-2">
+                      {p.roleBlock.items.map((it) => (
+                        <li
+                          key={it.label}
+                          className="flex items-start gap-2.5 rounded-lg border bg-card px-3 py-2"
+                        >
+                          <span
+                            aria-hidden="true"
+                            className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-md border border-violet-400/30 bg-violet-500/10 text-sm"
+                          >
+                            {it.icon}
+                          </span>
+                          <div className="min-w-0">
+                            <p className="text-[11px] font-semibold tracking-wide text-violet-700 dark:text-violet-300">
+                              {it.label}
+                            </p>
+                            <p className="mt-0.5 text-xs leading-snug text-muted-foreground">
+                              <Emphasized text={it.text} />
+                            </p>
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                    {p.roleBlock.bridge ? (
+                      <p className="mt-3 rounded-md border border-emerald-400/40 bg-emerald-500/5 px-3 py-2 text-xs leading-relaxed text-foreground">
+                        <span className="font-semibold text-emerald-700 dark:text-emerald-300">
+                          개발 업무 매핑 →
+                        </span>{" "}
+                        <Emphasized text={p.roleBlock.bridge} tone="emerald" />
+                      </p>
+                    ) : null}
+                  </div>
+                ) : null}
 
                 {/* 외부 증빙 링크 */}
                 {p.links && p.links.length > 0 ? (
@@ -170,7 +241,7 @@ export default function NamhaeOtakuSection({
           </ol>
 
           <p className="mt-6 rounded-lg border border-violet-400/30 bg-violet-500/5 px-4 py-3 text-sm leading-relaxed text-foreground">
-            {namhaeOtaku.closing}
+            <Emphasized text={namhaeOtaku.closing} />
           </p>
         </div>
       </div>
