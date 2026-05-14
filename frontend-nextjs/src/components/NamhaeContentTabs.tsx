@@ -48,8 +48,22 @@ type NamhaeContentTabsProps = {
   projects: PortfolioProject[];
 };
 
-type PrimaryTab = "overview" | "detail";
-type DetailTab = "intro" | "career" | "projects" | "education" | "interests";
+type Tab =
+  | "overview"
+  | "intro"
+  | "career"
+  | "projects"
+  | "education"
+  | "interests";
+
+const TABS: { id: Tab; label: string }[] = [
+  { id: "overview", label: "한눈에 보기" },
+  { id: "intro", label: "자기소개서" },
+  { id: "career", label: "실제 경력" },
+  { id: "projects", label: "프로젝트" },
+  { id: "education", label: "학력 / 기타" },
+  { id: "interests", label: "취향" },
+];
 
 const motivationHighlights = [
   { icon: "🎯", title: "비즈니스 → 기술", desc: "현장 문제를 코드로 치환" },
@@ -58,8 +72,7 @@ const motivationHighlights = [
 ];
 
 export default function NamhaeContentTabs({ projects }: NamhaeContentTabsProps) {
-  const [primaryTab, setPrimaryTab] = useState<PrimaryTab>("overview");
-  const [detailTab, setDetailTab] = useState<DetailTab>("intro");
+  const [tab, setTab] = useState<Tab>("overview");
   const [isPrintMode, setIsPrintMode] = useState(false);
 
   useEffect(() => {
@@ -81,38 +94,29 @@ export default function NamhaeContentTabs({ projects }: NamhaeContentTabsProps) 
       .filter((p): p is PortfolioProject => !!p);
   }, [projects]);
 
-  const showOverview = isPrintMode || primaryTab === "overview";
-  const showDetail = isPrintMode || primaryTab === "detail";
-  const isShown = (id: DetailTab) => isPrintMode || detailTab === id;
+  const isShown = (id: Tab) => isPrintMode || tab === id;
 
   return (
     <section className="mt-10">
-      <div className="print-hide flex gap-2 border-b pb-2">
-        <button
-          type="button"
-          onClick={() => setPrimaryTab("overview")}
-          className={`rounded-md px-3 py-1.5 text-sm font-semibold ${
-            primaryTab === "overview"
-              ? "bg-emerald-500 text-slate-950"
-              : "text-muted-foreground hover:bg-muted"
-          }`}
-        >
-          한눈에 보기
-        </button>
-        <button
-          type="button"
-          onClick={() => setPrimaryTab("detail")}
-          className={`rounded-md px-3 py-1.5 text-sm font-semibold ${
-            primaryTab === "detail"
-              ? "bg-emerald-500 text-slate-950"
-              : "text-muted-foreground hover:bg-muted"
-          }`}
-        >
-          상세 보기
-        </button>
+      <div className="print-hide flex flex-wrap gap-2 border-b pb-2">
+        {TABS.map((t) => (
+          <button
+            key={t.id}
+            type="button"
+            onClick={() => setTab(t.id)}
+            aria-current={tab === t.id ? "page" : undefined}
+            className={`rounded-md px-3 py-1.5 text-sm font-semibold transition ${
+              tab === t.id
+                ? "bg-emerald-500 text-slate-950"
+                : "text-muted-foreground hover:bg-muted"
+            }`}
+          >
+            {t.label}
+          </button>
+        ))}
       </div>
 
-      {showOverview && (
+      {isShown("overview") && (
         <div className="mt-5 grid gap-4">
           {/* 1단: 능력치 레이더 + 비즈니스 임팩트 */}
           <div className="grid gap-4 md:grid-cols-5">
@@ -305,33 +309,10 @@ export default function NamhaeContentTabs({ projects }: NamhaeContentTabsProps) 
         </div>
       )}
 
-      {showDetail && (
-        <div className={`mt-5 ${isPrintMode ? "print-break-before" : ""}`}>
-          <div className="print-hide mb-4 flex flex-wrap gap-2">
-            {[
-              { id: "intro", label: "자기소개서" },
-              { id: "career", label: "실제 경력" },
-              { id: "projects", label: "프로젝트" },
-              { id: "education", label: "학력 / 기타" },
-              { id: "interests", label: "취향" },
-            ].map((tab) => (
-              <button
-                key={tab.id}
-                type="button"
-                onClick={() => setDetailTab(tab.id as DetailTab)}
-                className={`rounded-md px-3 py-1.5 text-xs font-semibold ${
-                  detailTab === tab.id
-                    ? "bg-foreground text-background"
-                    : "border text-muted-foreground hover:bg-muted"
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
-
-          {isShown("intro") && (
-            <div className="space-y-4">
+      {isShown("intro") && (
+        <div
+          className={`mt-5 space-y-4 ${isPrintMode ? "print-break-before" : ""}`}
+        >
               <section className="grid gap-3 md:grid-cols-3">
                 {motivationHighlights.map((item) => (
                   <article
@@ -383,8 +364,8 @@ export default function NamhaeContentTabs({ projects }: NamhaeContentTabsProps) 
             </div>
           )}
 
-          {isShown("career") && (
-            <ol className="relative ml-3 space-y-3 border-l border-border pl-5">
+      {isShown("career") && (
+        <ol className="mt-5 relative ml-3 space-y-3 border-l border-border pl-5">
               {namhaeExperiences.map((exp) => (
                 <li
                   key={`${exp.title}-${exp.period}`}
@@ -416,14 +397,14 @@ export default function NamhaeContentTabs({ projects }: NamhaeContentTabsProps) 
             </ol>
           )}
 
-          {isShown("projects") && (
-            <div className={isPrintMode ? "mt-6" : undefined}>
-              <ProjectTabs projects={projects} accent="emerald" />
-            </div>
-          )}
+      {isShown("projects") && (
+        <div className="mt-5">
+          <ProjectTabs projects={projects} accent="emerald" />
+        </div>
+      )}
 
-          {isShown("education") && (
-            <div className="grid gap-3 md:grid-cols-2">
+      {isShown("education") && (
+        <div className="mt-5 grid gap-3 md:grid-cols-2">
               <section className="rounded-xl border bg-card p-5">
                 <h3 className="text-sm font-semibold">학력</h3>
                 <ul className="mt-2 space-y-1 text-sm text-muted-foreground">
@@ -449,13 +430,12 @@ export default function NamhaeContentTabs({ projects }: NamhaeContentTabsProps) 
             </div>
           )}
 
-          {isShown("interests") && (
-            <NamhaeOtakuSection
-              heading=""
-              subtitle="긴 호흡을 견디는 끈기·집중력은 개발에서도 동일하게 쓰입니다."
-            />
-          )}
-        </div>
+      {isShown("interests") && (
+        <NamhaeOtakuSection
+          className="mt-5"
+          heading=""
+          subtitle="긴 호흡을 견디는 끈기·집중력은 개발에서도 동일하게 쓰입니다."
+        />
       )}
     </section>
   );

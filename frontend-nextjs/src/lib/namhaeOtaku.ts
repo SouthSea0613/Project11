@@ -1,6 +1,6 @@
 /**
  * 김남해 서브컬쳐 '덕력' 어필 데이터.
- * 김남해 메인 프로필(/Namhae_Kim)과 래빗홀 제출 페이지(/Namhae_Kim/rabbithole) 모두에서 사용됩니다.
+ * 김남해 프로필 취향 탭·래빗홀 제출 페이지(/Namhae_Kim/rabbithole, URL 직접 공유)에서 동일 데이터를 사용합니다.
  */
 
 export type OtakuPillar = {

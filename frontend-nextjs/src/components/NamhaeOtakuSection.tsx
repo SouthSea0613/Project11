@@ -39,7 +39,7 @@ type Props = {
 
 /**
  * 김남해 서브컬쳐 '덕력' 어필 섹션 (FFXIV·고전 문학).
- * 메인 프로필(/Namhae_Kim)·래빗홀 제출 페이지에서 동일 데이터를 공유합니다.
+ * 김남해 프로필 취향 탭과 래빗홀 제출 페이지(비공개 URL)에서 동일 데이터를 공유합니다.
  */
 export default function NamhaeOtakuSection({
   heading = "취향 · 몰입의 깊이",
