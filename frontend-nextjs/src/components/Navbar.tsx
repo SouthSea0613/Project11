@@ -7,8 +7,8 @@ import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import { ImageSlot } from "@/components/ImageSlot";
 import { useLang } from "@/contexts/LanguageContext";
-import { namhaePhoto } from "@/lib/namhaeResume";
 import { minyoungPhoto } from "@/lib/minyoungResume";
+import { PORTFOLIO_OWNER_NAME, PORTFOLIO_ROLE } from "@/lib/siteConfig";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -18,7 +18,9 @@ export default function Navbar() {
   const { setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
-  useEffect(() => { setMounted(true); }, []);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const update = () => {
@@ -32,19 +34,17 @@ export default function Navbar() {
   if (pathname.startsWith("/detail")) return null;
 
   const isDark = resolvedTheme === "dark";
-  const isNamhaePage = pathname.startsWith("/Namhae_Kim");
-  const isMinyoungPage = pathname.startsWith("/Minyoung_Kim");
+  const isHome = pathname === "/";
+  const isAboutPage = pathname.startsWith("/Minyoung_Kim");
   const isProjectsPage = pathname.startsWith("/projects");
 
   return (
     <div className="print-hide fixed top-0 left-0 w-full z-50 pointer-events-none">
-      {/* 호버 트리거 영역 */}
       <div
         className="absolute top-0 left-0 w-full h-4 pointer-events-auto"
         onMouseEnter={() => setHovered(true)}
       />
 
-      {/* 네비게이션 바 */}
       <header
         className={`w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 pointer-events-auto ${
           onAbout
@@ -53,147 +53,88 @@ export default function Navbar() {
         }`}
         onMouseLeave={() => setHovered(false)}
       >
-        <div className="mx-auto flex h-14 md:h-20 max-w-screen-2xl items-center justify-between px-4 sm:px-6 md:px-8 lg:px-6">
-          <div className="flex min-w-0 items-end gap-2 md:gap-3">
-            {pathname.startsWith("/haeyoungsoftware") ? (
-              <span className="truncate font-semibold leading-none text-xl tracking-tight text-foreground md:text-3xl">
-                HaeYoungLab Team
-              </span>
-            ) : (
-              <a
-                href="https://team.haeyounglab.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="truncate font-semibold leading-none text-xl tracking-tight text-foreground underline-offset-4 hover:text-emerald-600 hover:underline md:text-3xl"
-              >
-                HaeYoungLab Team
-              </a>
-            )}
+        <div className="mx-auto flex h-14 md:h-[4.5rem] max-w-screen-2xl items-center justify-between px-4 sm:px-6 md:px-8 lg:px-6">
+          <Link
+            href="/"
+            aria-current={isHome ? "page" : undefined}
+            className="group flex min-w-0 items-center gap-2.5 md:gap-3"
+          >
             {mounted ? (
-              <span className="shrink-0 inline-flex items-center gap-2 pb-0.5 text-sm font-semibold tracking-tight text-foreground/90 md:text-base">
-                <Link
-                  href="/Namhae_Kim"
-                  aria-current={isNamhaePage ? "page" : undefined}
-                  className={`group inline-flex items-center gap-1.5 rounded-full pl-0.5 pr-2 py-0.5 transition-colors underline-offset-4 ${
-                    isNamhaePage
-                      ? "text-emerald-500 underline"
-                      : "hover:text-emerald-500"
-                  }`}
-                >
-                  <span
-                    className={`block h-7 w-7 overflow-hidden rounded-full ring-2 transition ${
-                      isNamhaePage
-                        ? "ring-emerald-400"
-                        : "ring-border group-hover:ring-emerald-400/60"
-                    }`}
-                  >
-                    <ImageSlot
-                      src={namhaePhoto}
-                      alt="김남해 프로필"
-                      aspect="aspect-square"
-                      rounded="rounded-full"
-                      label=""
-                      className="!border-0"
-                      sizes="28px"
-                    />
-                  </span>
-                  김남해
-                </Link>
-                <span aria-hidden="true" className="text-foreground/40">·</span>
-                <Link
-                  href="/Minyoung_Kim"
-                  aria-current={isMinyoungPage ? "page" : undefined}
-                  className={`group inline-flex items-center gap-1.5 rounded-full pl-0.5 pr-2 py-0.5 transition-colors underline-offset-4 ${
-                    isMinyoungPage
-                      ? "text-sky-500 underline"
-                      : "hover:text-sky-500"
-                  }`}
-                >
-                  <span
-                    className={`block h-7 w-7 overflow-hidden rounded-full ring-2 transition ${
-                      isMinyoungPage
-                        ? "ring-sky-400"
-                        : "ring-border group-hover:ring-sky-400/60"
-                    }`}
-                  >
-                    <ImageSlot
-                      src={minyoungPhoto}
-                      alt="김민영 프로필"
-                      aspect="aspect-square"
-                      rounded="rounded-full"
-                      label=""
-                      className="!border-0"
-                      sizes="28px"
-                    />
-                  </span>
-                  김민영
-                </Link>
+              <span
+                className={`block h-9 w-9 shrink-0 overflow-hidden rounded-full ring-2 transition md:h-10 md:w-10 ${
+                  isHome || isAboutPage
+                    ? "ring-sky-400"
+                    : "ring-border group-hover:ring-sky-400/60"
+                }`}
+              >
+                <ImageSlot
+                  src={minyoungPhoto}
+                  alt={`${PORTFOLIO_OWNER_NAME} 프로필`}
+                  aspect="aspect-square"
+                  rounded="rounded-full"
+                  label=""
+                  className="!border-0"
+                  sizes="40px"
+                />
               </span>
             ) : (
-              <span className="shrink-0 pb-0.5 text-sm font-semibold tracking-tight text-foreground/90 md:text-base">
-                김남해 · 김민영
-              </span>
+              <span className="block h-9 w-9 shrink-0 rounded-full bg-muted md:h-10 md:w-10" />
             )}
-          </div>
+            <span className="min-w-0 leading-tight">
+              <span className="block truncate text-lg font-bold tracking-tight text-foreground md:text-2xl">
+                {PORTFOLIO_OWNER_NAME}
+              </span>
+              <span className="hidden truncate text-[11px] font-medium text-muted-foreground sm:block md:text-xs">
+                {PORTFOLIO_ROLE}
+              </span>
+            </span>
+          </Link>
 
-          {/* 우측 버튼 */}
           <div className="flex items-center gap-1 md:gap-2">
+            <Link
+              href="/Minyoung_Kim"
+              aria-current={isAboutPage ? "page" : undefined}
+              className={`hidden md:inline-flex items-center rounded-md px-2.5 h-8 text-xs md:text-sm font-medium transition underline-offset-4 ${
+                isAboutPage
+                  ? "text-sky-500 underline"
+                  : "text-muted-foreground hover:text-sky-500"
+              }`}
+            >
+              About
+            </Link>
             <Link
               href="/projects"
               aria-current={isProjectsPage ? "page" : undefined}
               className={`hidden md:inline-flex items-center rounded-md px-2.5 h-8 text-xs md:text-sm font-medium transition underline-offset-4 ${
                 isProjectsPage
-                  ? "text-emerald-500 underline"
-                  : "text-muted-foreground hover:text-emerald-500"
+                  ? "text-sky-500 underline"
+                  : "text-muted-foreground hover:text-sky-500"
               }`}
             >
               Projects
             </Link>
             <a
-              href="https://haeyounglab.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="HaeYoungLab 메인 사이트로 이동"
-              className="hidden md:inline-flex items-center gap-1 rounded-md px-2.5 h-8 text-xs md:text-sm font-medium text-muted-foreground transition hover:text-emerald-500"
-            >
-              Lab
-              <span aria-hidden="true" className="text-[10px] opacity-70">↗</span>
-            </a>
-            <a
               href="https://planit.haeyounglab.com"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="PlanIT 라이브 데모로 이동"
-              className="hidden md:inline-flex items-center gap-1 rounded-md border border-emerald-400/30 bg-emerald-400/10 px-2.5 h-8 text-xs md:text-sm font-semibold text-emerald-500 transition hover:border-emerald-400/60 hover:bg-emerald-400/20"
+              aria-label="PlanIT 라이브 데모"
+              className="hidden lg:inline-flex items-center gap-1 rounded-md border border-sky-400/30 bg-sky-400/10 px-2.5 h-8 text-xs md:text-sm font-semibold text-sky-500 transition hover:border-sky-400/60 hover:bg-sky-400/20"
             >
               PlanIT
-              <span aria-hidden="true" className="text-[10px] opacity-80">↗</span>
+              <span aria-hidden="true" className="text-[10px] opacity-80">
+                ↗
+              </span>
             </a>
-            {pathname.startsWith("/haeyoungsoftware") ? (
-              <a
-                href="https://team.haeyounglab.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs md:text-sm font-semibold tracking-tight text-foreground underline-offset-4 hover:text-emerald-600 hover:underline px-3"
-              >
-                HaeYoungLab Team
-              </a>
-            ) : (
-              <Button asChild variant="ghost" size="sm" className="hidden md:inline-flex text-xs md:text-sm font-medium px-3 h-8 text-muted-foreground hover:text-foreground">
-                <Link href="/haeyoungsoftware">HAEYOUNGSOFTWARE</Link>
-              </Button>
-            )}
-            {/* 언어 토글 */}
             <Button
               variant="ghost"
               size="sm"
               className="text-xs md:text-sm font-medium text-muted-foreground hover:text-foreground px-3 h-8"
-              onClick={() => setLang(lang === "KO" ? "EN" : lang === "EN" ? "JP" : "KO")}
+              onClick={() =>
+                setLang(lang === "KO" ? "EN" : lang === "EN" ? "JP" : "KO")
+              }
             >
               {lang === "KO" ? "EN" : lang === "EN" ? "日本語" : "한국어"}
             </Button>
-
-            {/* 다크모드 토글 */}
             <Button
               variant="ghost"
               size="sm"

@@ -16,11 +16,11 @@ import {
   minyoungSkillCategories,
   minyoungSummary,
 } from "@/lib/minyoungResume";
-import { SITE_NAME } from "@/lib/siteConfig";
+import { PORTFOLIO_OWNER_NAME, PORTFOLIO_SITE_TITLE } from "@/lib/siteConfig";
 
 const member = getMemberById("minyoung");
 
-const pageTitle = "김민영 | HaeYoungLab Team Portfolio";
+const pageTitle = PORTFOLIO_SITE_TITLE;
 const pageDesc = `${minyoungHeadline} — 의료 데이터 연동, 시스템 최적화, 운영 효율화 경험.`;
 
 export const metadata: Metadata = {
@@ -28,18 +28,19 @@ export const metadata: Metadata = {
   description: pageDesc,
   keywords: [
     "김민영",
-    "HaeYoungLab",
+    "포트폴리오",
     "의료 IT",
     "MS-SQL",
     ".NET",
-    "포트폴리오",
+    "백엔드",
+    "풀스택",
   ],
   alternates: { canonical: "/Minyoung_Kim" },
   openGraph: {
     title: pageTitle,
     description: pageDesc,
     url: "/Minyoung_Kim",
-    siteName: SITE_NAME,
+    siteName: PORTFOLIO_OWNER_NAME,
     locale: "ko_KR",
     type: "profile",
   },
@@ -90,7 +91,7 @@ export default function MinyoungKimPage() {
             </div>
             <div className="min-w-0 flex-1 sm:flex-none">
               <p className="text-[11px] font-semibold tracking-widest text-sky-500 uppercase">
-                Team Member
+                Portfolio
               </p>
               <h1 className="mt-1 text-2xl font-bold tracking-tight">
                 {member?.name ?? "김민영"}
@@ -108,7 +109,7 @@ export default function MinyoungKimPage() {
             >
               이메일
             </a>
-            <PrintButton documentTitle="김민영_HaeYoungLab_Portfolio" />
+            <PrintButton documentTitle="김민영_Portfolio" />
             <a
               href={minyoungGithubUrl}
               target="_blank"

@@ -3,67 +3,74 @@ import Link from "next/link";
 import { ImageSlot } from "@/components/ImageSlot";
 import JsonLd from "@/components/JsonLd";
 import TeamStackTreemap from "@/components/TeamStackTreemap";
-import { organizationLd, websiteLd } from "@/lib/jsonLd";
+import { personLd, websiteLd } from "@/lib/jsonLd";
 import {
+  getMemberById,
   haeyoungLabAbout,
   haeyoungLabPitch,
   portfolioProjects,
   teamContact,
-  teamMembers,
 } from "@/lib/portfolioData";
-import { namhaePhoto } from "@/lib/namhaeResume";
-import { minyoungPhoto } from "@/lib/minyoungResume";
+import {
+  minyoungContact,
+  minyoungGithubUrl,
+  minyoungHeadline,
+  minyoungImpactStats,
+  minyoungPhoto,
+  minyoungSkillCategories,
+  minyoungSummary,
+} from "@/lib/minyoungResume";
 import {
   STACK_CATEGORIES,
   STACK_DOT_CLASS,
   STACK_LABEL,
 } from "@/lib/stackCategory";
 import { classifyMetric } from "@/lib/metric";
-import { SITE_NAME, SITE_URL } from "@/lib/siteConfig";
+import {
+  PORTFOLIO_OWNER_NAME,
+  PORTFOLIO_SITE_TITLE,
+  SITE_URL,
+} from "@/lib/siteConfig";
+
+const minyoungMember = getMemberById("minyoung");
+const minyoungSkills = Array.from(
+  new Set(minyoungSkillCategories.flatMap((c) => c.items))
+);
 
 export const metadata: Metadata = {
-  title: "Team Portfolio | HAEYOUNGLAB",
-  description:
-    "김남해, 김민영 팀의 프로젝트와 역할, 결과물을 한눈에 소개하는 팀 포트폴리오입니다.",
+  title: PORTFOLIO_SITE_TITLE,
+  description: minyoungSummary,
   alternates: { canonical: "/" },
   keywords: [
-    "포트폴리오",
-    "팀 포트폴리오",
-    "김남해",
     "김민영",
-    "HAEYOUNGLAB",
-    "프로젝트",
+    "포트폴리오",
+    "백엔드",
+    "풀스택",
+    ".NET",
+    "MS-SQL",
+    "의료 IT",
   ],
   openGraph: {
-    title: "Team Portfolio | HAEYOUNGLAB",
-    description: "팀의 대표 프로젝트, 담당 역할, 결과물을 소개하는 포트폴리오 페이지",
+    title: PORTFOLIO_SITE_TITLE,
+    description: minyoungHeadline,
     url: SITE_URL,
-    siteName: SITE_NAME,
+    siteName: PORTFOLIO_OWNER_NAME,
     locale: "ko_KR",
-    type: "website",
+    type: "profile",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Team Portfolio | HAEYOUNGLAB",
-    description: "김남해, 김민영 팀의 프로젝트 포트폴리오",
+    title: PORTFOLIO_SITE_TITLE,
+    description: minyoungHeadline,
   },
 };
 
-const FEATURED_SLUGS = ["planit", "rd-autonote", "avis-tron-paradise"];
+const FEATURED_SLUGS = ["planit", "kakao-carechat-integration", "team-portfolio-platform"];
 
-const memberPhotoMap: Record<string, string> = {
-  namhae: namhaePhoto,
-  minyoung: minyoungPhoto,
-};
-
-const teamImpact = [
-  { value: `${portfolioProjects.length}+`, label: "출시·운영 프로젝트", accent: "text-emerald-400" },
-  { value: "−60%", label: "RAG 토큰 비용 절감", accent: "text-sky-400" },
-  { value: "+30%", label: "쿼리 응답 성능 개선", accent: "text-violet-400" },
-  { value: "1분", label: "신규 기능 배포 주기", accent: "text-amber-400" },
-];
-
-const heroHeadlineStats = teamImpact.slice(0, 2);
+const heroImpactStats = minyoungImpactStats.map((stat, i) => ({
+  ...stat,
+  accent: ["text-sky-400", "text-emerald-400", "text-violet-400", "text-amber-400"][i],
+}));
 
 const stackLegend = STACK_CATEGORIES.map((key) => ({
   color: STACK_DOT_CLASS[key],
@@ -82,8 +89,21 @@ export default function Home() {
   return (
     <main className="relative">
       <JsonLd
-        id="ld-organization"
-        data={[organizationLd(), websiteLd()]}
+        id="ld-home"
+        data={[
+          personLd({
+            member: minyoungMember,
+            fallbackName: PORTFOLIO_OWNER_NAME,
+            path: "/",
+            imagePath: minyoungPhoto,
+            description: `${minyoungHeadline} — ${minyoungSummary}`,
+            email: minyoungContact.email,
+            sameAs: [minyoungGithubUrl],
+            jobTitle: "Backend / Full-stack Engineer",
+            knowsAbout: minyoungSkills,
+          }),
+          websiteLd(),
+        ]}
       />
       <div className="pointer-events-none fixed inset-0 -z-20 bg-[#040916]" />
       <div
@@ -91,120 +111,104 @@ export default function Home() {
         style={{ backgroundImage: "url('/background.jpg')" }}
       />
 
-      {/* ── Hero (통합) ── */}
+      {/* ── Hero ── */}
       <section className="mx-auto max-w-screen-2xl px-4 pt-32 pb-12 sm:px-6 md:px-8 lg:px-6">
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,420px)] lg:items-end">
-          {/* 좌: 가치제안 */}
-          <div>
-            <p className="text-xs font-semibold tracking-[0.25em] uppercase text-emerald-400 md:text-sm">
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,240px)_minmax(0,1fr)_minmax(0,340px)] lg:items-start">
+          <div className="mx-auto w-full max-w-[240px] lg:mx-0">
+            <div className="overflow-hidden rounded-2xl ring-2 ring-sky-400/40 ring-offset-2 ring-offset-[#040916]">
+              <ImageSlot
+                src={minyoungPhoto}
+                alt={`${PORTFOLIO_OWNER_NAME} 프로필`}
+                aspect="aspect-[4/5]"
+                rounded="rounded-2xl"
+                label="프로필"
+                sizes="240px"
+                priority
+              />
+            </div>
+          </div>
+
+          <div className="min-w-0">
+            <p className="text-xs font-semibold tracking-[0.25em] uppercase text-sky-400 md:text-sm">
               {haeyoungLabPitch.tagline}
             </p>
-            <h1 className="mt-3 text-4xl font-bold leading-[1.1] tracking-tight text-white md:text-6xl">
+            <h1 className="mt-2 text-4xl font-bold leading-[1.05] tracking-tight text-white md:text-6xl">
               {haeyoungLabPitch.heroTitle}
             </h1>
-            <p className="mt-3 text-xl font-semibold text-slate-200 md:text-2xl">
+            <p className="mt-3 text-lg font-semibold leading-snug text-slate-200 md:text-xl">
               {haeyoungLabPitch.heroSubtitle}
             </p>
-            <p className="mt-6 max-w-2xl text-sm leading-7 text-slate-300 md:text-base">
+            <p className="mt-5 max-w-2xl text-sm leading-7 text-slate-300 md:text-base">
               {haeyoungLabPitch.description}
             </p>
 
-            <div className="mt-7 flex flex-wrap items-center gap-3">
-              {teamMembers.map((member) => (
-                <Link
-                  key={member.id}
-                  href={member.profilePath}
-                  className={`group inline-flex items-center gap-2.5 rounded-full border py-1.5 pl-1.5 pr-4 text-sm font-medium text-white transition ${
-                    member.id === "namhae"
-                      ? "border-emerald-400/30 bg-emerald-500/10 hover:border-emerald-400/70 hover:bg-emerald-500/20"
-                      : "border-sky-400/30 bg-sky-500/10 hover:border-sky-400/70 hover:bg-sky-500/20"
-                  }`}
-                >
-                  <span
-                    className={`block h-8 w-8 overflow-hidden rounded-full ring-2 ${
-                      member.id === "namhae"
-                        ? "ring-emerald-400/40"
-                        : "ring-sky-400/40"
-                    }`}
-                  >
-                    <ImageSlot
-                      src={memberPhotoMap[member.id]}
-                      alt={`${member.name} 프로필`}
-                      aspect="aspect-square"
-                      rounded="rounded-full"
-                      label=""
-                      className="!border-0"
-                      sizes="32px"
-                    />
-                  </span>
-                  {member.name} 프로필
-                </Link>
-              ))}
+            <div className="mt-7 flex flex-wrap items-center gap-2">
+              <Link
+                href="/Minyoung_Kim"
+                className="rounded-md bg-sky-500 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-sky-400"
+              >
+                경력·기술 상세 보기
+              </Link>
+              <Link
+                href="/projects"
+                className="rounded-md border border-white/15 bg-white/5 px-4 py-2 text-sm font-medium text-white transition hover:border-sky-400/50 hover:bg-white/10"
+              >
+                프로젝트 {portfolioProjects.length}개
+              </Link>
+              <a
+                href={`mailto:${minyoungContact.email}`}
+                className="rounded-md border border-sky-400/30 bg-sky-500/10 px-4 py-2 text-sm font-medium text-sky-200 transition hover:bg-sky-500/20"
+              >
+                이메일
+              </a>
             </div>
 
-            {/* 외부 사이트 빠른 이동 */}
-            <div className="mt-4 flex flex-wrap items-center gap-2 text-xs">
-              <span className="text-[10px] font-semibold tracking-widest uppercase text-slate-400">
-                Live
+            <div className="mt-5 flex flex-wrap items-center gap-2 text-xs">
+              <span className="text-[10px] font-semibold tracking-widest uppercase text-slate-500">
+                제품
               </span>
-              <a
-                href="https://haeyounglab.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 rounded-md border border-white/10 bg-white/5 px-2.5 py-1 font-medium text-slate-200 transition hover:border-emerald-400/40 hover:text-emerald-300"
-              >
-                haeyounglab.com
-                <span aria-hidden="true" className="text-[10px] opacity-70">↗</span>
-              </a>
               <a
                 href="https://planit.haeyounglab.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 rounded-md border border-emerald-400/30 bg-emerald-400/10 px-2.5 py-1 font-semibold text-emerald-300 transition hover:border-emerald-400/60 hover:bg-emerald-400/20"
+                className="inline-flex items-center gap-1 rounded-md border border-sky-400/30 bg-sky-400/10 px-2.5 py-1 font-medium text-sky-300 transition hover:border-sky-400/60"
               >
-                planit.haeyounglab.com
-                <span aria-hidden="true" className="text-[10px] opacity-80">↗</span>
+                PlanIT
+                <span aria-hidden="true" className="text-[10px] opacity-80">
+                  ↗
+                </span>
+              </a>
+              <a
+                href={minyoungGithubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 rounded-md border border-white/10 bg-white/5 px-2.5 py-1 font-medium text-slate-300 transition hover:text-white"
+              >
+                GitHub
+                <span aria-hidden="true" className="text-[10px] opacity-70">
+                  ↗
+                </span>
               </a>
             </div>
           </div>
 
-          {/* 우: 거대 숫자 2개 (한눈 핵심 KPI) */}
           <div className="grid grid-cols-2 gap-3">
-            {heroHeadlineStats.map((stat) => (
+            {heroImpactStats.map((stat) => (
               <div
                 key={stat.label}
-                className="rounded-2xl border border-white/10 bg-slate-950/70 p-5 backdrop-blur"
+                className="rounded-2xl border border-white/10 bg-slate-950/70 p-4 backdrop-blur md:p-5"
               >
                 <div
-                  className={`text-4xl font-bold tracking-tight md:text-5xl ${stat.accent}`}
+                  className={`text-3xl font-bold tracking-tight md:text-4xl ${stat.accent}`}
                 >
                   {stat.value}
                 </div>
-                <div className="mt-2 text-[11px] font-semibold leading-snug tracking-wide text-slate-300 md:text-xs">
+                <div className="mt-2 text-[10px] font-semibold leading-snug tracking-wide text-slate-300 md:text-[11px]">
                   {stat.label}
                 </div>
               </div>
             ))}
           </div>
-        </div>
-
-        {/* 보조 KPI 2개 — 한 줄 strip */}
-        <div className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-4">
-          {teamImpact.slice(2).map((stat) => (
-            <div
-              key={stat.label}
-              className="rounded-xl border border-white/10 bg-slate-950/50 px-4 py-3 backdrop-blur md:col-span-2"
-            >
-              <div
-                className={`text-xl font-bold tracking-tight md:text-2xl ${stat.accent}`}
-              >
-                {stat.value}
-              </div>
-              <div className="mt-1 text-[11px] leading-snug text-slate-300 md:text-xs">
-                {stat.label}
-              </div>
-            </div>
-          ))}
         </div>
       </section>
 
@@ -329,7 +333,7 @@ export default function Home() {
                 Team Tech Map
               </p>
               <h2 className="mt-1 text-xl font-semibold text-white md:text-2xl">
-                팀이 다루는 기술
+                주요 기술 스택
               </h2>
             </div>
             <ul className="flex flex-wrap items-center gap-2 text-[11px] text-slate-300">
@@ -350,51 +354,43 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Team Members ── */}
+      {/* ── Strengths ── */}
       <section className="mx-auto max-w-screen-2xl px-4 pb-20 sm:px-6 md:px-8 lg:px-6">
-        <div>
-          <p className="text-xs font-semibold tracking-widest text-emerald-400 uppercase">
-            Members
-          </p>
-          <h2 className="mt-1 text-2xl font-semibold text-white md:text-3xl">
-            팀 구성
-          </h2>
+        <div className="flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <p className="text-xs font-semibold tracking-widest text-sky-400 uppercase">
+              Strengths
+            </p>
+            <h2 className="mt-1 text-2xl font-semibold text-white md:text-3xl">
+              핵심 역량
+            </h2>
+          </div>
+          <Link
+            href="/Minyoung_Kim"
+            className="text-xs text-sky-400 underline-offset-4 hover:underline md:text-sm"
+          >
+            경력·기술 기록 보기 →
+          </Link>
         </div>
-        <div className="mt-6 grid gap-4 md:grid-cols-2">
-          {teamMembers.map((member) => (
-            <article
-              key={member.id}
-              className="flex gap-5 overflow-hidden rounded-2xl border border-white/10 bg-slate-950/60 p-5"
+        <ul className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {minyoungMember?.highlights.map((highlight) => (
+            <li
+              key={highlight}
+              className="rounded-2xl border border-white/10 bg-slate-950/60 p-4 text-sm leading-6 text-slate-200"
             >
-              <div className="h-28 w-28 shrink-0 overflow-hidden rounded-2xl ring-1 ring-white/10">
-                <ImageSlot
-                  src={memberPhotoMap[member.id]}
-                  alt={`${member.name} 프로필`}
-                  aspect="aspect-square"
-                  rounded="rounded-2xl"
-                  label="프로필"
-                  sizes="112px"
-                />
-              </div>
-              <div className="min-w-0 flex-1">
-                <h3 className="text-lg font-semibold text-white">{member.name}</h3>
-                <p className="mt-0.5 text-xs text-emerald-300">{member.role}</p>
-                <ul className="mt-3 space-y-1 text-xs text-slate-300">
-                  {member.highlights.slice(0, 3).map((highlight) => (
-                    <li key={highlight} className="flex gap-2">
-                      <span className="mt-1 inline-block h-1 w-1 shrink-0 rounded-full bg-emerald-400" />
-                      <span className="line-clamp-2">{highlight}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Link
-                  href={member.profilePath}
-                  className="mt-4 inline-block rounded-md bg-emerald-500 px-3 py-1.5 text-xs font-semibold text-slate-950 transition hover:bg-emerald-400"
-                >
-                  상세 프로필 →
-                </Link>
-              </div>
-            </article>
+              <span className="mr-2 inline-block h-1.5 w-1.5 rounded-full bg-sky-400 align-middle" />
+              {highlight}
+            </li>
+          ))}
+        </ul>
+        <div className="mt-4 flex flex-wrap gap-1.5">
+          {minyoungSkills.slice(0, 14).map((skill) => (
+            <span
+              key={skill}
+              className="rounded-full border border-sky-400/25 bg-sky-500/10 px-2.5 py-0.5 text-[11px] font-medium text-sky-200"
+            >
+              {skill}
+            </span>
           ))}
         </div>
       </section>
@@ -500,52 +496,29 @@ export default function Home() {
               전체 프로젝트 검색·필터
             </h3>
             <p className="mt-1 text-xs text-slate-400">
-              스택 / 멤버 / 키워드로 좁혀 보기
+              스택 / 키워드로 좁혀 보기
             </p>
             <span className="mt-3 inline-block text-xs text-emerald-400">
               열기 →
             </span>
           </Link>
-          <div className="grid grid-cols-2 gap-3">
-            {teamMembers.map((member) => (
-              <Link
-                key={member.id}
-                href={member.profilePath}
-                className={`group flex flex-col justify-between rounded-2xl border bg-slate-950/60 p-4 transition hover:-translate-y-0.5 ${
-                  member.id === "namhae"
-                    ? "border-emerald-400/30 hover:border-emerald-400/70"
-                    : "border-sky-400/30 hover:border-sky-400/70"
-                }`}
-              >
-                <div>
-                  <p
-                    className={`text-[10px] font-semibold tracking-widest uppercase ${
-                      member.id === "namhae"
-                        ? "text-emerald-400"
-                        : "text-sky-400"
-                    }`}
-                  >
-                    Profile
-                  </p>
-                  <h3 className="mt-1 text-sm font-semibold text-white">
-                    {member.name}
-                  </h3>
-                  <p className="mt-0.5 line-clamp-2 text-[11px] text-slate-400">
-                    {member.role}
-                  </p>
-                </div>
-                <span
-                  className={`mt-3 text-[11px] ${
-                    member.id === "namhae"
-                      ? "text-emerald-400"
-                      : "text-sky-400"
-                  }`}
-                >
-                  열기 →
-                </span>
-              </Link>
-            ))}
-          </div>
+          <Link
+            href="/Minyoung_Kim"
+            className="group flex flex-col justify-between rounded-2xl border border-sky-400/30 bg-slate-950/60 p-5 transition hover:-translate-y-0.5 hover:border-sky-400/70"
+          >
+            <div>
+              <p className="text-[10px] font-semibold tracking-widest uppercase text-sky-400">
+                Profile
+              </p>
+              <h3 className="mt-1 text-lg font-semibold text-white group-hover:text-sky-300">
+                김민영 상세 프로필
+              </h3>
+              <p className="mt-1 text-xs text-slate-400">
+                경력·기술·프로젝트·기술 기록
+              </p>
+            </div>
+            <span className="mt-3 text-xs text-sky-400">열기 →</span>
+          </Link>
         </div>
       </section>
 
@@ -554,22 +527,22 @@ export default function Home() {
         id="contact"
         className="mx-auto max-w-screen-2xl px-4 pb-24 sm:px-6 md:px-8 lg:px-6"
       >
-        <div className="grid gap-6 rounded-2xl border border-emerald-400/30 bg-emerald-500/10 p-6 md:p-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:gap-10">
+        <div className="grid gap-6 rounded-2xl border border-sky-400/30 bg-sky-500/10 p-6 md:p-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:gap-10">
           <div>
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-300/30 bg-emerald-300/10 px-2 py-0.5 text-[10px] font-semibold tracking-widest uppercase text-emerald-200">
-              <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-300" />
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-sky-300/30 bg-sky-300/10 px-2 py-0.5 text-[10px] font-semibold tracking-widest uppercase text-sky-200">
+              <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-sky-300" />
               Open for work
             </span>
             <h2 className="mt-3 text-2xl font-bold text-white md:text-3xl">
-              함께 만들 프로젝트를 찾고 있나요?
+              함께 일할 기회를 찾고 있습니다
             </h2>
             <p className="mt-3 text-sm text-slate-200 md:text-base">
-              기획부터 개발, 출시 후 개선까지 팀 단위로 빠르게 실행합니다.
-              아래 채널로 편하게 연락 주세요 —{" "}
-              <span className="font-semibold text-emerald-200">
+              백엔드·풀스택 개발, 의료·운영 데이터 연동, B2B SaaS 아키텍처 관련
+              협업·채용 문의를 환영합니다. 아래로 연락 주시면{" "}
+              <span className="font-semibold text-sky-200">
                 {teamContact.responseSla}
               </span>
-              .
+              에 답변드립니다.
             </p>
             <div className="mt-5 flex flex-wrap gap-2">
               {teamContact.channels.map((c) => (
@@ -584,7 +557,7 @@ export default function Home() {
                   }
                   className={
                     c.primary
-                      ? "rounded-md bg-emerald-500 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-emerald-400"
+                      ? "rounded-md bg-sky-500 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-sky-400"
                       : "rounded-md border border-white/15 bg-white/5 px-4 py-2 text-sm font-medium text-white transition hover:bg-white/10"
                   }
                 >
@@ -595,7 +568,7 @@ export default function Home() {
             </div>
           </div>
           <ul className="grid gap-2 self-center">
-            <li className="text-[10px] font-semibold tracking-widest uppercase text-emerald-200">
+            <li className="text-[10px] font-semibold tracking-widest uppercase text-sky-200">
               자주 받는 문의
             </li>
             {teamContact.inquiryTypes.map((q) => (

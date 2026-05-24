@@ -1,4 +1,4 @@
-export type MemberId = "namhae" | "minyoung";
+export type MemberId = "minyoung";
 
 /** 갤러리 항목: 단순 경로(string)이거나 캡션이 있는 객체 */
 export type GalleryEntry = string | { src: string; caption?: string };
@@ -49,23 +49,23 @@ export type TeamMemberProfile = {
   profilePath: string;
 };
 
-/** 홈 히어로·팀 소개 — 자기소개서 기반 HaeYoungLab 톤 */
+/** 홈 히어로·소개 — 김민영 이력서 기반 */
 export const haeyoungLabPitch = {
-  tagline: "HaeYoungLab Team",
-  heroTitle: "리스크를 줄이고, 제품으로 증명하는 팀",
-  heroSubtitle: "김남해 · 김민영",
-  /** 두 줄 안에 끝나는 짧은 핵심 카피 */
+  tagline: "Backend · Full-stack Engineer",
+  heroTitle: "김민영",
+  heroSubtitle:
+    "데이터 무결성과 운영 효율을 함께 설계하는 백엔드·풀스택 엔지니어",
   description:
-    "기업의 재무·운영 리스크를 0→1 SaaS와 자동화 제품으로 풉니다. 코드와 결과를 공개해 팀의 실행력을 증명합니다.",
+    "의료 데이터 연동 환경에서 정합성과 안정성을 우선으로 시스템을 설계해 왔습니다. C# .NET·MS-SQL 실무와 PlanIT 아키텍처, 포트폴리오 플랫폼까지 — 설계부터 배포·운영까지 측정 가능한 결과로 증명합니다.",
 };
 
-/** About — 팀 서사 (왜 함께 일하는가) */
+/** About — 경력 서사 */
 export const haeyoungLabAbout = {
-  kicker: "About the Team",
-  heading: "왜 우리는 함께 일하는가",
+  kicker: "About Me",
+  heading: "어떤 엔지니어인가",
   paragraphs: [
-    "HaeYoungLab은 백엔드·풀스택을 중심으로 두 명이 운영하는 작은 제품팀입니다. 한 명은 0→1 실행과 AI·운영 자동화를, 한 명은 데이터 무결성과 도메인 신뢰성을 맡습니다.",
-    "함께 만든 PlanIT·R&D 오토노트·avis-tron 등은 모두 \u201C현장 문제를 코드로 치환\u201D한 결과입니다. 회의·문서가 아니라 배포된 제품과 측정 가능한 숫자로 협업의 가치를 증명하려 합니다.",
+    "9년가량 의료 IT 현장에서 데이터 연동·저장 프로시저·운영 화면을 설계·구현해 왔습니다. C# .NET과 MS-SQL 중심의 실무 위에 PlanIT 아키텍처, 팀 포트폴리오 플랫폼 등 제품 경험을 더했습니다.",
+    "추상적인 계획보다 배포된 제품과 숫자로 결과를 남기는 일을 중시합니다. 데이터 정합성, 쿼리 성능, 운영 대응 속도처럼 현장에서 바로 체감되는 지표를 개선하는 데 집중합니다.",
   ],
   pillars: [
     {
@@ -81,7 +81,7 @@ export const haeyoungLabAbout = {
     {
       icon: "🚀",
       title: "0 → 1 실행",
-      desc: "기획·개발·배포·운영 풀사이클을 둘이서 끝까지 책임집니다",
+      desc: "기획·개발·배포·운영 풀사이클을 끝까지 책임집니다",
     },
   ],
 } as const;
@@ -99,45 +99,22 @@ export const teamContact: {
   channels: ContactChannel[];
   inquiryTypes: string[];
 } = {
-  email: "contact@haeyounglab.com",
+  email: "sms0751@naver.com",
   responseSla: "보통 24시간 이내 회신",
   channels: [
-    { label: "이메일", href: "mailto:contact@haeyounglab.com", primary: true },
+    { label: "이메일", href: "mailto:sms0751@naver.com", primary: true },
     { label: "Lab 사이트", href: "https://haeyounglab.com" },
     { label: "PlanIT 데모", href: "https://planit.haeyounglab.com" },
-    { label: "GitHub", href: "https://github.com/SouthSea0613" },
+    { label: "GitHub", href: "https://github.com/alsdud0301" },
   ],
   inquiryTypes: [
-    "B2B SaaS 도입 / 커스터마이즈",
-    "AI·자동화 PoC (RAG / 데이터 파이프라인)",
-    "팀·외주 프로젝트 협업",
+    "백엔드·풀스택 채용 / 협업",
+    "의료·운영 데이터 연동·최적화",
+    "B2B SaaS 아키텍처·PoC",
   ],
 };
 
 export const teamMembers: TeamMemberProfile[] = [
-  {
-    id: "namhae",
-    name: "김남해",
-    role: "백엔드·풀스택 엔지니어 · Backend / Full-stack",
-    intro:
-      "백엔드/서버 개발 중심으로 1년 4개월 실무를 수행했으며, 노바소프트 엔터프라이즈 보안 시스템과 HaeYoungLab의 PlanIt·R&D 오토노트를 통해 비즈니스 문제를 기술로 치환하는 경험을 쌓았습니다.",
-    skills: [
-      "Next.js",
-      "TypeScript",
-      "NestJS",
-      "FastAPI",
-      "LangChain / RAG",
-      "PostgreSQL",
-      "Docker / CI·CD",
-      "Slack·Notion·Discord 연동",
-    ],
-    highlights: [
-      "PlanIt: Start-End 스크럼·ChatOps 워크플로·게임화 UX 설계",
-      "R&D 오토노트: RAG 전처리·SHA-256 무결성, 토큰 비용 약 60% 절감",
-      "avis-tron 4.0: SIEM 4단계 결재·DB-to-DB 실시간 동기화·IIS 이중화",
-    ],
-    profilePath: "/Namhae_Kim",
-  },
   {
     id: "minyoung",
     name: "김민영",
@@ -242,101 +219,9 @@ export const portfolioProjects: PortfolioProject[] = [
       "Vector 기반 활동·진척 인사이트",
       "유료 구독·리포트 자동화 설계",
     ],
-    members: ["namhae", "minyoung"],
+    members: ["minyoung"],
     links: {
       demo: "https://planit.haeyounglab.com/",
-    },
-  },
-  {
-    slug: "rd-autonote",
-    title: "R&D 오토노트",
-    period: "2026.01 - 2026.04",
-    role: "파운더 · 리드 프로덕트 엔지니어",
-    thumbnail: "/projects/rd-autonote/rd-autonote-screen-01.png",
-    heroImage: "/projects/rd-autonote/rd-autonote-screen-01.png",
-    gallery: [
-      {
-        src: "/projects/rd-autonote/rd-autonote-screen-01.png",
-        caption: "R&D 오토노트 — 제품 메인 UI",
-      },
-      {
-        src: "/projects/rd-autonote/rd-autonote-screen-02.png",
-        caption: "R&D 오토노트 — 연구노트 자동 생성 화면",
-      },
-      {
-        src: "/projects/rd-autonote/rd-autonote-screen-03.png",
-        caption: "R&D 오토노트 — 협업 로그 통합 뷰",
-      },
-      {
-        src: "/projects/rd-autonote/rd-autonote-screen-04.png",
-        caption: "R&D 오토노트 — RAG·무결성 설정",
-      },
-      {
-        src: "/projects/rd-autonote/rd-autonote-business-01.png",
-        caption: "사업 비전 1 — 시장 페인포인트 분석",
-      },
-      {
-        src: "/projects/rd-autonote/rd-autonote-business-02.png",
-        caption: "사업 비전 2 — 솔루션 가치 제안",
-      },
-      {
-        src: "/projects/rd-autonote/rd-autonote-business-03.png",
-        caption: "사업 비전 3 — 비즈니스 임팩트",
-      },
-      {
-        src: "/projects/rd-autonote/rd-autonote-slackbot-01.png",
-        caption: "Slack 연동 — 메시지 수집 봇",
-      },
-      {
-        src: "/projects/rd-autonote/rd-autonote-slackbot-02.png",
-        caption: "Slack 연동 — Webhook 자동화",
-      },
-      {
-        src: "/projects/rd-autonote/rd-autonote-slackbot-03.png",
-        caption: "Slack 연동 — 실시간 원천 로그 동기화",
-      },
-    ],
-    stack: [
-      "NestJS",
-      "Prisma",
-      "PostgreSQL",
-      "pgvector",
-      "Next.js",
-      "TypeScript",
-      "shadcn/ui",
-      "FastAPI",
-      "LangChain",
-      "RAG",
-      "Slack",
-      "Notion",
-      "Discord SDK",
-      "Gemini API",
-      "SHA-256 무결성",
-      "Docker",
-      "Redis",
-    ],
-    summary:
-      "비침습형 협업 데이터 기반 세무 증빙 자동화 SaaS. 파편화된 협업 로그를 수집·정제해 연구노트로 연결하고, 감사 대응에 필요한 기술적 방어권을 확보합니다.",
-    problem:
-      "연구·개발 활동 증빙이 수기·이종 툴에 흩어져 있고, LLM만으로 생성하면 비용과 부정확성·감사 신뢰성 이슈가 동시에 발생합니다.",
-    solution: [
-      "Vector Embedding·시멘틱 유사도로 국세청 R&D 가이드라인에 맞지 않는 일상 대화 1차 필터링",
-      "유효 R&D 데이터만 LLM 컨텍스트로 주입하는 RAG로 정확도 향상 및 API 토큰 비용 약 60% 절감",
-      "Slack·Notion·Discord Webhook/API 통합으로 연구원 추가 작업 없이 실시간 원천 로그 수집",
-      "생성 연구노트와 원천 데이터 매칭에 SHA-256 해시 박제로 사후 검증 시 조작 방어",
-    ],
-    outcome: [
-      "제조·바이오 기업 50건 콜드 아웃리치로 세무 리스크 페인 포인트 도출 후 MVP 기획·풀스택 주도",
-      "Git-Push 기반 무중단 자동 배포로 인프라 관리 공수 최소화",
-    ],
-    metrics: [
-      "토큰 비용 약 60% 절감(RAG·전처리)",
-      "이종 협업 툴 실시간 로그 파이프라인",
-      "SHA-256 기반 무결성 검증",
-    ],
-    members: ["namhae"],
-    links: {
-      demo: "https://www.haeyounglab.com",
     },
   },
   {
@@ -431,95 +316,8 @@ export const portfolioProjects: PortfolioProject[] = [
     links: {},
   },
   {
-    slug: "pet-health-llm",
-    title: "반려동물 변 분석·건강 자가진단 웹앱",
-    period: "2026.01 - 2026.02",
-    role: "리드 아키텍트 · 풀스택",
-    thumbnail: "/background.jpg",
-    stack: ["Java", "Spring Boot", "JPA", "PostgreSQL", "Next.js", "TypeScript", "Tailwind", "JWT", "Gemini API"],
-    summary:
-      "개·고양이 변 상태 데이터를 분석해 질병 가능성을 추론하고, 병원 방문 필요성을 제안하는 LLM 연동 웹앱.",
-    problem:
-      "반려 가구가 초기 증상을 놓치기 쉽고, 비용·심리 부담을 줄이려면 가벼운 자가진단과 명확한 다음 행동 제안이 필요했습니다.",
-    solution: [
-      "LLM API 연동 파이프라인으로 분석·추론·안내 문구 생성",
-      "도메인 중심 조립형 아키텍처와 컴포넌트 기반 UI로 확장·유지보수성 확보",
-      "JWT Dual Token과 XSS/CSRF 대응 토큰 저장 전략",
-    ],
-    outcome: [
-      "기능 모듈 분리·조합으로 비즈니스 로직 명확화",
-      "조기 발견 유도로 사고 예방·가구 부담 경감 방향 설계",
-    ],
-    metrics: ["LLM 파이프라인 1차 완성", "Dual Token 인증 체계", "도메인 조립형 아키텍처"],
-    members: ["namhae"],
-    links: {},
-  },
-  {
-    slug: "avis-tron-paradise",
-    title: "avis-tron 4.0 — 파라다이스 그룹 전사 보안 통합 감시",
-    period: "2025.06 - 재직중",
-    role: "백엔드/서버개발 · 솔루션사업부 팀원",
-    thumbnail: "/projects/avis-tron-paradise/avis-tron-dashboard-01.png",
-    heroImage: "/projects/avis-tron-paradise/avis-tron-dashboard-01.png",
-    gallery: [
-      {
-        src: "/projects/avis-tron-paradise/avis-tron-dashboard-01.png",
-        caption: "avis-tron 4.0 — 임원 통합 관측 대시보드",
-      },
-      {
-        src: "/projects/avis-tron-paradise/avis-tron-dashboard-02.png",
-        caption: "avis-tron 4.0 — 운영 통합 대시보드",
-      },
-      {
-        src: "/projects/avis-tron-paradise/avis-tron-dashboard-03.png",
-        caption: "avis-tron 4.0 — 보안 지표 시각화",
-      },
-    ],
-    stack: [".NET (C#)", "JavaScript", "IIS", "MSSQL", "SIEM", "SVN"],
-    summary:
-      "주식회사 노바소프트에서 SIEM 연동 전사 보안 통합 감시체계 구축. 승인·동기화·이중화·대시보드까지 풀스택으로 참여했습니다.",
-    problem:
-      "보안 검측 데이터와 인사·운영 시스템이 분리되어 소명·동기화·가시성 확보에 시간이 많이 들었습니다.",
-    solution: [
-      "SIEM 데이터 연동 기반 4단계 결재·소명 시스템 구축",
-      "파라다이스 그룹 인사 DB와 Real-time DB-to-DB 연동으로 전사 인적 정보 자동 동기화",
-      "IIS 웹 서버 이중화(VIP) 및 SVN 형상관리로 서비스 연속성 확보",
-      "임원·운영 조직용 통합 관측 대시보드로 보안 지표 가시화",
-    ],
-    outcome: [
-      "보안 사고 대응 프로세스 체계화",
-      "전 부서 협의 주도 및 기술 운영 매뉴얼 배포로 관리 효율 개선",
-    ],
-    metrics: ["3단계 소명 워크플로", "Real-time DB-to-DB", "IIS 이중화·통합 대시보드"],
-    members: ["namhae"],
-    links: {},
-  },
-  {
-    slug: "interior-matching-platform",
-    title: "인테리어 전문가 매칭·견적 자동화 플랫폼",
-    period: "2025.02 - 2025.03",
-    role: "팀장 · 풀스택 시스템 설계",
-    thumbnail: "/background.jpg",
-    stack: ["Spring Boot", "Thymeleaf", "MySQL", "jQuery", "AWS S3", "Git"],
-    summary:
-      "인천일보아카데미에서 예산·스타일·지역 기반 전문가 매칭과 견적 프로세스 표준화를 담당했습니다.",
-    problem:
-      "사용자 요구와 전문가 데이터가 체계적으로 연결되지 않아 매칭·견적에 시간이 오래 걸렸습니다.",
-    solution: [
-      "필터링 기반 매칭 엔진으로 최적 업체 추천",
-      "단계별 견적 폼으로 전문가에게 표준화된 견적 데이터 제공",
-      "거래 기반 리뷰·실시간 포트폴리오 대시보드",
-    ],
-    outcome: [
-      "향후 결제·정산 연동을 고려한 트랜잭션·확장성 설계",
-    ],
-    metrics: ["매칭 엔진·표준 견적 흐름", "팀장 역할로 메인 비즈니스 로직 주도"],
-    members: ["namhae"],
-    links: {},
-  },
-  {
     slug: "team-portfolio-platform",
-    title: "Team Portfolio Platform",
+    title: "Portfolio Platform",
     period: "2026.04 - 진행 중",
     role: "정보 구조 설계 · 프론트엔드",
     thumbnail: "/projects/team-portfolio-platform/team-portfolio-home.png",
@@ -527,46 +325,38 @@ export const portfolioProjects: PortfolioProject[] = [
     gallery: [
       {
         src: "/projects/team-portfolio-platform/team-portfolio-home.png",
-        caption: "Team Portfolio — 홈 (팀 임팩트·대표 프로젝트·기술 트리맵)",
-      },
-      {
-        src: "/projects/team-portfolio-platform/team-portfolio-namhae.png",
-        caption: "Team Portfolio — 김남해 멤버 페이지 (한눈에 보기)",
+        caption: "Team Portfolio — 홈 (임팩트·대표 프로젝트·기술 트리맵)",
       },
       {
         src: "/projects/team-portfolio-platform/team-portfolio-minyoung.png",
-        caption: "Team Portfolio — 김민영 멤버 페이지 (한눈에 보기)",
+        caption: "Team Portfolio — 김민영 프로필 (한눈에 보기)",
       },
       {
         src: "/projects/team-portfolio-platform/team-portfolio-project-planit.png",
         caption: "Team Portfolio — 프로젝트 상세(PlanIT) 페이지",
       },
-      {
-        src: "/projects/team-portfolio-platform/team-portfolio-project-rd-autonote.png",
-        caption: "Team Portfolio — 프로젝트 상세(R&D 오토노트) 페이지",
-      },
     ],
     stack: ["Next.js App Router", "TypeScript"],
     summary:
-      "팀과 개인의 프로젝트 결과물을 구조적으로 보여주는 포트폴리오 허브.",
+      "프로젝트와 경력을 구조적으로 보여주는 개인 포트폴리오 허브.",
     problem:
-      "단일 프로젝트 소개 중심 구조로는 팀 전체 역량과 멤버별 기여를 전달하기 어려웠습니다.",
+      "단일 프로젝트 소개만으로는 역량과 기여 범위를 한눈에 전달하기 어려웠습니다.",
     solution: [
-      "프로젝트/팀원/상세 페이지를 연결하는 정보 구조 설계",
-      "공통 데이터 소스로 홈/멤버/상세를 일관되게 렌더링",
-      "네비게이션에서 멤버 활성 상태 강조로 탐색성 개선",
+      "프로젝트·프로필·상세 페이지를 연결하는 정보 구조 설계",
+      "공통 데이터 소스로 홈·프로필·상세를 일관되게 렌더링",
+      "검색·필터·기술 트리맵으로 탐색성 강화",
     ],
     outcome: [
-      "팀 소개 중심 랜딩에서 포트폴리오 허브로 전환 완료",
+      "랜딩에서 포트폴리오 허브로 전환 완료",
       "프로젝트 상세 라우트 기반 확장 가능한 구조 확보",
       "신규 프로젝트 추가 시 데이터만 추가하면 반영 가능",
     ],
     metrics: [
       "프로젝트 상세 페이지 자동 SSG 생성",
-      "멤버별 참여 프로젝트 자동 노출",
+      "참여 프로젝트 자동 노출",
       "공통 데이터 소스로 유지보수 비용 절감",
     ],
-    members: ["namhae", "minyoung"],
+    members: ["minyoung"],
     links: {},
   },
   {

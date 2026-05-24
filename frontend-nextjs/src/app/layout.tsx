@@ -7,7 +7,8 @@ import ThemeProvider from "@/components/ThemeProvider";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import {
   DEFAULT_OG_IMAGE_PATH,
-  SITE_NAME,
+  PORTFOLIO_OWNER_NAME,
+  PORTFOLIO_SITE_TITLE,
   SITE_URL,
 } from "@/lib/siteConfig";
 
@@ -21,21 +22,35 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const defaultDescription =
+  "의료·운영 데이터 연동과 B2B SaaS 제품 경험을 소개하는 김민영의 백엔드·풀스택 포트폴리오입니다.";
+
 export const metadata: Metadata = {
-  title: "haeyounglab (해영랩) | 아이디어와 실행의 실험실",
-  description: "게임, 웹앱, 미들웨어 등 다양한 아이디어를 실현하는 해영랩(HAEYOUNGLAB)입니다. 상상을 현실로, 아이디어를 실행으로.",
-  keywords: ["haeyounglab", "해영랩", "HAEYOUNGLAB", "게임", "웹앱", "미들웨어", "스타트업", "아이디어"],
+  title: {
+    default: PORTFOLIO_SITE_TITLE,
+    template: `%s | ${PORTFOLIO_OWNER_NAME}`,
+  },
+  description: defaultDescription,
+  keywords: [
+    "김민영",
+    "포트폴리오",
+    "백엔드",
+    "풀스택",
+    ".NET",
+    "MS-SQL",
+    "의료 IT",
+  ],
   openGraph: {
-    title: "haeyounglab (해영랩) | 아이디어와 실행의 실험실",
-    description: "게임, 웹앱, 미들웨어 등 다양한 아이디어를 실현하는 해영랩(HAEYOUNGLAB)입니다.",
+    title: PORTFOLIO_SITE_TITLE,
+    description: defaultDescription,
     url: SITE_URL,
-    siteName: SITE_NAME,
+    siteName: PORTFOLIO_OWNER_NAME,
     images: [
       {
         url: DEFAULT_OG_IMAGE_PATH,
         width: 1200,
         height: 630,
-        alt: SITE_NAME,
+        alt: `${PORTFOLIO_OWNER_NAME} Portfolio`,
       },
     ],
     locale: "ko_KR",
@@ -43,26 +58,26 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "haeyounglab (해영랩) | 아이디어와 실행의 실험실",
-    description: "게임, 웹앱, 미들웨어 등 다양한 아이디어를 실현하는 해영랩(HAEYOUNGLAB)입니다.",
+    title: PORTFOLIO_SITE_TITLE,
+    description: defaultDescription,
     images: [DEFAULT_OG_IMAGE_PATH],
   },
   metadataBase: new URL(SITE_URL),
 };
 
 export default function RootLayout({
-                                       children,
-                                   }: Readonly<{
-    children: React.ReactNode;
+  children,
+}: Readonly<{
+  children: React.ReactNode;
 }>) {
-    return (
-        <html lang="ko" suppressHydrationWarning>
-        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+  return (
+    <html lang="ko" suppressHydrationWarning>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ThemeProvider>
-            <LanguageProvider>
-                <Navbar />
-                {children}
-            </LanguageProvider>
+          <LanguageProvider>
+            <Navbar />
+            {children}
+          </LanguageProvider>
         </ThemeProvider>
         <Script
           id="adsbygoogle-init"
@@ -70,7 +85,7 @@ export default function RootLayout({
           crossOrigin="anonymous"
           strategy="afterInteractive"
         />
-        </body>
-        </html>
-    );
+      </body>
+    </html>
+  );
 }

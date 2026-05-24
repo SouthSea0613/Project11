@@ -82,6 +82,7 @@ export default function ProjectsIndex({
 
   const total = projects.length;
   const visible = filtered.length;
+  const showMemberFilter = Object.keys(memberLabels).length > 1;
   const isFiltered =
     !!query ||
     memberFilter !== "all" ||
@@ -92,7 +93,13 @@ export default function ProjectsIndex({
     <div>
       {/* 컨트롤 바 */}
       <section className="rounded-2xl border bg-card p-4 md:p-5">
-        <div className="grid gap-3 md:grid-cols-[1fr_auto_auto_auto]">
+        <div
+          className={`grid gap-3 ${
+            showMemberFilter
+              ? "md:grid-cols-[1fr_auto_auto_auto]"
+              : "md:grid-cols-[1fr_auto_auto]"
+          }`}
+        >
           {/* 검색 */}
           <label className="relative">
             <span className="sr-only">프로젝트 검색</span>
@@ -115,20 +122,21 @@ export default function ProjectsIndex({
             )}
           </label>
 
-          {/* 멤버 */}
-          <select
-            value={memberFilter}
-            onChange={(e) => setMemberFilter(e.target.value as MemberFilter)}
-            className="rounded-lg border bg-background/60 px-3 py-2 text-sm focus:border-emerald-400 focus:outline-none"
-            aria-label="멤버 필터"
-          >
-            <option value="all">전체 멤버</option>
-            {(Object.keys(memberLabels) as MemberId[]).map((id) => (
-              <option key={id} value={id}>
-                {memberLabels[id]}
-              </option>
-            ))}
-          </select>
+          {showMemberFilter && (
+            <select
+              value={memberFilter}
+              onChange={(e) => setMemberFilter(e.target.value as MemberFilter)}
+              className="rounded-lg border bg-background/60 px-3 py-2 text-sm focus:border-emerald-400 focus:outline-none"
+              aria-label="멤버 필터"
+            >
+              <option value="all">전체 멤버</option>
+              {(Object.keys(memberLabels) as MemberId[]).map((id) => (
+                <option key={id} value={id}>
+                  {memberLabels[id]}
+                </option>
+              ))}
+            </select>
+          )}
 
           {/* 카테고리 */}
           <select
@@ -195,14 +203,8 @@ export default function ProjectsIndex({
               <span className="font-semibold text-emerald-500">{visible}</span>
               개
             </span>
-            {memberFilter !== "all" && (
-              <span
-                className={`inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[10px] ${
-                  memberFilter === "namhae"
-                    ? "border-emerald-400/40 bg-emerald-500/10 text-emerald-500"
-                    : "border-sky-400/40 bg-sky-500/10 text-sky-500"
-                }`}
-              >
+            {showMemberFilter && memberFilter !== "all" && (
+              <span className="inline-flex items-center gap-1 rounded-full border border-sky-400/40 bg-sky-500/10 px-2 py-0.5 text-[10px] text-sky-500">
                 멤버: {memberLabels[memberFilter]}
               </span>
             )}
@@ -262,25 +264,19 @@ export default function ProjectsIndex({
               <div className="flex flex-1 flex-col gap-2 p-4">
                 <div className="flex items-center justify-between gap-2 text-[11px] text-muted-foreground">
                   <span>{p.period}</span>
-                  <span className="flex items-center gap-1">
-                    {p.members.map((id) => (
-                      <span
-                        key={id}
-                        className={`inline-flex items-center gap-1 rounded-full border px-1.5 py-0.5 text-[10px] ${
-                          id === "namhae"
-                            ? "border-emerald-400/40 bg-emerald-500/10 text-emerald-500"
-                            : "border-sky-400/40 bg-sky-500/10 text-sky-500"
-                        }`}
-                      >
+                  {showMemberFilter && (
+                    <span className="flex items-center gap-1">
+                      {p.members.map((id) => (
                         <span
-                          className={`inline-block h-1.5 w-1.5 rounded-full ${
-                            id === "namhae" ? "bg-emerald-400" : "bg-sky-400"
-                          }`}
-                        />
-                        {memberLabels[id]}
-                      </span>
-                    ))}
-                  </span>
+                          key={id}
+                          className="inline-flex items-center gap-1 rounded-full border border-sky-400/40 bg-sky-500/10 px-1.5 py-0.5 text-[10px] text-sky-500"
+                        >
+                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-sky-400" />
+                          {memberLabels[id]}
+                        </span>
+                      ))}
+                    </span>
+                  )}
                 </div>
                 <h3 className="text-base font-semibold leading-snug group-hover:text-emerald-400">
                   {p.title}

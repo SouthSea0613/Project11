@@ -72,7 +72,9 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
     notFound();
   }
 
-  const projectMembers = teamMembers.filter((m) => project.members.includes(m.id));
+  const projectMembers = teamMembers.filter((m) =>
+    project.members.includes(m.id)
+  );
   const stackByCategory = STACK_CATEGORIES.map((key) => ({
     key,
     label: STACK_LABEL[key],
@@ -151,11 +153,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
                 <Link
                   key={member.id}
                   href={member.profilePath}
-                  className={`rounded-full border px-2.5 py-0.5 text-[11px] font-medium transition ${
-                    member.id === "namhae"
-                      ? "border-emerald-400/40 bg-emerald-400/15 text-emerald-100 hover:bg-emerald-400/25"
-                      : "border-sky-400/40 bg-sky-400/15 text-sky-100 hover:bg-sky-400/25"
-                  }`}
+                  className="rounded-full border border-sky-400/40 bg-sky-400/15 px-2.5 py-0.5 text-[11px] font-medium text-sky-100 transition hover:bg-sky-400/25"
                 >
                   {member.name}
                 </Link>
@@ -220,17 +218,9 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
                   <Link
                     key={member.id}
                     href={member.profilePath}
-                    className={`inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[11px] font-medium transition ${
-                      member.id === "namhae"
-                        ? "border-emerald-400/40 bg-emerald-500/10 text-emerald-500 hover:bg-emerald-500/20"
-                        : "border-sky-400/40 bg-sky-500/10 text-sky-500 hover:bg-sky-500/20"
-                    }`}
+                    className="inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[11px] font-medium transition border-sky-400/40 bg-sky-500/10 text-sky-500 hover:bg-sky-500/20"
                   >
-                    <span
-                      className={`inline-block h-1.5 w-1.5 rounded-full ${
-                        member.id === "namhae" ? "bg-emerald-400" : "bg-sky-400"
-                      }`}
-                    />
+                    <span className="inline-block h-1.5 w-1.5 rounded-full bg-sky-400" />
                     {member.name}
                   </Link>
                 ))}

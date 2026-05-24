@@ -44,10 +44,9 @@ function resolveChromePath() {
 
 const routes = [
   { name: "home", path: "/" },
-  { name: "namhae", path: "/Namhae_Kim" },
   { name: "minyoung", path: "/Minyoung_Kim" },
+  { name: "projects", path: "/projects" },
   { name: "project-planit", path: "/projects/planit" },
-  { name: "project-rd-autonote", path: "/projects/rd-autonote" },
 ];
 
 const CATEGORIES = ["performance", "accessibility", "best-practices", "seo"];

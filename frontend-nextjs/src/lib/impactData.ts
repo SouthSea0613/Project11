@@ -16,30 +16,6 @@ export type ImpactMetric = {
   direction: "up" | "down";
 };
 
-export const namhaeImpactMetrics: ImpactMetric[] = [
-  {
-    project: "R&D 오토노트",
-    label: "RAG 토큰 비용 절감",
-    value: 60,
-    unit: "%",
-    direction: "down",
-  },
-  {
-    project: "PlanIT",
-    label: "대면 회의 시간 절감",
-    value: 30,
-    unit: "%",
-    direction: "down",
-  },
-  {
-    project: "PlanIT 배포",
-    label: "컨테이너 배포 시간 단축",
-    value: 98,
-    unit: "%",
-    direction: "down",
-  },
-];
-
 export const minyoungImpactMetrics: ImpactMetric[] = [
   {
     project: "카카오 케어챗",

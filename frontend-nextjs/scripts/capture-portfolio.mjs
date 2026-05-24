@@ -29,11 +29,6 @@ const targets = [
     waitFor: "main",
   },
   {
-    name: "team-portfolio-namhae.png",
-    url: `${BASE}/Namhae_Kim`,
-    waitFor: "main",
-  },
-  {
     name: "team-portfolio-minyoung.png",
     url: `${BASE}/Minyoung_Kim`,
     waitFor: "main",
@@ -41,11 +36,6 @@ const targets = [
   {
     name: "team-portfolio-project-planit.png",
     url: `${BASE}/projects/planit`,
-    waitFor: "main",
-  },
-  {
-    name: "team-portfolio-project-rd-autonote.png",
-    url: `${BASE}/projects/rd-autonote`,
     waitFor: "main",
   },
 ];

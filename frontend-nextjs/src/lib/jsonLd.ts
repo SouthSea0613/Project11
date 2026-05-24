@@ -4,7 +4,12 @@
  */
 
 import type { PortfolioProject, TeamMemberProfile } from "@/lib/portfolioData";
-import { SITE_NAME, SITE_URL } from "@/lib/siteConfig";
+import {
+  PORTFOLIO_OWNER_NAME,
+  PORTFOLIO_SITE_TITLE,
+  SITE_NAME,
+  SITE_URL,
+} from "@/lib/siteConfig";
 
 const abs = (path: string): string => {
   if (path.startsWith("http://") || path.startsWith("https://")) return path;
@@ -21,19 +26,17 @@ export function organizationLd() {
     alternateName: "해영랩",
     url: SITE_URL,
     logo: abs("/projects/team-portfolio-platform/team-portfolio-home.png"),
-    sameAs: [
-      "https://github.com/SouthSea0613",
-      "https://github.com/alsdud0301",
-    ],
+    sameAs: ["https://github.com/alsdud0301"],
   };
 }
 
-/** 홈 — WebSite (사이트 검색·이름) */
+/** 홈 — WebSite */
 export function websiteLd() {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: `${SITE_NAME} Team Portfolio`,
+    name: PORTFOLIO_SITE_TITLE,
+    alternateName: `${PORTFOLIO_OWNER_NAME} Portfolio`,
     url: SITE_URL,
     inLanguage: "ko-KR",
   };
@@ -43,7 +46,7 @@ export function websiteLd() {
 export function personLd(args: {
   member: TeamMemberProfile | undefined;
   fallbackName: string;
-  /** 멤버 페이지 경로 ("/Namhae_Kim" 등) */
+  /** 멤버 페이지 경로 ("/Minyoung_Kim" 등) */
   path: string;
   /** 프로필 사진 (절대/상대 모두 허용) */
   imagePath: string;
@@ -109,7 +112,7 @@ export function projectLd(args: {
     },
     isPartOf: {
       "@type": "WebSite",
-      name: `${SITE_NAME} Team Portfolio`,
+      name: PORTFOLIO_SITE_TITLE,
       url: SITE_URL,
     },
   };

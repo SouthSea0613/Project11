@@ -1,28 +1,18 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ImageSlot } from "@/components/ImageSlot";
-import {
-  portfolioProjects,
-  teamMembers,
-  type MemberId,
-} from "@/lib/portfolioData";
-import { namhaePhoto } from "@/lib/namhaeResume";
+import { portfolioProjects, teamMembers } from "@/lib/portfolioData";
 import { minyoungPhoto } from "@/lib/minyoungResume";
 import { SITE_NAME } from "@/lib/siteConfig";
 
 export const metadata: Metadata = {
-  title: `페이지를 찾을 수 없어요 (404) | ${SITE_NAME} Team Portfolio`,
+  title: `페이지를 찾을 수 없어요 (404) | ${SITE_NAME} Portfolio`,
   description:
-    "요청하신 페이지가 이동되었거나 존재하지 않습니다. 홈, 프로젝트 목록, 멤버 페이지로 이동해 보세요.",
+    "요청하신 페이지가 이동되었거나 존재하지 않습니다. 홈, 프로젝트 목록, 프로필로 이동해 보세요.",
   robots: { index: false, follow: false },
 };
 
-const memberPhotoMap: Record<MemberId, string> = {
-  namhae: namhaePhoto,
-  minyoung: minyoungPhoto,
-};
-
-const FEATURED_SLUGS = ["planit", "rd-autonote", "avis-tron-paradise"];
+const FEATURED_SLUGS = ["planit", "kakao-carechat-integration", "team-portfolio-platform"];
 
 export default function NotFound() {
   const featured = FEATURED_SLUGS.map((slug) =>
@@ -57,7 +47,6 @@ export default function NotFound() {
           아래에서 가장 자주 찾는 곳으로 빠르게 이동할 수 있어요.
         </p>
 
-        {/* 빠른 액션 */}
         <div className="mt-7 flex flex-wrap gap-2 text-sm">
           <Link
             href="/"
@@ -72,12 +61,6 @@ export default function NotFound() {
             전체 프로젝트 보기
           </Link>
           <Link
-            href="/Namhae_Kim"
-            className="rounded-md border border-white/15 bg-white/5 px-3.5 py-2 font-medium text-white transition hover:bg-white/10"
-          >
-            김남해 프로필
-          </Link>
-          <Link
             href="/Minyoung_Kim"
             className="rounded-md border border-white/15 bg-white/5 px-3.5 py-2 font-medium text-white transition hover:bg-white/10"
           >
@@ -86,7 +69,6 @@ export default function NotFound() {
         </div>
       </section>
 
-      {/* 추천 프로젝트 */}
       <section className="mx-auto max-w-5xl px-4 pb-12 sm:px-6 md:px-8">
         <p className="text-[11px] font-semibold tracking-widest uppercase text-emerald-400">
           이런 프로젝트는 어떠세요?
@@ -126,12 +108,11 @@ export default function NotFound() {
         </div>
       </section>
 
-      {/* 멤버 카드 */}
       <section className="mx-auto max-w-5xl px-4 pb-24 sm:px-6 md:px-8">
         <p className="text-[11px] font-semibold tracking-widest uppercase text-emerald-400">
-          Team
+          Profile
         </p>
-        <div className="mt-3 grid gap-3 sm:grid-cols-2">
+        <div className="mt-3 grid gap-3 sm:max-w-md">
           {teamMembers.map((m) => (
             <Link
               key={m.id}
@@ -140,7 +121,7 @@ export default function NotFound() {
             >
               <span className="block h-14 w-14 shrink-0 overflow-hidden rounded-full ring-2 ring-white/10 group-hover:ring-emerald-400/50">
                 <ImageSlot
-                  src={memberPhotoMap[m.id]}
+                  src={minyoungPhoto}
                   alt={`${m.name} 프로필`}
                   aspect="aspect-square"
                   rounded="rounded-full"
