@@ -1,9 +1,10 @@
 import type { MetadataRoute } from "next";
-import { portfolioProjects } from "@/lib/portfolioData";
+import { getPublicProjects } from "@/lib/portfolioData";
 import { SITE_URL } from "@/lib/siteConfig";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
+  const publicProjects = getPublicProjects();
 
   const staticRoutes: MetadataRoute.Sitemap = [
     {
@@ -26,7 +27,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
-  const projectRoutes: MetadataRoute.Sitemap = portfolioProjects.map((p) => ({
+  const projectRoutes: MetadataRoute.Sitemap = publicProjects.map((p) => ({
     url: `${SITE_URL}/projects/${p.slug}`,
     lastModified: now,
     changeFrequency: "monthly" as const,

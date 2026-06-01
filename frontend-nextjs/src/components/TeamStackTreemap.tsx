@@ -2,12 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { ResponsiveContainer, Tooltip, Treemap } from "recharts";
-import { portfolioProjects } from "@/lib/portfolioData";
+import { getPublicProjects } from "@/lib/portfolioData";
 import { STACK_COLOR_HEX, classifyTech } from "@/lib/stackCategory";
 
 function buildData() {
   const counts = new Map<string, number>();
-  portfolioProjects.forEach((project) => {
+  getPublicProjects().forEach((project) => {
     project.stack.forEach((tech) => {
       const norm = tech.trim();
       counts.set(norm, (counts.get(norm) ?? 0) + 1);

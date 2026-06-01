@@ -37,6 +37,9 @@ export default function Navbar() {
   const isHome = pathname === "/";
   const isAboutPage = pathname.startsWith("/Minyoung_Kim");
   const isProjectsPage = pathname.startsWith("/projects");
+  const isNamhaeRoute = pathname.startsWith("/Namhae_Kim");
+  const isNamhaeProfile =
+    pathname === "/Namhae_Kim" || pathname.startsWith("/Namhae_Kim/");
 
   return (
     <div className="print-hide fixed top-0 left-0 w-full z-50 pointer-events-none">
@@ -89,6 +92,34 @@ export default function Navbar() {
               </span>
             </span>
           </Link>
+
+          {mounted && isNamhaeRoute && (
+            <div className="hidden min-w-0 items-center gap-1 text-[11px] font-medium tracking-tight text-muted-foreground sm:flex md:text-xs">
+              <Link
+                href="/Namhae_Kim"
+                aria-current={isNamhaeProfile ? "page" : undefined}
+                className={`shrink-0 transition-colors ${
+                  isNamhaeProfile
+                    ? "text-emerald-500"
+                    : "hover:text-foreground"
+                }`}
+              >
+                김남해
+              </Link>
+              <span className="shrink-0 opacity-60">·</span>
+              <Link
+                href="/Minyoung_Kim"
+                aria-current={isAboutPage ? "page" : undefined}
+                className={`shrink-0 transition-colors ${
+                  isAboutPage
+                    ? "text-sky-500"
+                    : "hover:text-foreground"
+                }`}
+              >
+                김민영
+              </Link>
+            </div>
+          )}
 
           <div className="flex items-center gap-1 md:gap-2">
             <Link

@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ImageSlot } from "@/components/ImageSlot";
-import { portfolioProjects, teamMembers } from "@/lib/portfolioData";
+import {
+  getPublicProjects,
+  getPublicTeamMembers,
+} from "@/lib/portfolioData";
 import { minyoungPhoto } from "@/lib/minyoungResume";
 import { SITE_NAME } from "@/lib/siteConfig";
 
@@ -15,9 +18,10 @@ export const metadata: Metadata = {
 const FEATURED_SLUGS = ["planit", "kakao-carechat-integration", "team-portfolio-platform"];
 
 export default function NotFound() {
+  const publicProjects = getPublicProjects();
   const featured = FEATURED_SLUGS.map((slug) =>
-    portfolioProjects.find((p) => p.slug === slug)
-  ).filter((p): p is (typeof portfolioProjects)[number] => !!p);
+    publicProjects.find((p) => p.slug === slug)
+  ).filter((p): p is (typeof publicProjects)[number] => !!p);
 
   return (
     <main className="relative">
@@ -113,7 +117,7 @@ export default function NotFound() {
           Profile
         </p>
         <div className="mt-3 grid gap-3 sm:max-w-md">
-          {teamMembers.map((m) => (
+          {getPublicTeamMembers().map((m) => (
             <Link
               key={m.id}
               href={m.profilePath}

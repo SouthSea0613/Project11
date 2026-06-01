@@ -1,4 +1,4 @@
-/**
+﻿/**
  * 멤버별 비즈니스 임팩트 메트릭.
  * BarChart 용 — 모두 % 단위로 통일했습니다.
  */
@@ -16,6 +16,30 @@ export type ImpactMetric = {
   direction: "up" | "down";
 };
 
+export const namhaeImpactMetrics: ImpactMetric[] = [
+  {
+    project: "R&D 오토노트",
+    label: "RAG 토큰 비용 절감",
+    value: 60,
+    unit: "%",
+    direction: "down",
+  },
+  {
+    project: "PlanIT",
+    label: "대면 회의 시간 절감",
+    value: 30,
+    unit: "%",
+    direction: "down",
+  },
+  {
+    project: "PlanIT 배포",
+    label: "컨테이너 배포 시간 단축",
+    value: 98,
+    unit: "%",
+    direction: "down",
+  },
+];
+
 export const minyoungImpactMetrics: ImpactMetric[] = [
   {
     project: "카카오 케어챗",
@@ -26,7 +50,7 @@ export const minyoungImpactMetrics: ImpactMetric[] = [
   },
   {
     project: "옵션 관리",
-    label: "운영 대응 속도 개선",
+    label: "유지보수 대응 속도 개선",
     value: 50,
     unit: "%",
     direction: "up",

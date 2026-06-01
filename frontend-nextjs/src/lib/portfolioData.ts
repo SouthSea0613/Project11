@@ -1,4 +1,4 @@
-export type MemberId = "minyoung";
+export type MemberId = "namhae" | "minyoung";
 
 /** 갤러리 항목: 단순 경로(string)이거나 캡션이 있는 객체 */
 export type GalleryEntry = string | { src: string; caption?: string };
@@ -116,6 +116,29 @@ export const teamContact: {
 
 export const teamMembers: TeamMemberProfile[] = [
   {
+    id: "namhae",
+    name: "김남해",
+    role: "백엔드·풀스택 엔지니어 · Backend / Full-stack",
+    intro:
+      "백엔드/서버 개발 중심으로 1년 4개월 실무를 수행했으며, 노바소프트 엔터프라이즈 보안 시스템과 HaeYoungLab의 PlanIt·R&D 오토노트를 통해 비즈니스 문제를 기술로 치환하는 경험을 쌓았습니다.",
+    skills: [
+      "Next.js",
+      "TypeScript",
+      "NestJS",
+      "FastAPI",
+      "LangChain / RAG",
+      "PostgreSQL",
+      "Docker / CI·CD",
+      "Slack·Notion·Discord 연동",
+    ],
+    highlights: [
+      "PlanIt: Start-End 스크럼·ChatOps 워크플로·게임화 UX 설계",
+      "R&D 오토노트: RAG 전처리·SHA-256 무결성, 토큰 비용 약 60% 절감",
+      "avis-tron 4.0: SIEM 4단계 결재·DB-to-DB 실시간 동기화·IIS 이중화",
+    ],
+    profilePath: "/Namhae_Kim",
+  },
+  {
     id: "minyoung",
     name: "김민영",
     role: "백엔드·풀스택 엔지니어 · Backend / Full-stack",
@@ -219,9 +242,63 @@ export const portfolioProjects: PortfolioProject[] = [
       "Vector 기반 활동·진척 인사이트",
       "유료 구독·리포트 자동화 설계",
     ],
-    members: ["minyoung"],
+    members: ["namhae", "minyoung"],
     links: {
       demo: "https://planit.haeyounglab.com/",
+    },
+  },
+  {
+    slug: "rd-autonote",
+    title: "R&D 오토노트",
+    period: "2026.01 - 2026.04",
+    role: "파운더 · 리드 프로덕트 엔지니어",
+    thumbnail: "/projects/rd-autonote/rd-autonote-screen-01.png",
+    heroImage: "/projects/rd-autonote/rd-autonote-screen-01.png",
+    gallery: [
+      {
+        src: "/projects/rd-autonote/rd-autonote-screen-01.png",
+        caption: "R&D 오토노트 — 제품 메인 UI",
+      },
+      {
+        src: "/projects/rd-autonote/rd-autonote-screen-02.png",
+        caption: "R&D 오토노트 — 연구노트 자동 생성 화면",
+      },
+    ],
+    stack: [
+      "NestJS",
+      "Prisma",
+      "PostgreSQL",
+      "pgvector",
+      "Next.js",
+      "TypeScript",
+      "FastAPI",
+      "LangChain",
+      "RAG",
+      "Slack",
+      "Docker",
+    ],
+    summary:
+      "비침습형 협업 데이터 기반 세무 증빙 자동화 SaaS. 파편화된 협업 로그를 수집·정제해 연구노트로 연결합니다.",
+    problem:
+      "연구·개발 활동 증빙이 수기·이종 툴에 흩어져 있고, LLM만으로 생성하면 비용과 부정확성·감사 신뢰성 이슈가 동시에 발생합니다.",
+    solution: [
+      "Vector Embedding·시멘틱 유사도로 일상 대화 1차 필터링",
+      "유효 R&D 데이터만 LLM 컨텍스트로 주입하는 RAG로 토큰 비용 약 60% 절감",
+      "Slack·Notion·Discord 통합으로 실시간 원천 로그 수집",
+      "SHA-256 해시 박제로 사후 검증 시 조작 방어",
+    ],
+    outcome: [
+      "제조·바이오 기업 콜드 아웃리치 후 MVP 기획·풀스택 주도",
+      "Git-Push 기반 무중단 자동 배포로 인프라 관리 공수 최소화",
+    ],
+    metrics: [
+      "토큰 비용 약 60% 절감(RAG·전처리)",
+      "이종 협업 툴 실시간 로그 파이프라인",
+      "SHA-256 기반 무결성 검증",
+    ],
+    members: ["namhae"],
+    links: {
+      demo: "https://www.haeyounglab.com",
     },
   },
   {
@@ -316,6 +393,82 @@ export const portfolioProjects: PortfolioProject[] = [
     links: {},
   },
   {
+    slug: "pet-health-llm",
+    title: "반려동물 변 분석·건강 자가진단 웹앱",
+    period: "2026.01 - 2026.02",
+    role: "리드 아키텍트 · 풀스택",
+    thumbnail: "/background.jpg",
+    stack: ["Java", "Spring Boot", "JPA", "PostgreSQL", "Next.js", "TypeScript", "JWT", "Gemini API"],
+    summary:
+      "개·고양이 변 상태 데이터를 분석해 질병 가능성을 추론하고, 병원 방문 필요성을 제안하는 LLM 연동 웹앱.",
+    problem:
+      "반려 가구가 초기 증상을 놓치기 쉽고, 가벼운 자가진단과 명확한 다음 행동 제안이 필요했습니다.",
+    solution: [
+      "LLM API 연동 파이프라인으로 분석·추론·안내 문구 생성",
+      "도메인 중심 조립형 아키텍처와 컴포넌트 기반 UI",
+      "JWT Dual Token과 XSS/CSRF 대응 토큰 저장 전략",
+    ],
+    outcome: [
+      "기능 모듈 분리·조합으로 비즈니스 로직 명확화",
+      "조기 발견 유도로 사고 예방·가구 부담 경감 방향 설계",
+    ],
+    metrics: ["LLM 파이프라인 1차 완성", "Dual Token 인증 체계", "도메인 조립형 아키텍처"],
+    members: ["namhae"],
+    links: {},
+  },
+  {
+    slug: "avis-tron-paradise",
+    title: "avis-tron 4.0 — 파라다이스 그룹 전사 보안 통합 감시",
+    period: "2025.06 - 재직중",
+    role: "백엔드/서버개발 · 솔루션사업부 팀원",
+    thumbnail: "/projects/avis-tron-paradise/avis-tron-dashboard-01.png",
+    heroImage: "/projects/avis-tron-paradise/avis-tron-dashboard-01.png",
+    gallery: [
+      {
+        src: "/projects/avis-tron-paradise/avis-tron-dashboard-01.png",
+        caption: "avis-tron 4.0 — 임원 통합 관측 대시보드",
+      },
+    ],
+    stack: [".NET (C#)", "JavaScript", "IIS", "MSSQL", "SIEM", "SVN"],
+    summary:
+      "SIEM 연동 전사 보안 통합 감시체계 구축. 승인·동기화·이중화·대시보드까지 풀스택으로 참여했습니다.",
+    problem:
+      "보안 검측 데이터와 인사·운영 시스템이 분리되어 소명·동기화·가시성 확보에 시간이 많이 들었습니다.",
+    solution: [
+      "SIEM 데이터 연동 기반 4단계 결재·소명 시스템 구축",
+      "인사 DB와 Real-time DB-to-DB 연동으로 전사 인적 정보 자동 동기화",
+      "IIS 웹 서버 이중화(VIP) 및 SVN 형상관리",
+    ],
+    outcome: [
+      "보안 사고 대응 프로세스 체계화",
+      "전 부서 협의 주도 및 기술 운영 매뉴얼 배포",
+    ],
+    metrics: ["3단계 소명 워크플로", "Real-time DB-to-DB", "IIS 이중화·통합 대시보드"],
+    members: ["namhae"],
+    links: {},
+  },
+  {
+    slug: "interior-matching-platform",
+    title: "인테리어 전문가 매칭·견적 자동화 플랫폼",
+    period: "2025.02 - 2025.03",
+    role: "팀장 · 풀스택 시스템 설계",
+    thumbnail: "/background.jpg",
+    stack: ["Spring Boot", "Thymeleaf", "MySQL", "jQuery", "AWS S3", "Git"],
+    summary:
+      "예산·스타일·지역 기반 전문가 매칭과 견적 프로세스 표준화를 담당했습니다.",
+    problem:
+      "사용자 요구와 전문가 데이터가 체계적으로 연결되지 않아 매칭·견적에 시간이 오래 걸렸습니다.",
+    solution: [
+      "필터링 기반 매칭 엔진으로 최적 업체 추천",
+      "단계별 견적 폼으로 표준화된 견적 데이터 제공",
+      "거래 기반 리뷰·실시간 포트폴리오 대시보드",
+    ],
+    outcome: ["향후 결제·정산 연동을 고려한 확장성 설계"],
+    metrics: ["매칭 엔진·표준 견적 흐름", "팀장 역할로 메인 비즈니스 로직 주도"],
+    members: ["namhae"],
+    links: {},
+  },
+  {
     slug: "team-portfolio-platform",
     title: "Portfolio Platform",
     period: "2026.04 - 진행 중",
@@ -356,7 +509,7 @@ export const portfolioProjects: PortfolioProject[] = [
       "참여 프로젝트 자동 노출",
       "공통 데이터 소스로 유지보수 비용 절감",
     ],
-    members: ["minyoung"],
+    members: ["namhae", "minyoung"],
     links: {},
   },
   {
@@ -482,4 +635,44 @@ export function getProjectBySlug(slug: string) {
 
 export function getProjectsByMember(memberId: MemberId) {
   return portfolioProjects.filter((project) => project.members.includes(memberId));
+}
+
+/** 공개 메인 사이트(김민영 포트폴리오)에 노출할 멤버 */
+export const PUBLIC_PORTFOLIO_MEMBER_IDS = ["minyoung"] as const;
+
+export function isPublicPortfolioMember(id: MemberId): boolean {
+  return (PUBLIC_PORTFOLIO_MEMBER_IDS as readonly string[]).includes(id);
+}
+
+export function getPublicTeamMembers(): TeamMemberProfile[] {
+  return teamMembers.filter((m) => isPublicPortfolioMember(m.id));
+}
+
+export function isPublicPortfolioProject(project: PortfolioProject): boolean {
+  return project.members.some((m) => isPublicPortfolioMember(m));
+}
+
+/** 홈·프로젝트 목록·사이트맵용 (김민영 참여 프로젝트만) */
+export function getPublicProjects(): PortfolioProject[] {
+  return portfolioProjects.filter(isPublicPortfolioProject);
+}
+
+/** 김남해 비공개 포트폴리오 URL 구간 */
+export function isNamhaePortfolioRoute(pathname: string): boolean {
+  return pathname.startsWith("/Namhae_Kim");
+}
+
+/** 공개 사이트에 노출할 프로젝트 참여 멤버 (김남해 제외) */
+export function getPublicProjectTeamMembers(
+  project: PortfolioProject
+): TeamMemberProfile[] {
+  return teamMembers.filter(
+    (m) => project.members.includes(m.id) && isPublicPortfolioMember(m.id)
+  );
+}
+
+export function getPublicMemberLabels(): Record<MemberId, string> {
+  return Object.fromEntries(
+    getPublicTeamMembers().map((m) => [m.id, m.name])
+  ) as Record<MemberId, string>;
 }

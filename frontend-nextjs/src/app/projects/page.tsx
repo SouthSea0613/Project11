@@ -3,11 +3,16 @@ import Link from "next/link";
 import JsonLd from "@/components/JsonLd";
 import ProjectsIndex from "@/components/ProjectsIndex";
 import { breadcrumbLd } from "@/lib/jsonLd";
-import { portfolioProjects, teamMembers } from "@/lib/portfolioData";
+import {
+  getPublicMemberLabels,
+  getPublicProjects,
+} from "@/lib/portfolioData";
 import { PORTFOLIO_OWNER_NAME, SITE_URL } from "@/lib/siteConfig";
 
+const publicProjects = getPublicProjects();
+
 const pageTitle = `Projects | ${PORTFOLIO_OWNER_NAME}`;
-const pageDesc = `김민영이 진행한 ${portfolioProjects.length}개 프로젝트. 검색·기술 카테고리로 필터링해 살펴보세요.`;
+const pageDesc = `김민영이 진행한 ${publicProjects.length}개 프로젝트. 검색·기술 카테고리로 필터링해 살펴보세요.`;
 
 export const metadata: Metadata = {
   title: pageTitle,
@@ -29,9 +34,7 @@ export const metadata: Metadata = {
 };
 
 export default function ProjectsListPage() {
-  const memberLabels = Object.fromEntries(
-    teamMembers.map((m) => [m.id, m.name])
-  ) as Record<(typeof teamMembers)[number]["id"], string>;
+  const memberLabels = getPublicMemberLabels();
 
   return (
     <main className="mx-auto max-w-6xl px-4 pt-24 pb-24 sm:px-6">
@@ -47,8 +50,8 @@ export default function ProjectsListPage() {
             inLanguage: "ko-KR",
             mainEntity: {
               "@type": "ItemList",
-              numberOfItems: portfolioProjects.length,
-              itemListElement: portfolioProjects.map((p, idx) => ({
+              numberOfItems: publicProjects.length,
+              itemListElement: publicProjects.map((p, idx) => ({
                 "@type": "ListItem",
                 position: idx + 1,
                 url: `${SITE_URL}/projects/${p.slug}`,
@@ -71,7 +74,7 @@ export default function ProjectsListPage() {
           전체 프로젝트
         </h1>
         <p className="mt-3 text-sm leading-7 text-muted-foreground md:text-base">
-          {portfolioProjects.length}개 프로젝트 — 제품 설계부터 운영까지 정리했습니다.
+          {publicProjects.length}개 프로젝트 — 제품 설계부터 운영까지 정리했습니다.
           검색·기술 카테고리로 좁혀 볼 수 있습니다.
         </p>
         <div className="mt-4 text-xs text-muted-foreground">
@@ -85,7 +88,7 @@ export default function ProjectsListPage() {
       </header>
 
       <ProjectsIndex
-        projects={portfolioProjects}
+        projects={publicProjects}
         memberLabels={memberLabels}
       />
     </main>

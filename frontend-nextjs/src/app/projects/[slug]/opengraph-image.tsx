@@ -5,8 +5,8 @@ import {
 } from "@/lib/ogImage";
 import {
   getProjectBySlug,
+  getPublicProjectTeamMembers,
   portfolioProjects,
-  teamMembers,
 } from "@/lib/portfolioData";
 
 export const runtime = "nodejs";
@@ -33,8 +33,7 @@ export default async function ProjectOpengraphImage({ params }: Props) {
     });
   }
 
-  const authorNames = teamMembers
-    .filter((m) => project.members.includes(m.id))
+  const authorNames = getPublicProjectTeamMembers(project)
     .map((m) => m.name)
     .join(" · ");
 

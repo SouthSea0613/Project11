@@ -266,7 +266,9 @@ export default function ProjectsIndex({
                   <span>{p.period}</span>
                   {showMemberFilter && (
                     <span className="flex items-center gap-1">
-                      {p.members.map((id) => (
+                      {p.members
+                        .filter((id) => memberLabels[id])
+                        .map((id) => (
                         <span
                           key={id}
                           className="inline-flex items-center gap-1 rounded-full border border-sky-400/40 bg-sky-500/10 px-1.5 py-0.5 text-[10px] text-sky-500"

@@ -8,7 +8,7 @@ import {
   getMemberById,
   haeyoungLabAbout,
   haeyoungLabPitch,
-  portfolioProjects,
+  getPublicProjects,
   teamContact,
 } from "@/lib/portfolioData";
 import {
@@ -67,6 +67,8 @@ export const metadata: Metadata = {
 
 const FEATURED_SLUGS = ["planit", "kakao-carechat-integration", "team-portfolio-platform"];
 
+const publicProjects = getPublicProjects();
+
 const heroImpactStats = minyoungImpactStats.map((stat, i) => ({
   ...stat,
   accent: ["text-sky-400", "text-emerald-400", "text-violet-400", "text-amber-400"][i],
@@ -79,10 +81,10 @@ const stackLegend = STACK_CATEGORIES.map((key) => ({
 
 export default function Home() {
   const featured = FEATURED_SLUGS.map((slug) =>
-    portfolioProjects.find((p) => p.slug === slug)
-  ).filter((p): p is (typeof portfolioProjects)[number] => !!p);
+    publicProjects.find((p) => p.slug === slug)
+  ).filter((p): p is (typeof publicProjects)[number] => !!p);
 
-  const others = portfolioProjects.filter(
+  const others = publicProjects.filter(
     (p) => !FEATURED_SLUGS.includes(p.slug)
   );
 
@@ -153,7 +155,7 @@ export default function Home() {
                 href="/projects"
                 className="rounded-md border border-white/15 bg-white/5 px-4 py-2 text-sm font-medium text-white transition hover:border-sky-400/50 hover:bg-white/10"
               >
-                프로젝트 {portfolioProjects.length}개
+                프로젝트 {publicProjects.length}개
               </Link>
               <a
                 href={`mailto:${minyoungContact.email}`}

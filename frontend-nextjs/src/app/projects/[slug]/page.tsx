@@ -7,9 +7,9 @@ import ProjectGallery from "@/components/ProjectGallery";
 import { breadcrumbLd, projectLd } from "@/lib/jsonLd";
 import {
   getProjectBySlug,
+  getPublicProjectTeamMembers,
   normalizeGallery,
   portfolioProjects,
-  teamMembers,
 } from "@/lib/portfolioData";
 import {
   DEFAULT_OG_IMAGE_PATH,
@@ -72,9 +72,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
     notFound();
   }
 
-  const projectMembers = teamMembers.filter((m) =>
-    project.members.includes(m.id)
-  );
+  const projectMembers = getPublicProjectTeamMembers(project);
   const stackByCategory = STACK_CATEGORIES.map((key) => ({
     key,
     label: STACK_LABEL[key],
