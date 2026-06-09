@@ -3,22 +3,19 @@ import Link from "next/link";
 import { ImageSlot } from "@/components/ImageSlot";
 import JsonLd from "@/components/JsonLd";
 import TeamStackTreemap from "@/components/TeamStackTreemap";
-import { personLd, websiteLd } from "@/lib/jsonLd";
+import { organizationLd, websiteLd } from "@/lib/jsonLd";
 import {
   getMemberById,
   haeyoungLabAbout,
   haeyoungLabPitch,
+  haeyoungLabStats,
   getPublicProjects,
   teamContact,
 } from "@/lib/portfolioData";
 import {
   namhaeContact,
   namhaeGithubUrl,
-  namhaeHeadline,
-  namhaeImpactStats,
-  namhaePhoto,
   namhaeSkillCategories,
-  namhaeSummary,
 } from "@/lib/namhaeResume";
 import {
   STACK_CATEGORIES,
@@ -26,42 +23,42 @@ import {
   STACK_LABEL,
 } from "@/lib/stackCategory";
 import { classifyMetric } from "@/lib/metric";
-import {
-  PORTFOLIO_OWNER_NAME,
-  PORTFOLIO_SITE_TITLE,
-  SITE_URL,
-} from "@/lib/siteConfig";
+import { SITE_NAME, SITE_URL } from "@/lib/siteConfig";
 
 const namhaeMember = getMemberById("namhae");
 const namhaeSkills = Array.from(
   new Set(namhaeSkillCategories.flatMap((c) => c.items))
 );
 
+const HOME_TITLE = `${SITE_NAME} — 개발 포트폴리오`;
+const HOME_DESC =
+  "PlanIT · R&D 오토노트 · AWS 인프라까지, 기획·개발·배포·운영을 끝까지 책임지는 HaeYoungLab의 작업 모음입니다.";
+
 export const metadata: Metadata = {
-  title: PORTFOLIO_SITE_TITLE,
-  description: namhaeSummary,
+  title: HOME_TITLE,
+  description: HOME_DESC,
   alternates: { canonical: "/" },
   keywords: [
-    "김남해",
+    "HaeYoungLab",
+    "해영랩",
     "포트폴리오",
     "백엔드",
     "풀스택",
-    "NestJS",
+    "AWS",
     "RAG",
-    "FastAPI",
   ],
   openGraph: {
-    title: PORTFOLIO_SITE_TITLE,
-    description: namhaeHeadline,
+    title: HOME_TITLE,
+    description: HOME_DESC,
     url: SITE_URL,
-    siteName: PORTFOLIO_OWNER_NAME,
+    siteName: SITE_NAME,
     locale: "ko_KR",
-    type: "profile",
+    type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: PORTFOLIO_SITE_TITLE,
-    description: namhaeHeadline,
+    title: HOME_TITLE,
+    description: HOME_DESC,
   },
 };
 
@@ -69,7 +66,7 @@ const FEATURED_SLUGS = ["planit", "aws-infra-modernization", "rd-autonote"];
 
 const publicProjects = getPublicProjects();
 
-const heroImpactStats = namhaeImpactStats.map((stat, i) => ({
+const heroImpactStats = haeyoungLabStats.map((stat, i) => ({
   ...stat,
   accent: ["text-emerald-400", "text-teal-400", "text-violet-400", "text-amber-400"][i],
 }));
@@ -92,20 +89,7 @@ export default function Home() {
     <main className="relative">
       <JsonLd
         id="ld-home"
-        data={[
-          personLd({
-            member: namhaeMember,
-            fallbackName: PORTFOLIO_OWNER_NAME,
-            path: "/",
-            imagePath: namhaePhoto,
-            description: `${namhaeHeadline} — ${namhaeSummary}`,
-            email: namhaeContact.email,
-            sameAs: [namhaeGithubUrl],
-            jobTitle: "Backend / Full-stack Engineer",
-            knowsAbout: namhaeSkills,
-          }),
-          websiteLd(),
-        ]}
+        data={[websiteLd(), organizationLd()]}
       />
       <div className="pointer-events-none fixed inset-0 -z-20 bg-[#040916]" />
       <div
@@ -115,21 +99,7 @@ export default function Home() {
 
       {/* ── Hero ── */}
       <section className="mx-auto max-w-screen-2xl px-4 pt-32 pb-12 sm:px-6 md:px-8 lg:px-6">
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,240px)_minmax(0,1fr)_minmax(0,340px)] lg:items-start">
-          <div className="mx-auto w-full max-w-[240px] lg:mx-0">
-            <div className="overflow-hidden rounded-2xl ring-2 ring-emerald-400/40 ring-offset-2 ring-offset-[#040916]">
-              <ImageSlot
-                src={namhaePhoto}
-                alt={`${PORTFOLIO_OWNER_NAME} 프로필`}
-                aspect="aspect-[4/5]"
-                rounded="rounded-2xl"
-                label="프로필"
-                sizes="240px"
-                priority
-              />
-            </div>
-          </div>
-
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,340px)] lg:items-start">
           <div className="min-w-0">
             <p className="text-xs font-semibold tracking-[0.25em] uppercase text-emerald-400 md:text-sm">
               {haeyoungLabPitch.tagline}
@@ -149,7 +119,7 @@ export default function Home() {
                 href="/Namhae_Kim"
                 className="rounded-md bg-emerald-500 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-emerald-400"
               >
-                경력·기술 상세 보기
+                엔지니어 프로필 보기
               </Link>
               <Link
                 href="/projects"
@@ -371,7 +341,7 @@ export default function Home() {
             href="/Namhae_Kim"
             className="text-xs text-emerald-400 underline-offset-4 hover:underline md:text-sm"
           >
-            경력·기술 기록 보기 →
+            엔지니어 상세 →
           </Link>
         </div>
         <ul className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -513,7 +483,7 @@ export default function Home() {
                 Profile
               </p>
               <h3 className="mt-1 text-lg font-semibold text-white group-hover:text-emerald-300">
-                김남해 상세 프로필
+                엔지니어 프로필
               </h3>
               <p className="mt-1 text-xs text-slate-400">
                 경력·기술·프로젝트·기술 기록

@@ -5,7 +5,8 @@ import NamhaeContentTabs from "@/components/NamhaeContentTabs";
 import PrintButton from "@/components/PrintButton";
 import ProfilePhotoViewer from "@/components/ProfilePhotoViewer";
 import { breadcrumbLd, personLd } from "@/lib/jsonLd";
-import { getMemberById, getProjectsByMember } from "@/lib/portfolioData";
+import { getMemberById, getProjectsByMember, getProjectBySlug } from "@/lib/portfolioData";
+import MermaidDiagram from "@/components/MermaidDiagram";
 import {
   namhaeContact,
   namhaeExternalLinks,
@@ -168,6 +169,42 @@ export default function NamhaeKimPage() {
           </div>
 
           <NamhaeContentTabs projects={projects} />
+
+          {(() => {
+            const aws = getProjectBySlug("aws-infra-modernization");
+            if (!aws?.architectures?.length) return null;
+            return (
+              <section className="mt-10 rounded-xl border bg-card p-5">
+                <div className="flex flex-wrap items-baseline justify-between gap-2">
+                  <h2 className="text-lg font-semibold">AWS · 인프라 아키텍처</h2>
+                  <Link
+                    href={`/projects/${aws.slug}`}
+                    className="text-xs font-medium text-emerald-500 underline-offset-4 hover:underline"
+                  >
+                    프로젝트 상세 보기 →
+                  </Link>
+                </div>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  재분석 → 문제점 → 응급처치까지, Mermaid로 그린 아키텍처 변천.
+                </p>
+                <div className="mt-4 space-y-6">
+                  {aws.architectures.map((d, i) => (
+                    <div key={d.label + i}>
+                      <h3 className="text-sm font-semibold text-foreground">{d.label}</h3>
+                      {d.description && (
+                        <p className="mt-1 text-xs leading-6 text-muted-foreground">
+                          {d.description}
+                        </p>
+                      )}
+                      <div className="mt-2 rounded-lg border bg-background/40 p-3">
+                        <MermaidDiagram code={d.code} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            );
+          })()}
 
           <section className="print-hide mt-10 rounded-xl border bg-card p-5">
             <h2 className="text-lg font-semibold">외부 링크</h2>

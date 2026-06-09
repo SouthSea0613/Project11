@@ -3,25 +3,22 @@ import {
   OG_SIZE,
   renderOgImage,
 } from "@/lib/ogImage";
-import { namhaeHeadline, namhaeImpactStats } from "@/lib/namhaeResume";
-import {
-  PORTFOLIO_OWNER_NAME,
-  PORTFOLIO_ROLE,
-} from "@/lib/siteConfig";
+import { haeyoungLabStats } from "@/lib/portfolioData";
+import { SITE_NAME } from "@/lib/siteConfig";
 
 export const runtime = "nodejs";
-export const alt = `${PORTFOLIO_OWNER_NAME} · Portfolio`;
+export const alt = `${SITE_NAME} · Portfolio`;
 export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
 
 export default async function HomeOpengraphImage() {
   return renderOgImage({
-    kicker: PORTFOLIO_ROLE,
-    title: PORTFOLIO_OWNER_NAME,
-    subtitle: namhaeHeadline,
-    footer: PORTFOLIO_OWNER_NAME,
+    kicker: "Software Engineering Lab",
+    title: SITE_NAME,
+    subtitle: "PlanIT · R&D 오토노트 · AWS 인프라",
+    footer: SITE_NAME,
     accent: "emerald",
-    stats: namhaeImpactStats.map((s) => ({
+    stats: haeyoungLabStats.map((s) => ({
       value: s.value,
       label: s.label,
     })),

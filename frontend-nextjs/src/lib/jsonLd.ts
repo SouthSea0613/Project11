@@ -35,8 +35,8 @@ export function websiteLd() {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: PORTFOLIO_SITE_TITLE,
-    alternateName: `${PORTFOLIO_OWNER_NAME} Portfolio`,
+    name: SITE_NAME,
+    alternateName: `${SITE_NAME} Portfolio`,
     url: SITE_URL,
     inLanguage: "ko-KR",
   };

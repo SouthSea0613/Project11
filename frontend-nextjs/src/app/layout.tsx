@@ -7,8 +7,7 @@ import ThemeProvider from "@/components/ThemeProvider";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import {
   DEFAULT_OG_IMAGE_PATH,
-  PORTFOLIO_OWNER_NAME,
-  PORTFOLIO_SITE_TITLE,
+  SITE_NAME,
   SITE_URL,
 } from "@/lib/siteConfig";
 
@@ -22,35 +21,36 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const SITE_TITLE_DEFAULT = `${SITE_NAME} — 개발 포트폴리오`;
 const defaultDescription =
-  "AI·RAG 파이프라인부터 ChatOps 협업 SaaS, 엔터프라이즈 보안 시스템까지 — 비즈니스 문제를 기술로 치환해 온 김남해의 백엔드·풀스택 포트폴리오입니다.";
+  "PlanIT · R&D 오토노트 · AWS 인프라까지, 기획·개발·배포·운영을 끝까지 책임지는 HaeYoungLab의 개발 포트폴리오입니다.";
 
 export const metadata: Metadata = {
   title: {
-    default: PORTFOLIO_SITE_TITLE,
-    template: `%s | ${PORTFOLIO_OWNER_NAME}`,
+    default: SITE_TITLE_DEFAULT,
+    template: `%s | ${SITE_NAME}`,
   },
   description: defaultDescription,
   keywords: [
-    "김남해",
+    "HaeYoungLab",
+    "해영랩",
     "포트폴리오",
     "백엔드",
     "풀스택",
-    "NestJS",
+    "AWS",
     "RAG",
-    "FastAPI",
   ],
   openGraph: {
-    title: PORTFOLIO_SITE_TITLE,
+    title: SITE_TITLE_DEFAULT,
     description: defaultDescription,
     url: SITE_URL,
-    siteName: PORTFOLIO_OWNER_NAME,
+    siteName: SITE_NAME,
     images: [
       {
         url: DEFAULT_OG_IMAGE_PATH,
         width: 1200,
         height: 630,
-        alt: `${PORTFOLIO_OWNER_NAME} Portfolio`,
+        alt: `${SITE_NAME} Portfolio`,
       },
     ],
     locale: "ko_KR",
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: PORTFOLIO_SITE_TITLE,
+    title: SITE_TITLE_DEFAULT,
     description: defaultDescription,
     images: [DEFAULT_OG_IMAGE_PATH],
   },

@@ -5,10 +5,8 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
-import { ImageSlot } from "@/components/ImageSlot";
 import { useLang } from "@/contexts/LanguageContext";
-import { namhaePhoto } from "@/lib/namhaeResume";
-import { PORTFOLIO_OWNER_NAME, PORTFOLIO_ROLE } from "@/lib/siteConfig";
+import { SITE_NAME } from "@/lib/siteConfig";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -59,33 +57,22 @@ export default function Navbar() {
             aria-current={isHome ? "page" : undefined}
             className="group flex min-w-0 items-center gap-2.5 md:gap-3"
           >
-            {mounted ? (
-              <span
-                className={`block h-9 w-9 shrink-0 overflow-hidden rounded-full ring-2 transition md:h-10 md:w-10 ${
-                  isHome || isAboutPage
-                    ? "ring-emerald-400"
-                    : "ring-border group-hover:ring-emerald-400/60"
-                }`}
-              >
-                <ImageSlot
-                  src={namhaePhoto}
-                  alt={`${PORTFOLIO_OWNER_NAME} 프로필`}
-                  aspect="aspect-square"
-                  rounded="rounded-full"
-                  label=""
-                  className="!border-0"
-                  sizes="40px"
-                />
-              </span>
-            ) : (
-              <span className="block h-9 w-9 shrink-0 rounded-full bg-muted md:h-10 md:w-10" />
-            )}
+            <span
+              className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-sm font-bold tracking-tight ring-2 transition md:h-10 md:w-10 ${
+                isHome
+                  ? "bg-emerald-500/15 text-emerald-400 ring-emerald-400/50"
+                  : "bg-emerald-500/10 text-emerald-400 ring-border group-hover:ring-emerald-400/60"
+              }`}
+              aria-hidden="true"
+            >
+              HY
+            </span>
             <span className="min-w-0 leading-tight">
               <span className="block truncate text-lg font-bold tracking-tight text-foreground md:text-2xl">
-                {PORTFOLIO_OWNER_NAME}
+                {SITE_NAME}
               </span>
               <span className="hidden truncate text-[11px] font-medium text-muted-foreground sm:block md:text-xs">
-                {PORTFOLIO_ROLE}
+                Software Engineering Lab
               </span>
             </span>
           </Link>

@@ -7,12 +7,12 @@ import {
   getPublicMemberLabels,
   getPublicProjects,
 } from "@/lib/portfolioData";
-import { PORTFOLIO_OWNER_NAME, SITE_URL } from "@/lib/siteConfig";
+import { SITE_NAME, SITE_URL } from "@/lib/siteConfig";
 
 const publicProjects = getPublicProjects();
 
-const pageTitle = `Projects | ${PORTFOLIO_OWNER_NAME}`;
-const pageDesc = `김남해가 진행한 ${publicProjects.length}개 프로젝트. 검색·기술 카테고리로 필터링해 살펴보세요.`;
+const pageTitle = `Projects | ${SITE_NAME}`;
+const pageDesc = `HaeYoungLab의 프로젝트 ${publicProjects.length}개. 검색·기술 카테고리로 필터링해 살펴보세요.`;
 
 export const metadata: Metadata = {
   title: pageTitle,
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     title: pageTitle,
     description: pageDesc,
     url: "/projects",
-    siteName: PORTFOLIO_OWNER_NAME,
+    siteName: SITE_NAME,
     locale: "ko_KR",
     type: "website",
   },
@@ -68,7 +68,7 @@ export default function ProjectsListPage() {
 
       <header className="mb-8">
         <p className="text-xs font-semibold tracking-widest text-emerald-500 uppercase">
-          {PORTFOLIO_OWNER_NAME} · Projects
+          {SITE_NAME} · Projects
         </p>
         <h1 className="mt-2 text-3xl font-bold tracking-tight md:text-4xl">
           전체 프로젝트

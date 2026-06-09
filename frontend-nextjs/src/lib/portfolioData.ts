@@ -57,21 +57,29 @@ export type TeamMemberProfile = {
 
 /** 홈 히어로·소개 — 김남해 이력서 기반 */
 export const haeyoungLabPitch = {
-  tagline: "Backend · Full-stack Engineer",
-  heroTitle: "김남해",
+  tagline: "Software Engineering Lab",
+  heroTitle: "HaeYoungLab",
   heroSubtitle:
-    "비즈니스 문제를 기술로 치환해 실행하는 백엔드·풀스택 엔지니어",
+    "아이디어를 배포된 제품으로 옮기는 개발 랩",
   description:
-    "노바소프트 엔터프라이즈 보안 실무와 HaeYoungLab 창업 경험을 바탕으로, AI·RAG 파이프라인부터 ChatOps 협업 SaaS까지 제품을 밑바닥부터 설계·구현해 왔습니다. PlanIT 아키텍처, R&D 오토노트, SIEM 보안 통합 — 설계부터 배포·운영까지 측정 가능한 결과로 증명합니다.",
+    "PlanIT, R&D 오토노트, AWS 인프라까지 — 기획·개발·배포·운영을 끝까지 책임진 작업들을 모았습니다. 추상적인 계획보다 배포된 제품과 숫자로 결과를 남깁니다.",
 };
+
+/** 홈 히어로 임팩트 카드 — 랩/성과 단위 (개인 경력 지표 아님) */
+export const haeyoungLabStats: { value: string; label: string }[] = [
+  { value: "0 → 1", label: "제품 기획·풀스택 주도" },
+  { value: "-60%", label: "RAG 토큰 비용 절감" },
+  { value: "-$80+/월", label: "AWS 인프라 비용 절감" },
+  { value: "22.6만", label: "에러 표면화·추적" },
+];
 
 /** About — 경력 서사 */
 export const haeyoungLabAbout = {
-  kicker: "About Me",
-  heading: "어떤 엔지니어인가",
+  kicker: "About",
+  heading: "HaeYoungLab은",
   paragraphs: [
-    "백엔드·서버 개발 중심으로 1년 4개월의 실무를 수행하며, 노바소프트 엔터프라이즈 보안 시스템과 HaeYoungLab의 PlanIt·R&D 오토노트를 통해 비즈니스 문제를 기술로 치환하는 경험을 쌓았습니다. Next.js·NestJS·FastAPI 기반으로 제품을 밑바닥부터 만들어 왔습니다.",
-    "추상적인 계획보다 배포된 제품과 숫자로 결과를 남기는 일을 중시합니다. RAG 전처리로 토큰 비용을 약 60% 절감하고, SHA-256 무결성·DB-to-DB 실시간 동기화처럼 현장에서 바로 체감되는 지표를 개선하는 데 집중합니다.",
+    "아이디어를 빠르게 배포된 제품으로 옮기는 소프트웨어 개발 랩입니다. PlanIT(ChatOps 협업 SaaS), R&D 오토노트(RAG 기반 세무 증빙 자동화), AWS 인프라 재정비까지 — 기획·개발·배포·운영 풀사이클을 직접 책임집니다.",
+    "추상적인 계획보다 배포된 제품과 숫자로 결과를 남기는 것을 중시합니다. RAG 토큰 비용 약 60% 절감, AWS 고정비 절감, 에러 22.6만 건 표면화처럼 현장에서 바로 체감되는 지표를 개선하는 데 집중합니다.",
   ],
   pillars: [
     {
