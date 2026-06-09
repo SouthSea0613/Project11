@@ -5,7 +5,7 @@ export const SITE_URL = "https://www.haeyounglab.com" as const;
 export const SITE_NAME = "HaeYoungLab" as const;
 
 /** 포트폴리오 주인공 */
-export const PORTFOLIO_OWNER_NAME = "김민영" as const;
+export const PORTFOLIO_OWNER_NAME = "김남해" as const;
 
 export const PORTFOLIO_ROLE = "Backend · Full-stack Engineer" as const;
 

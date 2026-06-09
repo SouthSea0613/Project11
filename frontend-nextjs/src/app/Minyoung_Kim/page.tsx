@@ -36,6 +36,7 @@ export const metadata: Metadata = {
     "풀스택",
   ],
   alternates: { canonical: "/Minyoung_Kim" },
+  robots: { index: false, follow: false },
   openGraph: {
     title: pageTitle,
     description: pageDesc,

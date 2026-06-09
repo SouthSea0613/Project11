@@ -12,7 +12,7 @@ import { PORTFOLIO_OWNER_NAME, SITE_URL } from "@/lib/siteConfig";
 const publicProjects = getPublicProjects();
 
 const pageTitle = `Projects | ${PORTFOLIO_OWNER_NAME}`;
-const pageDesc = `김민영이 진행한 ${publicProjects.length}개 프로젝트. 검색·기술 카테고리로 필터링해 살펴보세요.`;
+const pageDesc = `김남해가 진행한 ${publicProjects.length}개 프로젝트. 검색·기술 카테고리로 필터링해 살펴보세요.`;
 
 export const metadata: Metadata = {
   title: pageTitle,

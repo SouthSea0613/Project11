@@ -7,7 +7,7 @@ import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import { ImageSlot } from "@/components/ImageSlot";
 import { useLang } from "@/contexts/LanguageContext";
-import { minyoungPhoto } from "@/lib/minyoungResume";
+import { namhaePhoto } from "@/lib/namhaeResume";
 import { PORTFOLIO_OWNER_NAME, PORTFOLIO_ROLE } from "@/lib/siteConfig";
 
 export default function Navbar() {
@@ -35,11 +35,8 @@ export default function Navbar() {
 
   const isDark = resolvedTheme === "dark";
   const isHome = pathname === "/";
-  const isAboutPage = pathname.startsWith("/Minyoung_Kim");
+  const isAboutPage = pathname.startsWith("/Namhae_Kim");
   const isProjectsPage = pathname.startsWith("/projects");
-  const isNamhaeRoute = pathname.startsWith("/Namhae_Kim");
-  const isNamhaeProfile =
-    pathname === "/Namhae_Kim" || pathname.startsWith("/Namhae_Kim/");
 
   return (
     <div className="print-hide fixed top-0 left-0 w-full z-50 pointer-events-none">
@@ -66,12 +63,12 @@ export default function Navbar() {
               <span
                 className={`block h-9 w-9 shrink-0 overflow-hidden rounded-full ring-2 transition md:h-10 md:w-10 ${
                   isHome || isAboutPage
-                    ? "ring-sky-400"
-                    : "ring-border group-hover:ring-sky-400/60"
+                    ? "ring-emerald-400"
+                    : "ring-border group-hover:ring-emerald-400/60"
                 }`}
               >
                 <ImageSlot
-                  src={minyoungPhoto}
+                  src={namhaePhoto}
                   alt={`${PORTFOLIO_OWNER_NAME} 프로필`}
                   aspect="aspect-square"
                   rounded="rounded-full"
@@ -93,42 +90,14 @@ export default function Navbar() {
             </span>
           </Link>
 
-          {mounted && isNamhaeRoute && (
-            <div className="hidden min-w-0 items-center gap-1 text-[11px] font-medium tracking-tight text-muted-foreground sm:flex md:text-xs">
-              <Link
-                href="/Namhae_Kim"
-                aria-current={isNamhaeProfile ? "page" : undefined}
-                className={`shrink-0 transition-colors ${
-                  isNamhaeProfile
-                    ? "text-emerald-500"
-                    : "hover:text-foreground"
-                }`}
-              >
-                김남해
-              </Link>
-              <span className="shrink-0 opacity-60">·</span>
-              <Link
-                href="/Minyoung_Kim"
-                aria-current={isAboutPage ? "page" : undefined}
-                className={`shrink-0 transition-colors ${
-                  isAboutPage
-                    ? "text-sky-500"
-                    : "hover:text-foreground"
-                }`}
-              >
-                김민영
-              </Link>
-            </div>
-          )}
-
           <div className="flex items-center gap-1 md:gap-2">
             <Link
-              href="/Minyoung_Kim"
+              href="/Namhae_Kim"
               aria-current={isAboutPage ? "page" : undefined}
               className={`hidden md:inline-flex items-center rounded-md px-2.5 h-8 text-xs md:text-sm font-medium transition underline-offset-4 ${
                 isAboutPage
-                  ? "text-sky-500 underline"
-                  : "text-muted-foreground hover:text-sky-500"
+                  ? "text-emerald-500 underline"
+                  : "text-muted-foreground hover:text-emerald-500"
               }`}
             >
               About
@@ -138,8 +107,8 @@ export default function Navbar() {
               aria-current={isProjectsPage ? "page" : undefined}
               className={`hidden md:inline-flex items-center rounded-md px-2.5 h-8 text-xs md:text-sm font-medium transition underline-offset-4 ${
                 isProjectsPage
-                  ? "text-sky-500 underline"
-                  : "text-muted-foreground hover:text-sky-500"
+                  ? "text-emerald-500 underline"
+                  : "text-muted-foreground hover:text-emerald-500"
               }`}
             >
               Projects
@@ -149,7 +118,7 @@ export default function Navbar() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="PlanIT 라이브 데모"
-              className="hidden lg:inline-flex items-center gap-1 rounded-md border border-sky-400/30 bg-sky-400/10 px-2.5 h-8 text-xs md:text-sm font-semibold text-sky-500 transition hover:border-sky-400/60 hover:bg-sky-400/20"
+              className="hidden lg:inline-flex items-center gap-1 rounded-md border border-emerald-400/30 bg-emerald-400/10 px-2.5 h-8 text-xs md:text-sm font-semibold text-emerald-500 transition hover:border-emerald-400/60 hover:bg-emerald-400/20"
             >
               PlanIT
               <span aria-hidden="true" className="text-[10px] opacity-80">

@@ -23,7 +23,7 @@ const geistMono = Geist_Mono({
 });
 
 const defaultDescription =
-  "의료·운영 데이터 연동과 B2B SaaS 제품 경험을 소개하는 김민영의 백엔드·풀스택 포트폴리오입니다.";
+  "AI·RAG 파이프라인부터 ChatOps 협업 SaaS, 엔터프라이즈 보안 시스템까지 — 비즈니스 문제를 기술로 치환해 온 김남해의 백엔드·풀스택 포트폴리오입니다.";
 
 export const metadata: Metadata = {
   title: {
@@ -32,13 +32,13 @@ export const metadata: Metadata = {
   },
   description: defaultDescription,
   keywords: [
-    "김민영",
+    "김남해",
     "포트폴리오",
     "백엔드",
     "풀스택",
-    ".NET",
-    "MS-SQL",
-    "의료 IT",
+    "NestJS",
+    "RAG",
+    "FastAPI",
   ],
   openGraph: {
     title: PORTFOLIO_SITE_TITLE,

@@ -36,7 +36,6 @@ export const metadata: Metadata = {
     "포트폴리오",
   ],
   alternates: { canonical: "/Namhae_Kim" },
-  robots: { index: false, follow: false },
   openGraph: {
     title: pageTitle,
     description: pageDesc,
@@ -53,7 +52,7 @@ export const metadata: Metadata = {
 };
 
 export default function NamhaeKimPage() {
-  const projects = getProjectsByMember("namhae");
+  const projects = getProjectsByMember("namhae").filter((p) => !p.draft);
   const allKnownTech = Array.from(
     new Set(namhaeSkillCategories.flatMap((c) => c.items))
   );

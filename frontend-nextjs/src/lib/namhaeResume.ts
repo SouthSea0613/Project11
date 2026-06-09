@@ -33,6 +33,10 @@ export const namhaeSkillCategories: { label: string; items: string[] }[] = [
     label: "Game / Etc",
     items: ["Unity", "Unreal", "ARFoundation", "Git", "SVN"],
   },
+  {
+    label: "Cloud / DevOps",
+    items: ["AWS", "Terraform", "CloudWatch", "Auto Scaling", "NAT/VPC", "FinOps", "k6", "IAM"],
+  },
 ];
 
 export const namhaeContact = {

@@ -37,6 +37,12 @@ export type PortfolioProject = {
     demo?: string;
     github?: string;
   };
+  /** 아키텍처 다이어그램(Mermaid 소스). 있으면 상세 페이지에 렌더 + 편집 플레이그라운드 노출. */
+  architecture?: string;
+  /** 단계별 아키텍처 다이어그램(재분석 → 문제 → 개선 등). 있으면 순서대로 렌더. */
+  architectures?: { label: string; description?: string; code: string }[];
+  /** 작성 중 — 공개 목록·홈·sitemap·프로필 탭에서 제외. 상세는 직접 URL 미리보기만(noindex). 내용 완성 후 false/삭제. */
+  draft?: boolean;
 };
 
 export type TeamMemberProfile = {
@@ -49,14 +55,14 @@ export type TeamMemberProfile = {
   profilePath: string;
 };
 
-/** 홈 히어로·소개 — 김민영 이력서 기반 */
+/** 홈 히어로·소개 — 김남해 이력서 기반 */
 export const haeyoungLabPitch = {
   tagline: "Backend · Full-stack Engineer",
-  heroTitle: "김민영",
+  heroTitle: "김남해",
   heroSubtitle:
-    "데이터 무결성과 운영 효율을 함께 설계하는 백엔드·풀스택 엔지니어",
+    "비즈니스 문제를 기술로 치환해 실행하는 백엔드·풀스택 엔지니어",
   description:
-    "의료 데이터 연동 환경에서 정합성과 안정성을 우선으로 시스템을 설계해 왔습니다. C# .NET·MS-SQL 실무와 PlanIT 아키텍처, 포트폴리오 플랫폼까지 — 설계부터 배포·운영까지 측정 가능한 결과로 증명합니다.",
+    "노바소프트 엔터프라이즈 보안 실무와 HaeYoungLab 창업 경험을 바탕으로, AI·RAG 파이프라인부터 ChatOps 협업 SaaS까지 제품을 밑바닥부터 설계·구현해 왔습니다. PlanIT 아키텍처, R&D 오토노트, SIEM 보안 통합 — 설계부터 배포·운영까지 측정 가능한 결과로 증명합니다.",
 };
 
 /** About — 경력 서사 */
@@ -64,8 +70,8 @@ export const haeyoungLabAbout = {
   kicker: "About Me",
   heading: "어떤 엔지니어인가",
   paragraphs: [
-    "9년가량 의료 IT 현장에서 데이터 연동·저장 프로시저·운영 화면을 설계·구현해 왔습니다. C# .NET과 MS-SQL 중심의 실무 위에 PlanIT 아키텍처, 팀 포트폴리오 플랫폼 등 제품 경험을 더했습니다.",
-    "추상적인 계획보다 배포된 제품과 숫자로 결과를 남기는 일을 중시합니다. 데이터 정합성, 쿼리 성능, 운영 대응 속도처럼 현장에서 바로 체감되는 지표를 개선하는 데 집중합니다.",
+    "백엔드·서버 개발 중심으로 1년 4개월의 실무를 수행하며, 노바소프트 엔터프라이즈 보안 시스템과 HaeYoungLab의 PlanIt·R&D 오토노트를 통해 비즈니스 문제를 기술로 치환하는 경험을 쌓았습니다. Next.js·NestJS·FastAPI 기반으로 제품을 밑바닥부터 만들어 왔습니다.",
+    "추상적인 계획보다 배포된 제품과 숫자로 결과를 남기는 일을 중시합니다. RAG 전처리로 토큰 비용을 약 60% 절감하고, SHA-256 무결성·DB-to-DB 실시간 동기화처럼 현장에서 바로 체감되는 지표를 개선하는 데 집중합니다.",
   ],
   pillars: [
     {
@@ -99,17 +105,17 @@ export const teamContact: {
   channels: ContactChannel[];
   inquiryTypes: string[];
 } = {
-  email: "sms0751@naver.com",
+  email: "tksz0613@gmail.com",
   responseSla: "보통 24시간 이내 회신",
   channels: [
-    { label: "이메일", href: "mailto:sms0751@naver.com", primary: true },
+    { label: "이메일", href: "mailto:tksz0613@gmail.com", primary: true },
     { label: "Lab 사이트", href: "https://haeyounglab.com" },
     { label: "PlanIT 데모", href: "https://planit.haeyounglab.com" },
-    { label: "GitHub", href: "https://github.com/alsdud0301" },
+    { label: "GitHub", href: "https://github.com/SouthSea0613" },
   ],
   inquiryTypes: [
     "백엔드·풀스택 채용 / 협업",
-    "의료·운영 데이터 연동·최적화",
+    "AI·RAG·자동화 파이프라인 설계",
     "B2B SaaS 아키텍처·PoC",
   ],
 };
@@ -164,6 +170,257 @@ export const teamMembers: TeamMemberProfile[] = [
 ];
 
 export const portfolioProjects: PortfolioProject[] = [
+  // ─────────────────────────────────────────────────────────────
+  // AWS 인프라 재분석 · 옵저버빌리티 · FinOps — 공개됨.
+  // TODO(작성자): period(실제 기간) 입력 / metrics 비용수치 '추정' → Cost Explorer 실측 교체 /
+  //              커버·대시보드 스크린샷을 public/projects/aws-infra-modernization/ 에 추가.
+  // URL: /projects/aws-infra-modernization
+  // ─────────────────────────────────────────────────────────────
+  {
+    slug: "aws-infra-modernization",
+    title: "AWS 인프라 재분석 · 옵저버빌리티 구축 · FinOps 비용 최적화",
+    period: "(기간 작성 예정)",
+    role: "인프라 재분석 · DevOps · 옵저버빌리티 · FinOps · 부하테스트",
+    thumbnail: "/projects/aws-infra-modernization/cover.png",
+    heroImage: "/projects/aws-infra-modernization/cover.png",
+    gallery: [],
+    stack: [
+      "AWS",
+      "VPC",
+      "EC2 (Graviton t4g)",
+      "ALB",
+      "RDS PostgreSQL",
+      "ElastiCache Redis",
+      "NAT Gateway",
+      "Auto Scaling",
+      "DynamoDB",
+      "SES",
+      "SSM",
+      "CloudWatch",
+      "SNS",
+      "GitHub Actions",
+      "Docker",
+      "Terraform",
+      "k6",
+    ],
+    summary:
+      "운영 중이던 AWS 아키텍처를 처음부터 재분석해 다이어그램과 실제 리소스의 불일치를 드러내고, 옵저버빌리티(CloudWatch+알람)·보안·가용성·비용 문제를 단계적으로 개선했다. 모니터링 부재로 묻혀 있던 누적 에러 22.6만 건을 표면화하고, 유휴 NAT·중복 Redis·불필요한 외부(LLM) 호출로 새던 비용을 차단했다.",
+    problem:
+      "문서상 다이어그램과 실제 운영 구조가 달랐고, 옵저버빌리티가 없어 장애·에러가 표면화되지 않았다. release용 EC2가 퍼블릭 서브넷에 공인 IP로 직접 노출돼 공격 표면이 컸고, AZ 1a의 NAT Gateway는 아무도 쓰지 않으면서 과금되고 있었다. main Redis는 트래픽 대비 과한 다중 노드였고, NAT를 통한 불필요한 외부 LLM 호출로 데이터 처리 비용이 새고 있었다.",
+    solution: [
+      "재분석 — 다이어그램과 실제 리소스를 1:1 대조해 운영 구조를 다시 도식화. main/release 환경 분리, 서브넷·NAT·RDS(Multi-AZ vs Single-AZ)·Redis 노드 구성·egress 경로를 실측",
+      "옵저버빌리티 구축 — CloudWatch 대시보드 + 알람(EC2 memory/disk·RDS·Redis 지표)을 SNS 이메일로 연동. 그동안 드러나지 않던 누적 에러 22.6만 건을 표면화·추적 기반 확보",
+      "백엔드 이슈 추적 — 모니터링으로 노출된 에러 로그를 분석해 백엔드 버그·비효율 호출 패턴을 식별",
+      "NAT 비용 누수 차단 — NAT를 경유하던 불필요한 외부 LLM 호출을 발견·제거해 NAT 데이터 처리 비용 절감",
+      "응급처치 — 유휴 NAT(nat-a) 삭제, 중복 main Redis 레플리카 삭제·단일 노드화, release EC2 egress를 NAT 경유로 정리(공인 IP 노출 축소), ALB 2AZ·RDS Multi-AZ failover로 가용성 유지",
+      "부하 테스트 — k6로 서버 부하·한계를 측정해 인스턴스 사이징/오토스케일링 근거 확보",
+      "FinOps — 리소스 태깅·Cost Explorer 기반으로 환경별(main/release) 비용을 가시화하고 지속 최적화 체계화",
+    ],
+    outcome: [
+      "옵저버빌리티 부재로 묻혀 있던 누적 에러 22.6만 건 표면화 → 추적·해소 기반 마련",
+      "유휴 NAT Gateway·중복 Redis 노드 제거로 월 고정비 절감 (추정 ~$80+/월, 연 ~$1,000+ · 실측 교체 예정)",
+      "NAT 경유 불필요 LLM 호출 제거로 데이터 처리 비용 누수 차단",
+      "release EC2 퍼블릭 노출(공인 IP) 제거로 공격 표면 축소",
+      "k6 부하테스트로 사이징 근거 확보 → 과/저 프로비저닝 방지",
+      "ALB 2AZ·RDS Multi-AZ 자동 failover로 단일 AZ 장애 대비 가용성 유지",
+    ],
+    metrics: [
+      "표면화한 누적 에러 22.6만 건",
+      "고정비 절감 추정 ~$80+/월 (NAT 1 + Redis 노드 1)",
+      "NAT 데이터 처리 비용 누수 차단",
+      "공개 노출 EC2 1대 → 사설화",
+    ],
+    members: ["namhae"],
+    links: {},
+    architectures: [
+      {
+        label: "① 재분석 — 실제 운영 구조",
+        description:
+          "다이어그램과 실제 리소스를 대조해 다시 그린 운영 구조. main/release 환경, AZ 1a·1c, NAT·RDS·Redis 구성과 egress 경로를 실측.",
+        code: `flowchart TB
+  Internet([인터넷])
+  GH["GitHub Actions<br/>main + release 워크플로우"] --> SSM["AWS SSM"]
+  subgraph AWS["AWS · ap-northeast-1"]
+    IGW["Internet Gateway"]
+    ALBm[["grods-main-alb"]]
+    ALBr[["grods-release-alb"]]
+    subgraph Regional["리전 서비스"]
+      DDB[("DynamoDB<br/>runtime-main / runtime-release")]
+      S3[("S3<br/>catalog · env-file · payment-secrets")]
+      SES["SES"]
+    end
+    subgraph VPC["grods-vpc-prod · 10.50.0.0/16"]
+      subgraph AZA["AZ 1a"]
+        NATA["NAT-a · public-a"]
+        EC2R["release EC2<br/>t4g.small · app-a"]
+        subgraph DataA["data-a"]
+          RDSAm[("main RDS standby (숨김)")]
+          RDSr[("release RDS<br/>t4g.micro Single-AZ")]
+          REDArep[("main Redis replica 002")]
+          REDr[("release Redis t4g.micro")]
+        end
+      end
+      subgraph AZC["AZ 1c"]
+        NATC["NAT-c · public-c"]
+        EC2M["main EC2<br/>t4g.medium · app-c"]
+        subgraph DataC["data-c"]
+          RDSCm[("main RDS primary<br/>t4g.small Multi-AZ")]
+          REDmpri[("main Redis primary 001")]
+        end
+      end
+    end
+  end
+  Internet --> IGW
+  IGW --> ALBm --> EC2M
+  IGW --> ALBr --> EC2R
+  SSM -. 배포 .-> EC2M
+  SSM -. 배포 .-> EC2R
+  EC2M -. egress .-> NATC
+  EC2R -. egress .-> NATA
+  EC2M --> RDSCm
+  EC2M --> REDmpri
+  EC2M --> DDB
+  EC2M --> S3
+  EC2R --> RDSr
+  EC2R --> REDr
+  RDSCm -. Multi-AZ sync .-> RDSAm
+  REDmpri -. replication .-> REDArep
+  EC2M --> SES
+  EC2R --> SES`,
+      },
+      {
+        label: "② 발견한 문제점",
+        description:
+          "환경 분리 후 드러난 문제: release EC2의 공인 IP 직접 노출, 아무도 쓰지 않는 idle NAT-a, 트래픽 대비 과한 main Redis 2노드.",
+        code: `flowchart TB
+  Internet([인터넷])
+  subgraph CICD["배포 (각자 다른 브랜치)"]
+    GHm["main → main-deploy.yml"]
+    GHr["release → release-deploy.yml"]
+  end
+  SSM["AWS SSM · 롤링배포"]
+  GHm --> SSM
+  GHr --> SSM
+  subgraph AWS["AWS · ap-northeast-1"]
+    IGW["Internet Gateway"]
+    subgraph VPC["grods-vpc-prod · 10.50.0.0/16"]
+      subgraph MAINENV["MAIN 환경 (일반 유저 · 수만 req/일)"]
+        ALBm["grods-main-alb<br/>HTTP/HTTPS(ACM)"]
+        EC2m["main EC2 · i-0f9bc41e<br/>t4g.medium · 1c app-c (사설)<br/>egress → nat-c"]
+        RDSm[("grods-main-db<br/>PG17.6 t4g.small · Multi-AZ")]
+        REDm[("grods-redis-main<br/>t4g.small x2 (1c+1a)")]
+        DDBm[("DynamoDB runtime-main")]
+        ALBm --> EC2m --> RDSm
+        EC2m --> REDm
+        EC2m --> DDBm
+      end
+      subgraph RELENV["RELEASE 환경 (QA 7명 · 수천 req/일)"]
+        ALBr["grods-release-alb"]
+        EC2r["release EC2 · i-0ce0fadd<br/>t4g.small · 1a public-a (공개)<br/>공인IP · egress → IGW"]
+        RDSr[("grods-backend-release-db-v2<br/>PG17.6 t4g.micro · Single-AZ")]
+        REDr[("grods-redis-release<br/>t4g.micro x1")]
+        DDBr[("DynamoDB runtime-release")]
+        ALBr --> EC2r --> RDSr
+        EC2r --> REDr
+        EC2r --> DDBr
+      end
+      NATc["NAT-c · public-c"]
+      NATa["NAT-a · public-a<br/>아무도 안 씀 (idle)"]
+    end
+    SES["SES · 이메일"]
+  end
+  Internet -->|main 주소| IGW
+  Internet -->|release 주소| IGW
+  IGW --> ALBm
+  IGW --> ALBr
+  EC2m -. egress .-> NATc
+  EC2r -. egress 공인IP .-> IGW
+  EC2m --> SES
+  EC2r --> SES`,
+      },
+      {
+        label: "③ 응급처치 + 옵저버빌리티 + FinOps",
+        description:
+          "idle NAT·중복 Redis 제거, release egress를 NAT-c로 통합, CloudWatch 대시보드/알람→SNS 구성. ALB 2AZ·RDS Multi-AZ failover는 유지.",
+        code: `flowchart TB
+  Internet([인터넷])
+  GH["GitHub Actions"] --> SSM["AWS SSM"]
+  subgraph AWS["AWS · ap-northeast-1"]
+    IGW["Internet Gateway"]
+    ALBm[["grods-main-alb (2AZ 필수)"]]
+    ALBr[["grods-release-alb"]]
+    CW[["CloudWatch<br/>대시보드+알람 → SNS 이메일<br/>(EC2 mem/disk · RDS · Redis)"]]
+    subgraph Regional["리전 서비스"]
+      DDB[("DynamoDB runtime-main/release · 유지")]
+      SES["SES"]
+    end
+    subgraph VPC["grods-vpc-prod · 10.50.0.0/16"]
+      subgraph AZA["AZ 1a (축소)"]
+        EC2R["release EC2 · app-a<br/>(egress nat-c로 변경)"]
+        subgraph DataA2["data-a"]
+          RDSAm[("main RDS standby (숨김)")]
+          RDSr[("release RDS")]
+          REDr[("release Redis")]
+        end
+        NOTE1["nat-a 삭제 · main Redis replica 삭제"]
+      end
+      subgraph AZC["AZ 1c (메인)"]
+        NATC["NAT-c · 유일한 NAT"]
+        EC2M["main EC2 · app-c<br/>(ASG 1a failover 가능)"]
+        subgraph DataC2["data-c"]
+          RDSCm[("main RDS primary · Multi-AZ")]
+          REDmS[("main Redis · 단일 노드")]
+        end
+      end
+    end
+  end
+  Internet --> IGW
+  IGW --> ALBm --> EC2M
+  IGW --> ALBr --> EC2R
+  SSM -. 배포 .-> EC2M
+  EC2M -. egress .-> NATC
+  EC2R -. egress cross-AZ .-> NATC
+  EC2M --> RDSCm
+  EC2M --> REDmS
+  EC2M --> DDB
+  RDSCm -. 자동 failover .-> RDSAm
+  EC2M --> SES
+  RDSCm -. 지표 .-> CW
+  EC2M -. 지표 agent .-> CW
+  REDmS -. 지표 .-> CW`,
+      },
+    ],
+  },
+  // ─────────────────────────────────────────────────────────────
+  // [작성 예정] Python 프로젝트 — draft:true 상태라 공개되지 않음.
+  // 제목·내용·스택·수치를 채운 뒤 draft 를 false 로 바꾸면 공개됩니다.
+  // 미리보기: /projects/python-project (noindex)
+  // ─────────────────────────────────────────────────────────────
+  {
+    slug: "python-project",
+    title: "Python 프로젝트 — (제목 작성 예정)",
+    period: "(기간 작성 예정)",
+    role: "(역할 작성 예정)",
+    thumbnail: "/projects/python-project/cover.png",
+    heroImage: "/projects/python-project/cover.png",
+    gallery: [],
+    stack: ["Python", "FastAPI"],
+    summary: "Python 기반 프로젝트. (요약 작성 예정)",
+    problem: "(해결하려던 문제 작성 예정)",
+    solution: [
+      "(핵심 구현 1 — 작성 예정)",
+      "(핵심 구현 2 — 작성 예정)",
+      "(핵심 구현 3 — 작성 예정)",
+    ],
+    outcome: [
+      "(성과 1 — 수치 작성 예정)",
+      "(성과 2 — 작성 예정)",
+    ],
+    metrics: ["(지표 작성 예정)"],
+    members: ["namhae"],
+    links: {},
+    draft: true,
+  },
   {
     slug: "planit",
     title: "PlanIT",
@@ -481,8 +738,8 @@ export const portfolioProjects: PortfolioProject[] = [
         caption: "Team Portfolio — 홈 (임팩트·대표 프로젝트·기술 트리맵)",
       },
       {
-        src: "/projects/team-portfolio-platform/team-portfolio-minyoung.png",
-        caption: "Team Portfolio — 김민영 프로필 (한눈에 보기)",
+        src: "/projects/team-portfolio-platform/team-portfolio-namhae.png",
+        caption: "Team Portfolio — 김남해 프로필 (한눈에 보기)",
       },
       {
         src: "/projects/team-portfolio-platform/team-portfolio-project-planit.png",
@@ -637,8 +894,8 @@ export function getProjectsByMember(memberId: MemberId) {
   return portfolioProjects.filter((project) => project.members.includes(memberId));
 }
 
-/** 공개 메인 사이트(김민영 포트폴리오)에 노출할 멤버 */
-export const PUBLIC_PORTFOLIO_MEMBER_IDS = ["minyoung"] as const;
+/** 공개 메인 사이트(김남해 포트폴리오)에 노출할 멤버 */
+export const PUBLIC_PORTFOLIO_MEMBER_IDS = ["namhae"] as const;
 
 export function isPublicPortfolioMember(id: MemberId): boolean {
   return (PUBLIC_PORTFOLIO_MEMBER_IDS as readonly string[]).includes(id);
@@ -652,17 +909,19 @@ export function isPublicPortfolioProject(project: PortfolioProject): boolean {
   return project.members.some((m) => isPublicPortfolioMember(m));
 }
 
-/** 홈·프로젝트 목록·사이트맵용 (김민영 참여 프로젝트만) */
+/** 홈·프로젝트 목록·사이트맵용 (김남해 참여 + 작성 완료 프로젝트만) */
 export function getPublicProjects(): PortfolioProject[] {
-  return portfolioProjects.filter(isPublicPortfolioProject);
+  return portfolioProjects.filter(
+    (p) => isPublicPortfolioProject(p) && !p.draft
+  );
 }
 
-/** 김남해 비공개 포트폴리오 URL 구간 */
-export function isNamhaePortfolioRoute(pathname: string): boolean {
-  return pathname.startsWith("/Namhae_Kim");
+/** 김민영 비공개 포트폴리오 URL 구간 */
+export function isMinyoungPortfolioRoute(pathname: string): boolean {
+  return pathname.startsWith("/Minyoung_Kim");
 }
 
-/** 공개 사이트에 노출할 프로젝트 참여 멤버 (김남해 제외) */
+/** 공개 사이트에 노출할 프로젝트 참여 멤버 (비공개 멤버 제외) */
 export function getPublicProjectTeamMembers(
   project: PortfolioProject
 ): TeamMemberProfile[] {

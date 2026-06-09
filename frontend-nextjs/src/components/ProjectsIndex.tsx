@@ -204,7 +204,7 @@ export default function ProjectsIndex({
               개
             </span>
             {showMemberFilter && memberFilter !== "all" && (
-              <span className="inline-flex items-center gap-1 rounded-full border border-sky-400/40 bg-sky-500/10 px-2 py-0.5 text-[10px] text-sky-500">
+              <span className="inline-flex items-center gap-1 rounded-full border border-emerald-400/40 bg-emerald-500/10 px-2 py-0.5 text-[10px] text-emerald-500">
                 멤버: {memberLabels[memberFilter]}
               </span>
             )}
@@ -271,9 +271,9 @@ export default function ProjectsIndex({
                         .map((id) => (
                         <span
                           key={id}
-                          className="inline-flex items-center gap-1 rounded-full border border-sky-400/40 bg-sky-500/10 px-1.5 py-0.5 text-[10px] text-sky-500"
+                          className="inline-flex items-center gap-1 rounded-full border border-emerald-400/40 bg-emerald-500/10 px-1.5 py-0.5 text-[10px] text-emerald-500"
                         >
-                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-sky-400" />
+                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-400" />
                           {memberLabels[id]}
                         </span>
                       ))}

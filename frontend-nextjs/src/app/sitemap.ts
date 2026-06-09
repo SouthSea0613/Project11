@@ -14,7 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
-      url: `${SITE_URL}/Minyoung_Kim`,
+      url: `${SITE_URL}/Namhae_Kim`,
       lastModified: now,
       changeFrequency: "monthly",
       priority: 0.9,

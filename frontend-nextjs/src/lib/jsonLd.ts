@@ -26,7 +26,7 @@ export function organizationLd() {
     alternateName: "해영랩",
     url: SITE_URL,
     logo: abs("/projects/team-portfolio-platform/team-portfolio-home.png"),
-    sameAs: ["https://github.com/alsdud0301"],
+    sameAs: ["https://github.com/SouthSea0613"],
   };
 }
 

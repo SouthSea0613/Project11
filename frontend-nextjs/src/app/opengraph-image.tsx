@@ -3,7 +3,7 @@ import {
   OG_SIZE,
   renderOgImage,
 } from "@/lib/ogImage";
-import { minyoungHeadline, minyoungImpactStats } from "@/lib/minyoungResume";
+import { namhaeHeadline, namhaeImpactStats } from "@/lib/namhaeResume";
 import {
   PORTFOLIO_OWNER_NAME,
   PORTFOLIO_ROLE,
@@ -18,10 +18,10 @@ export default async function HomeOpengraphImage() {
   return renderOgImage({
     kicker: PORTFOLIO_ROLE,
     title: PORTFOLIO_OWNER_NAME,
-    subtitle: minyoungHeadline,
+    subtitle: namhaeHeadline,
     footer: PORTFOLIO_OWNER_NAME,
-    accent: "sky",
-    stats: minyoungImpactStats.map((s) => ({
+    accent: "emerald",
+    stats: namhaeImpactStats.map((s) => ({
       value: s.value,
       label: s.label,
     })),

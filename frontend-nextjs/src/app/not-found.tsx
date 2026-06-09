@@ -5,7 +5,7 @@ import {
   getPublicProjects,
   getPublicTeamMembers,
 } from "@/lib/portfolioData";
-import { minyoungPhoto } from "@/lib/minyoungResume";
+import { namhaePhoto } from "@/lib/namhaeResume";
 import { SITE_NAME } from "@/lib/siteConfig";
 
 export const metadata: Metadata = {
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-const FEATURED_SLUGS = ["planit", "kakao-carechat-integration", "team-portfolio-platform"];
+const FEATURED_SLUGS = ["planit", "rd-autonote", "avis-tron-paradise"];
 
 export default function NotFound() {
   const publicProjects = getPublicProjects();
@@ -30,7 +30,7 @@ export default function NotFound() {
         className="pointer-events-none fixed inset-0 -z-10 opacity-50"
         style={{
           background:
-            "radial-gradient(circle at 20% 0%, rgba(16,185,129,0.18), transparent 50%), radial-gradient(circle at 90% 100%, rgba(56,189,248,0.16), transparent 55%)",
+            "radial-gradient(circle at 20% 0%, rgba(16,185,129,0.18), transparent 50%), radial-gradient(circle at 90% 100%, rgba(45,212,191,0.16), transparent 55%)",
         }}
       />
 
@@ -65,10 +65,10 @@ export default function NotFound() {
             전체 프로젝트 보기
           </Link>
           <Link
-            href="/Minyoung_Kim"
+            href="/Namhae_Kim"
             className="rounded-md border border-white/15 bg-white/5 px-3.5 py-2 font-medium text-white transition hover:bg-white/10"
           >
-            김민영 프로필
+            김남해 프로필
           </Link>
         </div>
       </section>
@@ -125,7 +125,7 @@ export default function NotFound() {
             >
               <span className="block h-14 w-14 shrink-0 overflow-hidden rounded-full ring-2 ring-white/10 group-hover:ring-emerald-400/50">
                 <ImageSlot
-                  src={minyoungPhoto}
+                  src={namhaePhoto}
                   alt={`${m.name} 프로필`}
                   aspect="aspect-square"
                   rounded="rounded-full"

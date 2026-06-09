@@ -4,10 +4,14 @@ import { notFound } from "next/navigation";
 import { ImageSlot } from "@/components/ImageSlot";
 import JsonLd from "@/components/JsonLd";
 import ProjectGallery from "@/components/ProjectGallery";
+import MermaidDiagram from "@/components/MermaidDiagram";
+import MermaidPlayground from "@/components/MermaidPlayground";
 import { breadcrumbLd, projectLd } from "@/lib/jsonLd";
 import {
   getProjectBySlug,
   getPublicProjectTeamMembers,
+  getPublicProjects,
+  isPublicPortfolioProject,
   normalizeGallery,
   portfolioProjects,
 } from "@/lib/portfolioData";
@@ -42,12 +46,15 @@ export async function generateMetadata({
 
   const path = `/projects/${slug}`;
   const title = `${project.title} | ${SITE_NAME} Team Portfolio`;
+  // 공개 사이트(김남해) 미참여 또는 작성 중(draft) 프로젝트는 직접 URL 미리보기만 허용하고 색인 제외
+  const isListed = isPublicPortfolioProject(project) && !project.draft;
 
   return {
     title,
     description: project.summary,
     keywords: [...project.stack, project.title, "HaeYoungLab", "포트폴리오"],
     alternates: { canonical: path },
+    ...(isListed ? {} : { robots: { index: false, follow: false } }),
     openGraph: {
       title,
       description: project.summary,
@@ -85,13 +92,14 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
   const headline = pickHeadlineMetric(project.metrics);
   const parsedMetrics = classifyMetrics(project.metrics);
 
-  // 이전/다음 프로젝트 (portfolioProjects 순서 기준)
-  const currentIdx = portfolioProjects.findIndex((p) => p.slug === project.slug);
+  // 이전/다음 프로젝트 — 공개 프로젝트만 순회 (비공개 프로젝트로 동선이 새지 않도록)
+  const navProjects = getPublicProjects();
+  const currentIdx = navProjects.findIndex((p) => p.slug === project.slug);
   const prevProject =
-    currentIdx > 0 ? portfolioProjects[currentIdx - 1] : null;
+    currentIdx > 0 ? navProjects[currentIdx - 1] : null;
   const nextProject =
-    currentIdx >= 0 && currentIdx < portfolioProjects.length - 1
-      ? portfolioProjects[currentIdx + 1]
+    currentIdx >= 0 && currentIdx < navProjects.length - 1
+      ? navProjects[currentIdx + 1]
       : null;
 
   return (
@@ -151,7 +159,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
                 <Link
                   key={member.id}
                   href={member.profilePath}
-                  className="rounded-full border border-sky-400/40 bg-sky-400/15 px-2.5 py-0.5 text-[11px] font-medium text-sky-100 transition hover:bg-sky-400/25"
+                  className="rounded-full border border-emerald-400/40 bg-emerald-400/15 px-2.5 py-0.5 text-[11px] font-medium text-emerald-100 transition hover:bg-emerald-400/25"
                 >
                   {member.name}
                 </Link>
@@ -216,9 +224,9 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
                   <Link
                     key={member.id}
                     href={member.profilePath}
-                    className="inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[11px] font-medium transition border-sky-400/40 bg-sky-500/10 text-sky-500 hover:bg-sky-500/20"
+                    className="inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[11px] font-medium transition border-emerald-400/40 bg-emerald-500/10 text-emerald-500 hover:bg-emerald-500/20"
                   >
-                    <span className="inline-block h-1.5 w-1.5 rounded-full bg-sky-400" />
+                    <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-400" />
                     {member.name}
                   </Link>
                 ))}
@@ -367,6 +375,54 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
             ))}
         </div>
       </section>
+
+      {/* ── Architecture (Mermaid) ── */}
+      {(() => {
+        const diagrams =
+          project.architectures ??
+          (project.architecture
+            ? [{ label: "아키텍처", code: project.architecture }]
+            : []);
+        if (diagrams.length === 0) return null;
+        const playgroundSeed = diagrams[diagrams.length - 1].code;
+        return (
+          <section className="mt-8 rounded-2xl border bg-card p-5">
+            <div className="flex flex-wrap items-baseline justify-between gap-2">
+              <h2 className="text-sm font-semibold tracking-wider uppercase text-muted-foreground">
+                아키텍처 다이어그램
+              </h2>
+              <span className="text-[11px] text-muted-foreground">
+                Mermaid로 작성 · 아래에서 직접 편집해 미리볼 수 있어요
+              </span>
+            </div>
+            <div className="mt-4 space-y-6">
+              {diagrams.map((d, i) => (
+                <div key={d.label + i}>
+                  <h3 className="text-sm font-semibold text-foreground">
+                    {d.label}
+                  </h3>
+                  {d.description && (
+                    <p className="mt-1 text-xs leading-6 text-muted-foreground">
+                      {d.description}
+                    </p>
+                  )}
+                  <div className="mt-2 rounded-xl border bg-background/40 p-3">
+                    <MermaidDiagram code={d.code} />
+                  </div>
+                </div>
+              ))}
+            </div>
+            <details className="mt-5">
+              <summary className="cursor-pointer list-none text-xs font-medium text-emerald-500 underline-offset-4 hover:underline">
+                ✎ Mermaid 직접 편집해보기
+              </summary>
+              <div className="mt-3">
+                <MermaidPlayground initialCode={playgroundSeed} />
+              </div>
+            </details>
+          </section>
+        );
+      })()}
 
       {/* ── Gallery ── */}
       {project.gallery && project.gallery.length > 0 && (

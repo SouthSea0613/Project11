@@ -4,17 +4,16 @@ import {
   renderOgImage,
 } from "@/lib/ogImage";
 import { minyoungHeadline, minyoungImpactStats } from "@/lib/minyoungResume";
-import { PORTFOLIO_OWNER_NAME, PORTFOLIO_ROLE } from "@/lib/siteConfig";
 
 export const runtime = "nodejs";
-export const alt = `${PORTFOLIO_OWNER_NAME} · Portfolio`;
+export const alt = "김민영 · Portfolio";
 export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
 
 export default async function MinyoungOpengraphImage() {
   return renderOgImage({
-    kicker: PORTFOLIO_ROLE,
-    title: PORTFOLIO_OWNER_NAME,
+    kicker: "Backend · Full-stack Engineer",
+    title: "김민영",
     subtitle: minyoungHeadline,
     footer: "카카오 케어챗 · 혈당 인터페이스 · PlanIT",
     accent: "sky",
