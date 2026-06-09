@@ -168,15 +168,17 @@ export default function NamhaeKimPage() {
             ))}
           </div>
 
-          <NamhaeContentTabs projects={projects} />
-
+          {/* ── Signature Case (탭 위로) ── */}
           {(() => {
             const aws = getProjectBySlug("aws-infra-modernization");
             if (!aws?.architectures?.length) return null;
             return (
-              <section className="mt-10 rounded-xl border bg-card p-5">
-                <div className="flex flex-wrap items-baseline justify-between gap-2">
-                  <h2 className="text-lg font-semibold">AWS · 인프라 아키텍처</h2>
+              <section className="mt-8 rounded-xl border border-emerald-400/30 bg-emerald-500/5 p-5">
+                <p className="text-[11px] font-semibold uppercase tracking-widest text-emerald-500">
+                  Signature Case
+                </p>
+                <div className="mt-1 flex flex-wrap items-baseline justify-between gap-2">
+                  <h2 className="text-lg font-semibold">AWS · 인프라 재분석 · 옵저버빌리티 · FinOps</h2>
                   <Link
                     href={`/projects/${aws.slug}`}
                     className="text-xs font-medium text-emerald-500 underline-offset-4 hover:underline"
@@ -185,7 +187,7 @@ export default function NamhaeKimPage() {
                   </Link>
                 </div>
                 <p className="mt-1 text-sm text-muted-foreground">
-                  재분석 → 문제점 → 응급처치까지, Mermaid로 그린 아키텍처 변천.
+                  재분석 → 문제점 → 응급처치까지, Mermaid로 그린 아키텍처 변천. 옵저버빌리티 부재로 묻혀 있던 에러 22.6만 건을 표면화하고 NAT·Redis 비용 누수를 차단했습니다.
                 </p>
                 <div className="mt-4 space-y-6">
                   {aws.architectures.map((d, i) => (
@@ -196,7 +198,7 @@ export default function NamhaeKimPage() {
                           {d.description}
                         </p>
                       )}
-                      <div className="mt-2 rounded-lg border bg-background/40 p-3">
+                      <div className="mt-2 rounded-lg border bg-background/60 p-3">
                         <MermaidDiagram code={d.code} />
                       </div>
                     </div>
@@ -205,6 +207,8 @@ export default function NamhaeKimPage() {
               </section>
             );
           })()}
+
+          <NamhaeContentTabs projects={projects} />
 
           <section className="print-hide mt-10 rounded-xl border bg-card p-5">
             <h2 className="text-lg font-semibold">외부 링크</h2>

@@ -35,6 +35,8 @@ export default function Navbar() {
   const isHome = pathname === "/";
   const isAboutPage = pathname.startsWith("/Namhae_Kim");
   const isProjectsPage = pathname.startsWith("/projects");
+  // 민영 페이지(보호·비공개)에선 남해로 가는 인물 링크를 노출하지 않는다
+  const isMinyoungRoute = pathname.startsWith("/Minyoung_Kim");
 
   return (
     <div className="print-hide fixed top-0 left-0 w-full z-50 pointer-events-none">
@@ -78,17 +80,19 @@ export default function Navbar() {
           </Link>
 
           <div className="flex items-center gap-1 md:gap-2">
-            <Link
-              href="/Namhae_Kim"
-              aria-current={isAboutPage ? "page" : undefined}
-              className={`hidden md:inline-flex items-center rounded-md px-2.5 h-8 text-xs md:text-sm font-medium transition underline-offset-4 ${
-                isAboutPage
-                  ? "text-emerald-500 underline"
-                  : "text-muted-foreground hover:text-emerald-500"
-              }`}
-            >
-              About
-            </Link>
+            {!isMinyoungRoute && (
+              <Link
+                href="/Namhae_Kim"
+                aria-current={isAboutPage ? "page" : undefined}
+                className={`hidden md:inline-flex items-center rounded-md px-2.5 h-8 text-xs md:text-sm font-medium transition underline-offset-4 ${
+                  isAboutPage
+                    ? "text-emerald-500 underline"
+                    : "text-muted-foreground hover:text-emerald-500"
+                }`}
+              >
+                About
+              </Link>
+            )}
             <Link
               href="/projects"
               aria-current={isProjectsPage ? "page" : undefined}

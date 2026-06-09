@@ -7,6 +7,7 @@ import ProfilePhotoViewer from "@/components/ProfilePhotoViewer";
 import { breadcrumbLd, personLd } from "@/lib/jsonLd";
 import { getMemberById, getProjectsByMember } from "@/lib/portfolioData";
 import {
+  minyoungCaseStudies,
   minyoungContact,
   minyoungExternalLinks,
   minyoungGithubUrl,
@@ -16,11 +17,11 @@ import {
   minyoungSkillCategories,
   minyoungSummary,
 } from "@/lib/minyoungResume";
-import { PORTFOLIO_OWNER_NAME, PORTFOLIO_SITE_TITLE } from "@/lib/siteConfig";
+import { SITE_NAME } from "@/lib/siteConfig";
 
 const member = getMemberById("minyoung");
 
-const pageTitle = PORTFOLIO_SITE_TITLE;
+const pageTitle = "김민영 | 백엔드·풀스택 포트폴리오";
 const pageDesc = `${minyoungHeadline} — 의료 데이터 연동, 시스템 최적화, 운영 효율화 경험.`;
 
 export const metadata: Metadata = {
@@ -41,7 +42,7 @@ export const metadata: Metadata = {
     title: pageTitle,
     description: pageDesc,
     url: "/Minyoung_Kim",
-    siteName: PORTFOLIO_OWNER_NAME,
+    siteName: SITE_NAME,
     locale: "ko_KR",
     type: "profile",
   },
@@ -166,6 +167,28 @@ export default function MinyoungKimPage() {
               </div>
             ))}
           </div>
+
+          {/* ── Signature Cases (탭 위로) ── */}
+          <section className="mt-8 rounded-xl border border-sky-400/30 bg-sky-500/5 p-5">
+            <p className="text-[11px] font-semibold uppercase tracking-widest text-sky-500">
+              Signature Cases
+            </p>
+            <h2 className="mt-1 text-lg font-semibold">대표 사례 — 무결성·성능 최적화</h2>
+            <div className="mt-4 grid gap-3 md:grid-cols-3">
+              {minyoungCaseStudies.map((c) => (
+                <div key={c.title} className="rounded-lg border bg-background/60 p-4">
+                  <p className="text-[11px] font-semibold text-sky-500">{c.topic}</p>
+                  <h3 className="mt-1 text-sm font-semibold text-foreground">{c.title}</h3>
+                  <p className="mt-2 line-clamp-3 text-xs leading-6 text-muted-foreground">
+                    {c.problem}
+                  </p>
+                  <p className="mt-3 rounded-md border border-sky-400/40 bg-sky-500/10 px-2 py-1.5 text-xs font-medium text-sky-600 dark:text-sky-300">
+                    {c.outcome}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </section>
 
           <MinyoungContentTabs projects={projects} />
 
